@@ -1,0 +1,11 @@
+.image-panel {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.image-panel img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
