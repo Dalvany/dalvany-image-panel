@@ -2,6 +2,9 @@
 Display an image by concatenation of an URL, a metric and a suffix.  
 The result will be : baseURL + metric + suffix
 
+# Screenshot
+![screenshot](screenshot.png)
+
 # Build
 ```
 yarn install
