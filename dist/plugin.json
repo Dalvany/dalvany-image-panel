@@ -1,0 +1,30 @@
+{
+  "type": "panel",
+  "name": "Dynamic image panel",
+  "id": "dalvany-image-panel",
+
+  "info": {
+    "description": "Concatenate a metric to an URL in order to display an image",
+    "author": {
+      "name": "Dalvany",
+      "url": "https://github.com/Dalvany/dalvany-image-panel"
+    },
+    "keywords": [ "image", "panel", "dynamic" ],
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [
+      {"name": "Project site", "url": "https://github.com/Dalvany/dalvany-image-panel"},
+      {"name": "WTFPL", "url": "https://github.com/Dalvany/dalvany-image-panel/blob/master/LICENSE"}
+    ],
+    "screenshots": [],
+    "version": "1.0.0",
+    "updated": "2020-03-20"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "6.x.x",
+    "plugins": [ ]
+  }
+}
