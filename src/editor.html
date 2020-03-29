@@ -1,13 +1,18 @@
 <div class="editor-row">
-  <div class="section gf-form-group">
-    <h5 class="section-heading">General</h5>
-    <div class="gf-form">
-      <span class="gf-form-label width-8">Base URL</span>
-      <input type="text" class="gf-form-input max-width-10" ng-model="ctrl.baseUrl" ng-change="ctrl.render()">
-      <info-popover mode="right-absolute">Base URL for images.</info-popover>
-      <span class="gf-form-label width-8">Suffix</span>
-      <input type="text" class="gf-form-input max-width-10" ng-model="ctrl.suffix" ng-change="ctrl.render()">
-      <info-popover mode="right-absolute">Suffix to append at the end of the URL.</info-popover>
+  <div class="panel-options-group">
+    <div class="panel-options-group__header">
+      <span class="panel-options-group__title">General</span>
+    </div>
+    <div class="panel-options-group__body">
+      <div class="gf-form">
+          <label class="gf-form-label width-8">Base URL</label>
+          <input type="text" class="gf-form-input min-width-10 width-30" ng-model="ctrl.baseUrl" ng-change="ctrl.render()">
+          <info-popover mode="right-absolute">Base URL for images.</info-popover>
+          <label class="gf-form-label width-8">Suffix</label>
+          <input type="text" class="gf-form-input max-width-10" ng-model="ctrl.suffix" ng-change="ctrl.render()">
+          <info-popover mode="right-absolute">Suffix to append at the end of the URL.</info-popover>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 {
   "type": "panel",
-  "name": "Dynamic image panel",
-  "id": "dalvany-image-panel",
+  "name": "Test dynamic image panel",
+  "id": "test-image-panel",
 
   "info": {
     "description": "Concatenate a metric to an URL in order to display an image",
@@ -20,7 +20,7 @@
     ],
     "screenshots": [],
     "version": "1.0.0",
-    "updated": "2020-03-20"
+    "updated": "2020-03-29"
   },
 
   "dependencies": {
