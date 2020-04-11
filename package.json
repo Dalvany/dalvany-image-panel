@@ -1,6 +1,6 @@
 {
   "name": "dalvany-image-panel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Display an image based on metric",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
@@ -11,12 +11,6 @@
   "author": "Dalvany",
   "license": "WTFPL",
   "dependencies": {
-    "angular": "^1.7.9",
-    "flot": "^4.1.1",
-    "jquery": "^3.4.1",
-    "jquery.flot": "^0.8.3",
-    "lodash": "^4.17.15",
-    "minimist": "^1.2.2"
   },
   "devDependencies": {
     "@grafana/data": "next",
@@ -24,5 +18,8 @@
     "@grafana/toolkit": "next",
     "@types/grafana": "github:CorpGlory/types-grafana.git",
     "@types/lodash": "4.14.149"
+  },
+  "resolutions": {
+    "@babel/preset-env": "7.9.0"
   }
 }

@@ -19,8 +19,8 @@
       {"name": "WTFPL", "url": "https://github.com/Dalvany/dalvany-image-panel/blob/master/LICENSE"}
     ],
     "screenshots": [],
-    "version": "1.0.0",
-    "updated": "2020-03-20"
+    "version": "1.0.1",
+    "updated": "2020-04-11"
   },
 
   "dependencies": {
