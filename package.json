@@ -1,6 +1,6 @@
 {
   "name": "dalvany-image-panel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Display an image based on metric",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
