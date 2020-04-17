@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { PanelProps, FieldType } from '@grafana/data';
+import { PanelProps } from '@grafana/data';
 import { DynamicImageOptions } from './types';
 // @ts-ignore
 import TimeSeries from 'grafana/app/core/time_series';
@@ -25,11 +25,19 @@ export class DynamicImagePanel extends PureComponent<Props> {
         </div>
       )
     }
+    if (options.field == '') {
+      return (
+        <div className="panel-empty">
+          <p>No field selected (check query)</p>
+        </div>
+      )
+    }
 
     let icon: string = "";
     for (const tmp of data.series) {
       for (const tmp2 of tmp.fields) {
-        if (tmp2.type != FieldType.time) {
+        if (tmp2.name == options.field) {
+          // Last data
           icon = tmp2.values.get(tmp2.values.length - 1)
         }
       }

@@ -1,6 +1,7 @@
 export interface DynamicImageOptions {
   baseUrl: string;
   suffix: string;
+  field?: string;
 }
 
 export const defaults: DynamicImageOptions = {
