@@ -18,7 +18,7 @@ The result will be : baseURL + metric + suffix.
 
 # Screenshot
 
-![screenshot](screenshot/configuration.png)
+![screenshot](screenshot/screenshot.png)
 
 # Build
 
