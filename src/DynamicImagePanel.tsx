@@ -8,8 +8,7 @@ import './css/image.css';
 
 export class DynamicImagePanel extends PureComponent<Props> {
   render() {
-    const { options, width, height, data } = this.props;
-    console.log("width = " + width + " - height = " + height)
+    const { options, data } = this.props;
     if (!data) {
       return (
         <div className="panel-empty">
@@ -33,17 +32,18 @@ export class DynamicImagePanel extends PureComponent<Props> {
       )
     }
 
-    let icon: string = "";
+    let urls: string[] = []
     for (const tmp of data.series) {
       for (const tmp2 of tmp.fields) {
         if (tmp2.name == options.field) {
-          // Last data
-          icon = tmp2.values.get(tmp2.values.length - 1)
+          for (const name of tmp2.values.toArray()) {
+            urls.push(options.baseUrl + name + options.suffix)
+          }
         }
       }
     }
 
-    if (!icon || /^\s*$/.test(icon)) {
+    if (!urls || urls.length == 0) {
       return (
         <div className="panel-empty">
           <p>No data found in response</p>
@@ -51,10 +51,24 @@ export class DynamicImagePanel extends PureComponent<Props> {
       )
     }
 
-    var url = options.baseUrl + icon + options.suffix
+    if (options.singleFill && urls.length == 1) {
+      return (
+        <div className="image-container full">
+          <img src={urls[0]} />
+        </div>
+      )
+    }
+    //var url = options.baseUrl + icon + options.suffix
     return (
-      <div className="image-panel">
-        <img src={url} />
+      <div className="container">
+        {urls.map(url => {
+          return (
+            <div className="image-container"
+              style={{ width: options.width+"px", height: options.height+"px" }}>
+              <img src={url} />
+            </div>
+          )
+        })}
       </div>
     )
   }

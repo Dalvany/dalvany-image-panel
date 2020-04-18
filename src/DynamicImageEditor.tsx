@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { FormField, Select } from '@grafana/ui';
+import { FormField, Select, Switch } from '@grafana/ui';
 import { PanelEditorProps, FieldType, SelectableValue, PanelData } from '@grafana/data';
 
 import { DynamicImageOptions } from './types';
@@ -13,11 +13,23 @@ export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicIm
     this.props.onOptionsChange({ ...this.props.options, suffix: target.value });
   };
 
+  onHeightChange = ({ target }: any) => {
+    this.props.onOptionsChange({ ...this.props.options, height: target.value });
+  };
+
+  onWidthChange = ({ target }: any) => {
+    this.props.onOptionsChange({ ...this.props.options, width: target.value });
+  };
+
   onFieldChange = (item: SelectableValue<string>) => {
     this.props.onOptionsChange({ ...this.props.options, field: item.value })
   };
 
-  getSelect(options: any, data: PanelData) {
+  onSwitchFillChange = ({ target }: any) => {
+    this.props.onOptionsChange({ ...this.props.options, singleFill: !this.props.options.singleFill })
+  };
+
+  getSelect(options: DynamicImageOptions, data: PanelData) {
     const opt: SelectableValue<string>[] = [
     ]
 
@@ -63,11 +75,46 @@ export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicIm
             <span className="panel-options-group__title">General</span>
           </div>
           <div className="panel-options-group__body">
-            <FormField label="Base URL" labelWidth={8} inputWidth={30} tooltip="First part of the URL" type="text" onChange={this.onBaseUrlChange} value={options.baseUrl || ''} />
-            <FormField label="Suffix" labelWidth={8} inputWidth={10} type="text" tooltip="To append at the end of the URL" onChange={this.onSuffixChange} value={options.suffix || ''} />
+            <FormField label="Base URL"
+              labelWidth={8}
+              inputWidth={30}
+              tooltip="First part of the URL"
+              type="text"
+              onChange={this.onBaseUrlChange}
+              value={options.baseUrl} />
+            <FormField label="Suffix"
+              labelWidth={8}
+              inputWidth={10}
+              type="text"
+              tooltip="To append at the end of the URL"
+              onChange={this.onSuffixChange}
+              value={options.suffix} />
           </div>
           <div className="panel-options-group__body">
-            <FormField label="Icon field" labelWidth={8} inputWidth={10} tooltip="Field to use between base URL and suffix" inputEl={select} />
+            <FormField label="Icon field"
+              labelWidth={8}
+              inputWidth={10}
+              tooltip="Field to use between base URL and suffix"
+              inputEl={select} />
+            <FormField label="Icon width"
+              labelWidth={8}
+              inputWidth={8}
+              type="number"
+              tooltip="Icon width in pixel (potentially ignored if 'single fill')"
+              onChange={this.onWidthChange}
+              value={options.width} />
+            <FormField label="Icon height"
+              labelWidth={8}
+              inputWidth={8}
+              type="number"
+              tooltip="Icon height in pixel (potentially ignored if 'single fill')"
+              onChange={this.onHeightChange}
+              value={options.height} />
+            <Switch label="Single fill"
+              labelClass="width-8"
+              tooltip="If there is a single image, it will try to fill panel"
+              checked={options.singleFill}
+              onChange={this.onSwitchFillChange} />
           </div>
         </div>
       </div>
