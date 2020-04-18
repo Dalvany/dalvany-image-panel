@@ -29,7 +29,7 @@ The result will be : baseURL + metric + suffix.
 
 # Install
 
-Unzip a release file and rename the extracted folder with `dalvany-image-panel`  
+Unzip a release file and rename the extracted folder with `dalvany-image-panel`
 For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v1.2.0.zip;dalvany-image-panel`
 
 # Credits
