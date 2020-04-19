@@ -18,7 +18,10 @@
       {"name": "Project site", "url": "https://github.com/Dalvany/dalvany-image-panel"},
       {"name": "WTFPL", "url": "https://github.com/Dalvany/dalvany-image-panel/blob/master/LICENSE"}
     ],
-    "screenshots": [],
+    "screenshots": [
+      {"name": "Screenshots", "path": "img/screenshot.png"},
+      {"name": "Configuration", "path": "img/configuration.png"}
+    ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },

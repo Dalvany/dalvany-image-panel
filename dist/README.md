@@ -1,11 +1,11 @@
-# Image
+# Grafana image panel
 
 Display an image by concatenation of an URL, a metric and a suffix.  
 The result will be : baseURL + metric + suffix.  
 
 # Configuration
 
-![configuration panel](screenshot/configuration.png)
+![configuration panel](src/img/configuration.png)
 
 -   Base URL : the start of the URL where to fetch image
 -   Suffix : string to add at the end
@@ -18,7 +18,7 @@ The result will be : baseURL + metric + suffix.
 
 # Screenshot
 
-![screenshot](screenshot/screenshot.png)
+![screenshot](src/img/screenshot.png)
 
 # Build
 
