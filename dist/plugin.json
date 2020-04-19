@@ -19,8 +19,8 @@
       {"name": "WTFPL", "url": "https://github.com/Dalvany/dalvany-image-panel/blob/master/LICENSE"}
     ],
     "screenshots": [
-      {"name": "Screenshots", "path": "img/screenshot.png"},
-      {"name": "Configuration", "path": "img/configuration.png"}
+      {"name": "Screenshots", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot.png"},
+      {"name": "Configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration.png"}
     ],
     "version": "1.2.1",
     "updated": "2020-04-19"

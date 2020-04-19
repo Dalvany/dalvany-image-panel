@@ -5,7 +5,7 @@ The result will be : baseURL + metric + suffix.
 
 # Configuration
 
-![configuration panel](src/img/configuration.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration.png)
 
 -   Base URL : the start of the URL where to fetch image
 -   Suffix : string to add at the end
@@ -18,7 +18,7 @@ The result will be : baseURL + metric + suffix.
 
 # Screenshot
 
-![screenshot](src/img/screenshot.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot.png)
 
 # Build
 
@@ -28,7 +28,7 @@ The result will be : baseURL + metric + suffix.
 # Install
 
 Unzip a release file and rename the extracted folder with `dalvany-image-panel`
-For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v1.2.0.zip;dalvany-image-panel`
+For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v1.2.1.zip;dalvany-image-panel`
 
 # Credits
 
