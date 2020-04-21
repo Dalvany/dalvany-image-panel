@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
-import { FormField, Select, Switch } from '@grafana/ui';
+import { FormField, Select, Switch, PanelOptionsGroup } from '@grafana/ui';
 import { PanelEditorProps, FieldType, SelectableValue, PanelData } from '@grafana/data';
-
 import { DynamicImageOptions } from './types';
+import './css/image.css';
 
 export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicImageOptions>> {
   onBaseUrlChange = ({ target }: any) => {
@@ -69,12 +69,9 @@ export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicIm
     const select = this.getSelect(options, data)
 
     return (
-      <div className="editor-row">
-        <div className="panel-options-group">
-          <div className="panel-options-group__header">
-            <span className="panel-options-group__title">General</span>
-          </div>
-          <div className="panel-options-group__body">
+      <PanelOptionsGroup title="General">
+        <div className="container full editor">
+          <div className="option-column">
             <FormField label="Base URL"
               labelWidth={9}
               inputWidth={30}
@@ -82,6 +79,11 @@ export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicIm
               type="text"
               onChange={this.onBaseUrlChange}
               value={options.baseUrl} />
+            <FormField label="Image field"
+              labelWidth={9}
+              inputWidth={10}
+              tooltip="Field to use between base URL and suffix"
+              inputEl={select} />
             <FormField label="Suffix"
               labelWidth={9}
               inputWidth={30}
@@ -90,12 +92,7 @@ export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicIm
               onChange={this.onSuffixChange}
               value={options.suffix} />
           </div>
-          <div className="panel-options-group__body">
-            <FormField label="Image field"
-              labelWidth={9}
-              inputWidth={10}
-              tooltip="Field to use between base URL and suffix"
-              inputEl={select} />
+          <div>
             <FormField label="Image width"
               labelWidth={9}
               inputWidth={8}
@@ -117,7 +114,7 @@ export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicIm
               onChange={this.onSwitchFillChange} />
           </div>
         </div>
-      </div>
+      </PanelOptionsGroup>
     );
   }
 }

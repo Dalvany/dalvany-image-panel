@@ -1,16 +1,16 @@
 # Grafana image panel
 
 Display an image by concatenation of an URL, a metric and a suffix.  
-The result will be : baseURL + metric + suffix.  
+The result will be : baseURL + image field + suffix.  
 
 # Configuration
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration.png)
 
 -   Base URL : the start of the URL where to fetch image
--   Suffix : string to add at the end
 -   Image field : allow to select which field contains the image name if the query
     result has multiple fields
+-   Suffix : string to add at the end
 -   Image width : the width of the image
 -   Image height : the height of the image
 -   Single fill : if the query have a unique result, allow to fill the panel instead

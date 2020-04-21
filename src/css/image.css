@@ -19,3 +19,11 @@
   flex-flow: row wrap;
   justify-content: flex-start;
 }
+
+.editor {
+  margin-left: 0px;
+}
+
+.option-column {
+  margin-right: 42px;
+}
