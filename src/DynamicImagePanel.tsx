@@ -3,10 +3,12 @@ import { PanelProps } from '@grafana/data';
 import { DynamicImageOptions } from './types';
 // @ts-ignore
 import TimeSeries from 'grafana/app/core/time_series';
-interface Props extends PanelProps<DynamicImageOptions> { }
 import './css/image.css';
 
+interface Props extends PanelProps<DynamicImageOptions> { }
+
 export class DynamicImagePanel extends PureComponent<Props> {
+
   render() {
     const { options, data } = this.props;
     if (!data) {
@@ -63,10 +65,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
       <div className="container">
         {urls.map(url => {
           return (
-            <div className="image-container"
-              style={{ width: options.width+"px", height: options.height+"px" }}>
-              <img src={url} />
-            </div>
+            <img src={url} style={{ width: options.width + "px", height: options.height + "px" }} />
           )
         })}
       </div>

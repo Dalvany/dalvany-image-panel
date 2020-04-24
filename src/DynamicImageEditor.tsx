@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { FormField, Select, Switch, PanelOptionsGroup } from '@grafana/ui';
+import { FormField, Select, Switch, PanelOptionsGroup, PanelOptionsGrid } from '@grafana/ui';
 import { PanelEditorProps, FieldType, SelectableValue, PanelData } from '@grafana/data';
 import { DynamicImageOptions } from './types';
 import './css/image.css';
@@ -69,52 +69,50 @@ export class DynamicImageEditor extends PureComponent<PanelEditorProps<DynamicIm
     const select = this.getSelect(options, data)
 
     return (
-      <PanelOptionsGroup title="General">
-        <div className="container full editor">
-          <div className="option-column">
-            <FormField label="Base URL"
-              labelWidth={9}
-              inputWidth={30}
-              tooltip="First part of the URL"
-              type="text"
-              onChange={this.onBaseUrlChange}
-              value={options.baseUrl} />
-            <FormField label="Image field"
-              labelWidth={9}
-              inputWidth={10}
-              tooltip="Field to use between base URL and suffix"
-              inputEl={select} />
-            <FormField label="Suffix"
-              labelWidth={9}
-              inputWidth={30}
-              type="text"
-              tooltip="To append at the end of the URL"
-              onChange={this.onSuffixChange}
-              value={options.suffix} />
-          </div>
-          <div>
-            <FormField label="Image width"
-              labelWidth={9}
-              inputWidth={8}
-              type="number"
-              tooltip="Image width in pixel (potentially ignored if 'single fill')"
-              onChange={this.onWidthChange}
-              value={options.width} />
-            <FormField label="Image height"
-              labelWidth={9}
-              inputWidth={8}
-              type="number"
-              tooltip="Image height in pixel (potentially ignored if 'single fill')"
-              onChange={this.onHeightChange}
-              value={options.height} />
-            <Switch label="Single fill"
-              labelClass="width-9"
-              tooltip="If there is a single image, it will try to fill panel"
-              checked={options.singleFill}
-              onChange={this.onSwitchFillChange} />
-          </div>
-        </div>
-      </PanelOptionsGroup>
+      <PanelOptionsGrid cols={2}>
+        <PanelOptionsGroup title="URL">
+          <FormField label="Base URL"
+            labelWidth={9}
+            inputWidth={30}
+            tooltip="First part of the URL"
+            type="text"
+            onChange={this.onBaseUrlChange}
+            value={options.baseUrl} />
+          <FormField label="Image field"
+            labelWidth={9}
+            inputWidth={10}
+            tooltip="Field to use between base URL and suffix"
+            inputEl={select} />
+          <FormField label="Suffix"
+            labelWidth={9}
+            inputWidth={30}
+            type="text"
+            tooltip="To append at the end of the URL"
+            onChange={this.onSuffixChange}
+            value={options.suffix} />
+        </PanelOptionsGroup>
+        <PanelOptionsGroup title="Image">
+          <FormField label="Image width"
+            labelWidth={9}
+            inputWidth={8}
+            type="number"
+            tooltip="Image width in pixel (potentially ignored if 'single fill')"
+            onChange={this.onWidthChange}
+            value={options.width} />
+          <FormField label="Image height"
+            labelWidth={9}
+            inputWidth={8}
+            type="number"
+            tooltip="Image height in pixel (potentially ignored if 'single fill')"
+            onChange={this.onHeightChange}
+            value={options.height} />
+          <Switch label="Single fill"
+            labelClass="width-9"
+            tooltip="If there is a single image, it will try to fill panel"
+            checked={options.singleFill}
+            onChange={this.onSwitchFillChange} />
+        </PanelOptionsGroup>
+      </PanelOptionsGrid>
     );
   }
 }
