@@ -1,6 +1,6 @@
 {
   "name": "dalvany-image-panel",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Display an image based on metric",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
@@ -19,7 +19,8 @@
     "@types/lodash": "4.14.149",
     "eslint-plugin-prettier": "^3.1.3",
     "prettier": "^2.0.4",
-    "prettierrc": "^0.0.0-5"
+    "prettierrc": "^0.0.0-5",
+    "jquery":"^3.5.0"
   },
   "resolutions": {
     "@babel/preset-env": "7.9.0"

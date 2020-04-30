@@ -22,8 +22,8 @@
       {"name": "Screenshots", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot.png"},
       {"name": "Configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration.png"}
     ],
-    "version": "1.2.1",
-    "updated": "2020-04-24"
+    "version": "1.2.2",
+    "updated": "2020-04-30"
   },
 
   "dependencies": {

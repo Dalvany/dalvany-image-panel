@@ -28,7 +28,7 @@ The result will be : baseURL + image field + suffix.
 # Install
 
 Unzip a release file and rename the extracted folder with `dalvany-image-panel`
-For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v1.2.1.zip;dalvany-image-panel`
+For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v1.2.2.zip;dalvany-image-panel`
 
 # Credits
 
