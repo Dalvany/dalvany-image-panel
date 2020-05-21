@@ -28,13 +28,6 @@ export class DynamicImagePanel extends PureComponent<Props> {
         </div>
       )
     }
-    if (options.field == '') {
-      return (
-        <div className="panel-empty">
-          <p>No field selected (check query)</p>
-        </div>
-      )
-    }
 
     let names: string[] = []
     for (const tmp of data.series) {
