@@ -1,15 +1,13 @@
 # Grafana image panel
 
 Display an image by concatenation of an URL, a metric and a suffix.  
-The result will be : baseURL + image field + suffix.  
+The result will be : baseURL + first field that is not time + suffix.  
 
 # Configuration
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration.png)
 
 -   Base URL : the start of the URL where to fetch image
--   Image field : allow to select which field contains the image name if the query
-    result has multiple fields
 -   Suffix : string to add at the end
 -   Image width : the width of the image
 -   Image height : the height of the image
@@ -28,7 +26,12 @@ The result will be : baseURL + image field + suffix.
 # Install
 
 Unzip a release file and rename the extracted folder with `dalvany-image-panel`
-For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v1.2.2.zip;dalvany-image-panel`
+For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v2.0.0.zip;dalvany-image-panel`
+
+# TODO
+
+* Allow to select field if multiple
+* Allow to use another field for alternative
 
 # Credits
 

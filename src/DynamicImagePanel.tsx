@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import { PanelProps } from '@grafana/data';
 import { DynamicImageOptions } from './types';
+import { FieldType } from '@grafana/data';
+
 // @ts-ignore
-import TimeSeries from 'grafana/app/core/time_series';
+import { TimeSeries } from 'grafana/app/core/time_series';
 import './css/image.css';
 
 interface Props extends PanelProps<DynamicImageOptions> { }
@@ -37,7 +39,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
     let names: string[] = []
     for (const tmp of data.series) {
       for (const tmp2 of tmp.fields) {
-        if (tmp2.name == options.field) {
+        if (tmp2.type != FieldType.time && names.length == 0) {
           for (const name of tmp2.values.toArray()) {
             names.push(name)
           }
