@@ -9,7 +9,7 @@ If queries select multiple fields, use the join transform.
 
 ## URL
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png)  
 Options for building image URL :
 
 -   Base URL : the start of the URL where to fetch image
@@ -20,8 +20,8 @@ Options for building image URL :
 
 ## Image options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png)
-Options that allow how the image will be displayed :
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png)  
+Options that allow to choose how the image will be displayed :
 
 -   Image width : the width of the image
 -   Image height : the height of the image
@@ -32,7 +32,7 @@ Options that allow how the image will be displayed :
 
 ## Image tooltip options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png)  
 Options to add and customize a tooltip :
 
 -   Include tooltip : a tooltip will be display when the mouse hover over the image
@@ -60,12 +60,14 @@ For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https:
 # Changelog
 
 ## 2.1.0
-* Allow to select a field to use as `alt` image attribute
-* Add a configurable Tooltip
+
+-   Allow to select a field to use as `alt` image attribute
+-   Add a configurable Tooltip
 
 # TODO
 
 -   Use the same tooltip as graph panel
+-   Auto select first field instead of having a 'First non time field'
 
 # Credits
 
