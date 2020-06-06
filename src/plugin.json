@@ -20,7 +20,9 @@
     ],
     "screenshots": [
       {"name": "Screenshots", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot.png"},
-      {"name": "Configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration.png"}
+      {"name": "URL configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png"},
+      {"name": "Image configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png"},
+      {"name": "Tooltip configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png"}
     ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
