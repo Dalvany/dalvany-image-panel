@@ -55,9 +55,13 @@ Options to add and customize a tooltip :
 # Install
 
 Unzip a release file and rename the extracted folder with `dalvany-image-panel`
-For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v2.1.0.zip;dalvany-image-panel`
+For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v2.1.1.zip;dalvany-image-panel`
 
 # Changelog
+
+## 2.1.1
+
+-   Change default values for tooltip and date inclusion
 
 ## 2.1.0
 

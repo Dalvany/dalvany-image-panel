@@ -24,8 +24,8 @@
       {"name": "Image configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png"},
       {"name": "Tooltip configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png"}
     ],
-    "version": "2.1.0",
-    "updated": "2020-06-07"
+    "version": "2.1.1",
+    "updated": "2020-06-23"
   },
 
   "dependencies": {

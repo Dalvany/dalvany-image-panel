@@ -86,7 +86,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
     path: "tooltip",
     name: "Include tooltip",
     description: "Image have a tooltip",
-    defaultValue: true,
+    defaultValue: false,
     category: ["Image tooltip options"]
   }).addBooleanSwitch({
     path: "tooltip_include_field",
@@ -113,7 +113,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
     path: "tooltip_include_date",
     name: "Include date",
     description: "Include the date, if any, in tooltip text",
-    defaultValue: true,
+    defaultValue: false,
     showIf: currentConfig => currentConfig.tooltip,
     category: ["Image tooltip options"]
   }).addBooleanSwitch({
