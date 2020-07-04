@@ -2,34 +2,54 @@
   "type": "panel",
   "name": "Dynamic image panel",
   "id": "dalvany-image-panel",
-
   "info": {
     "description": "Concatenate a metric to an URL in order to display an image",
     "author": {
       "name": "Dalvany",
       "url": "https://github.com/Dalvany/dalvany-image-panel"
     },
-    "keywords": [ "image", "panel", "dynamic" ],
+    "keywords": [
+      "image",
+      "panel",
+      "dynamic"
+    ],
     "logos": {
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
     "links": [
-      {"name": "Project site", "url": "https://github.com/Dalvany/dalvany-image-panel"},
-      {"name": "WTFPL", "url": "https://github.com/Dalvany/dalvany-image-panel/blob/master/LICENSE"}
+      {
+        "name": "Project site",
+        "url": "https://github.com/Dalvany/dalvany-image-panel"
+      },
+      {
+        "name": "WTFPL",
+        "url": "https://github.com/Dalvany/dalvany-image-panel/blob/master/LICENSE"
+      }
     ],
     "screenshots": [
-      {"name": "Screenshots", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot.png"},
-      {"name": "URL configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png"},
-      {"name": "Image configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png"},
-      {"name": "Tooltip configuration", "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png"}
+      {
+        "name": "Screenshots",
+        "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot.png"
+      },
+      {
+        "name": "URL configuration",
+        "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png"
+      },
+      {
+        "name": "Image configuration",
+        "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png"
+      },
+      {
+        "name": "Tooltip configuration",
+        "path": "https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png"
+      }
     ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },
-
   "dependencies": {
     "grafanaVersion": "7.x.x",
-    "plugins": [ ]
+    "plugins": []
   }
 }
