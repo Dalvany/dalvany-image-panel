@@ -26,7 +26,6 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         path: "baseUrl",
         name: "Base URL",
         description: "First part of the URL",
-        defaultValue: "https://openweathermap.org/img/wn/",
         category: ["URL"]
     }).addSelect({
         path: "icon_field",
@@ -49,7 +48,6 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         path: "suffix",
         name: "Suffix",
         description: "To append at the end of the URL",
-        defaultValue: '@2x.png',
         category: ["URL"]
     }).addNumberInput({
         path: "width",

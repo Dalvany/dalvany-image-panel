@@ -38,7 +38,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         if (!data || data.series.length == 0) {
             return (
                 <div className="panel-empty">
-                    <p>No data found in response</p>
+                    <p>No data found in response.</p>
                 </div>
             )
         }
@@ -46,7 +46,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
             console.error(data.error.message)
             return (
                 <div className="panel-empty">
-                    <p>Error</p>
+                    <p>Error.</p>
                 </div>
             )
         }
@@ -55,7 +55,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         if (number_series > 1) {
             return (
                 <div className="panel-empty">
-                    <p>There's multiple time series. Use the join transform</p>
+                    <p>There's multiple time series. Use the outer join transform.</p>
                 </div>
             )
         }
@@ -69,13 +69,13 @@ export class DynamicImagePanel extends PureComponent<Props> {
             if (options.icon_field == '') {
                 return (
                     <div className="panel-empty">
-                        <p>Can't find a non time field for image</p>
+                        <p>Can't find a non time field for image.</p>
                     </div>
                 )
             } else {
                 return (
                     <div className="panel-empty">
-                        <p>Can't find {options.icon_field} field for iamge</p>
+                        <p>Can't find {options.icon_field} field for image.</p>
                     </div>
                 )
             }
@@ -86,7 +86,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         if (alt_index == -1) {
             return (
                 <div className="panel-empty">
-                    <p>Can't find {options.alt_field} field for alt</p>
+                    <p>Can't find {options.alt_field} field for alt.</p>
                 </div>
             )
         }
@@ -100,7 +100,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         if (tooltip_index == -1) {
             return (
                 <div className="panel-empty">
-                    <p>Can't find {options.tooltip_field} field for tooltip</p>
+                    <p>Can't find {options.tooltip_field} field for tooltip.</p>
                 </div>
             )
         }
@@ -110,7 +110,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         if (time_index == -1) {
             return (
                 <div className="panel-empty">
-                    <p>Can't find time field for tooltip</p>
+                    <p>Can't find time field for tooltip.</p>
                 </div>
             )
         }
@@ -141,23 +141,26 @@ export class DynamicImagePanel extends PureComponent<Props> {
         if (!values || values.length == 0) {
             return (
                 <div className="panel-empty">
-                    <p>No data found in response</p>
+                    <p>No data found in response.</p>
                 </div>
             )
         }
+
+        let start = options.baseUrl === undefined ? "":options.baseUrl;
+        let end = options.suffix === undefined ? "":options.suffix
 
         if (options.singleFill && values.length == 1) {
             if (options.tooltip) {
                 return (
                     <div className="image-container full">
-                        <img src={options.baseUrl + values[0].icon + options.suffix} alt={values[0].alt}
+                        <img src={start + values[0].icon + end} alt={values[0].alt}
                              title={values[0].tooltip}/>
                     </div>
                 )
             } else {
                 return (
                     <div className="image-container full">
-                        <img src={options.baseUrl + values[0].icon + options.suffix} alt={values[0].alt}/>
+                        <img src={start + values[0].icon + end} alt={values[0].alt}/>
                     </div>
                 )
             }
@@ -168,13 +171,13 @@ export class DynamicImagePanel extends PureComponent<Props> {
                 {values.map(value => {
                     if (options.tooltip) {
                         return (
-                            <img src={options.baseUrl + value.icon + options.suffix}
+                            <img src={start + value.icon + end}
                                  style={{width: options.width + "px", height: options.height + "px"}} alt={value.alt}
                                  title={value.tooltip}/>
                         )
                     } else {
                         return (
-                            <img src={options.baseUrl + value.icon + options.suffix}
+                            <img src={start + value.icon + end}
                                  style={{width: options.width + "px", height: options.height + "px"}} alt={value.alt}/>
                         )
                     }

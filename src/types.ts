@@ -1,6 +1,6 @@
 export interface DynamicImageOptions {
-    baseUrl: string;
-    suffix: string;
+    baseUrl?: string;
+    suffix?: string;
     singleFill: boolean;
     width: number;
     height: number;

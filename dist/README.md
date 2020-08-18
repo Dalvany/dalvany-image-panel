@@ -2,21 +2,21 @@
 
 Display an image by concatenation of an URL, a metric and a suffix.  
 The result will be : baseURL + icon field + suffix.  
-
 # Configuration
 
-If queries select multiple fields, use the join transform.
+If queries select multiple fields, use the outer join transform.
 
 ## URL
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png)  
 Options for building image URL :
 
--   Base URL : the start of the URL where to fetch image
+-   Base URL (optional) : the start of the URL where to fetch image. Can be left empty if `icon field` already contains the
+    base URL.
 -   Icon field : field that contains the name of the image. The special value
     `First non time field` will use the first non time field it finds. This is
     the default value.
--   Suffix : string to add at the end
+-   Suffix (optional) : string to add at the end.
 
 ## Image options
 
@@ -54,10 +54,13 @@ Options to add and customize a tooltip :
 
 # Install
 
-Unzip a release file and rename the extracted folder with `dalvany-image-panel`
-For docker, use GF_INSTALL_PLUGINS environment, eg : `GF_INSTALL_PLUGINS: https://github.com/Dalvany/dalvany-image-panel/archive/v2.1.1.zip;dalvany-image-panel`
+Follow instructions from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/installation)
 
 # Changelog
+
+## 2.2.0
+
+-   Base URL and suffix are optional
 
 ## 2.1.1
 
