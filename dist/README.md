@@ -47,11 +47,6 @@ Options to add and customize a tooltip :
 
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot.png)
 
-# Build
-
-        yarn install
-        yarn build
-
 # Install
 
 Follow instructions from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/installation)
