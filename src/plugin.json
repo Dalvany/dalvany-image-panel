@@ -28,7 +28,10 @@
       }
     ],
     "screenshots": [
-      {"name": "Screenshot", "path": "img/screenshot.png"}
+      {
+        "name": "Screenshot",
+        "path": "img/screenshot.png"
+      }
     ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
