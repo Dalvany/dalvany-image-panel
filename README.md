@@ -1,3 +1,7 @@
+[![Marketplace](https://img.shields.io/badge/dynamic/json?logo=grafana&color=205AD4&label=marketplace&prefix=v&query=%24.items%5B%3F%28%40.slug%20%3D%3D%20%22dalvany-image-panel%22%29%5D.version&url=https%3A%2F%2Fgrafana.com%2Fapi%2Fplugins)](https://grafana.com/grafana/plugins/dalvany-image-panel)
+[![Downloads](https://img.shields.io/badge/dynamic/json?logo=grafana&color=205AD4&label=downloads&query=%24.items%5B%3F%28%40.slug%20%3D%3D%20%22dalvany-image-panel%22%29%5D.downloads&url=https%3A%2F%2Fgrafana.com%2Fapi%2Fplugins)](https://grafana.com/grafana/plugins/dalvany-image-panel)
+
+
 # Grafana image panel
 
 Display an image by concatenation of an URL, a metric and a suffix.  
