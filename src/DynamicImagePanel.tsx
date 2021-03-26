@@ -37,6 +37,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
 
   render() {
     const { options, data } = this.props;
+
     if (!data || data.series.length === 0) {
       console.error('data is empty or null');
       return (
@@ -152,8 +153,9 @@ export class DynamicImagePanel extends PureComponent<Props> {
     }
 
     let start = options.baseUrl === undefined ? '' : options.baseUrl;
+    start = this.props.replaceVariables(start);
     let end = options.suffix === undefined ? '' : options.suffix;
-    //this.logImageData(values, start, end, options.tooltip);
+    end = this.props.replaceVariables(end);
 
     if (!values || values.length === 0) {
       console.error('Serie contains no values (see series in debug)');
@@ -180,6 +182,9 @@ export class DynamicImagePanel extends PureComponent<Props> {
       }
     }
 
+    let w = Number(this.props.replaceVariables(options.width));
+    let h = Number(this.props.replaceVariables(options.height));
+
     return (
       <div className="container">
         {values.map((value) => {
@@ -187,19 +192,13 @@ export class DynamicImagePanel extends PureComponent<Props> {
             return (
               <img
                 src={start + value.icon + end}
-                style={{ width: options.width + 'px', height: options.height + 'px', pointerEvents: 'auto' }}
+                style={{ width: w + 'px', height: h + 'px', pointerEvents: 'auto' }}
                 alt={value.alt}
                 title={value.tooltip}
               />
             );
           } else {
-            return (
-              <img
-                src={start + value.icon + end}
-                style={{ width: options.width + 'px', height: options.height + 'px' }}
-                alt={value.alt}
-              />
-            );
+            return <img src={start + value.icon + end} style={{ width: w + 'px', height: h + 'px' }} alt={value.alt} />;
           }
         })}
       </div>

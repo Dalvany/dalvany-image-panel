@@ -2,8 +2,8 @@ export interface DynamicImageOptions {
   baseUrl?: string;
   suffix?: string;
   singleFill: boolean;
-  width: number;
-  height: number;
+  width: string;
+  height: string;
   icon_field: string;
   alt_field: string;
   tooltip: boolean;
