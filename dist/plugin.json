@@ -28,10 +28,13 @@
       }
     ],
     "screenshots": [
-      {"name": "Screenshot", "path": "img/screenshot.png"}
+      {
+        "name": "Screenshot",
+        "path": "img/screenshot.png"
+      }
     ],
     "version": "2.2.0",
-    "updated": "2020-09-13"
+    "updated": "2021-03-26"
   },
   "dependencies": {
     "grafanaDependency": ">=7.1.5",
