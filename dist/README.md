@@ -12,19 +12,19 @@ If queries select multiple fields, use the outer join transform.
 Options for building image URL :
 
 -   Base URL (optional) : the start of the URL where to fetch image. Can be left empty if `icon field` already contains the
-    base URL.
+    base URL. This option support variable.
 -   Icon field : field that contains the name of the image. The special value
     `First non time field` will use the first non time field it finds. This is
     the default value.
--   Suffix (optional) : string to add at the end.
+-   Suffix (optional) : string to add at the end. This option support variable.
 
 ## Image options
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png)  
 Options that allow to choose how the image will be displayed :
 
--   Image width : the width of the image
--   Image height : the height of the image
+-   Image width : the width of the image. This option support variable (beware that it needs to be a number)
+-   Image height : the height of the image. This option support variable (beware that it needs to be a number)
 -   Single fill : if the query have a unique result, allow to fill the panel instead
     of using width and height above
 -   Alt field : field to use as `alt`. The special value `Use icon field`
@@ -52,6 +52,11 @@ Options to add and customize a tooltip :
 Follow instructions from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/installation)
 
 # Changelog
+
+## 2.3.0
+
+-   Fix tooltip
+-   Allow using variable for `base URL`, `Suffix`, `Image width` and `Image height`.
 
 ## 2.2.0
 

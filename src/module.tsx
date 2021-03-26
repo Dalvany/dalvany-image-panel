@@ -52,18 +52,18 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       description: 'To append at the end of the URL',
       category: ['URL'],
     })
-    .addNumberInput({
+    .addTextInput({
       path: 'width',
       name: 'Image width',
       description: "Image width in pixel (potentially ignored if 'single fill')",
-      defaultValue: 75,
+      defaultValue: '75',
       category: ['Image options'],
     })
-    .addNumberInput({
+    .addTextInput({
       path: 'height',
       name: 'Image height',
       description: "Image height in pixel (potentially ignored if 'single fill')",
-      defaultValue: 75,
+      defaultValue: '75',
       category: ['Image options'],
     })
     .addBooleanSwitch({
