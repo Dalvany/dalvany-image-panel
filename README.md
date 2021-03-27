@@ -53,7 +53,7 @@ Options to add and customize a tooltip :
 
 # Install
 
-Follow instructions from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/installation)
+Follow instructions from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/?tab=installation)
 
 # TODO
 
