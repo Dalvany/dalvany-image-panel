@@ -3,3 +3,4 @@ coverage
 jest.config.js
 tmp
 .idea
+dist
