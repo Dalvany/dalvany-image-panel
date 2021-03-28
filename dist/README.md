@@ -53,27 +53,7 @@ Options to add and customize a tooltip :
 
 # Install
 
-Follow instructions from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/installation)
-
-# Changelog
-
-## 2.3.0
-
--   Fix tooltip
--   Allow using variable for `base URL`, `Suffix`, `Image width` and `Image height`.
-
-## 2.2.0
-
--   Base URL and suffix are optional
-
-## 2.1.1
-
--   Change default values for tooltip and date inclusion
-
-## 2.1.0
-
--   Allow to select a field to use as `alt` image attribute
--   Add a configurable Tooltip
+Follow instructions from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/?tab=installation)
 
 # TODO
 
@@ -82,4 +62,5 @@ Follow instructions from [grafana plugin web page](https://grafana.com/grafana/p
 
 # Credits
 
-Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.
+Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.  
+Github workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
