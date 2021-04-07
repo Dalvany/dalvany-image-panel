@@ -132,5 +132,27 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       defaultValue: false,
       showIf: (currentConfig) => currentConfig.tooltip && currentConfig.tooltip_include_date,
       category: ['Image tooltip options'],
+    })
+    .addBooleanSwitch({
+      path: 'show_overlay',
+      name: 'Show overlay',
+      description: 'Display a small colored square on the corner of pictures',
+      defaultValue: false,
+      category: ['Overlay'],
+    })
+    .addSelect({
+      path: 'overlay_field',
+      name: 'Overlay field',
+      description: 'Field to use for color mapping',
+      settings: {
+        allowCustomValue: false,
+        options: [],
+        getOptions: async (context: FieldOverrideContext) => {
+          return Promise.resolve(listFields(context, { value: '', label: 'First non time field' }));
+        },
+      },
+      defaultValue: '',
+      showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
     });
 });
