@@ -22,3 +22,11 @@
     overflow: hidden;
     height: 100%;
 }
+
+.left-overlay {
+    float: left;
+}
+
+.right-overlay {
+    float: right;
+}

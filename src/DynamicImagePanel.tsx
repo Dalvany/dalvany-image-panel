@@ -19,6 +19,8 @@ interface ImageProps {
   height: number;
   /** Handle 'singleFill' use 100% instead of height and width **/
   useMax: boolean;
+  /** Show overlay **/
+  showOverlay: boolean;
   /** Position of the overlay **/
   position: Position;
   /** Size of the overlay **/
@@ -37,7 +39,7 @@ export class Image extends PureComponent<ImageProps> {
   }
 
   render() {
-    const { url, tooltip, alt, width, height, useMax, size } = this.props;
+    const { url, tooltip, alt, width, height, useMax, size, position, showOverlay } = this.props;
     let w = width + 'px';
     if (useMax) {
       w = '100%';
@@ -46,6 +48,11 @@ export class Image extends PureComponent<ImageProps> {
     if (useMax) {
       h = '100%';
     }
+    let cl = 'right-overlay';
+    if (position === Position.TOP_LEFT || position === Position.BOTTOM_LEFT) {
+      cl = 'left-overlay';
+    }
+
     if (tooltip === null || tooltip === '') {
       return (
         <div style={{ height: h, width: w, position: 'relative' }}>
@@ -62,7 +69,7 @@ export class Image extends PureComponent<ImageProps> {
             src={url}
             alt={alt}
           />
-          <div style={{ float: 'right', height: size, width: size, backgroundColor: 'red' }} />
+          {showOverlay && <div className={cl} style={{ height: size, width: size, backgroundColor: 'red' }} />}
         </div>
       );
     }
@@ -82,7 +89,7 @@ export class Image extends PureComponent<ImageProps> {
           title={tooltip}
           alt={alt}
         />
-        <div style={{ float: 'right', height: size, width: size, backgroundColor: 'red' }} />
+        {showOverlay && <div className={cl} style={{ height: size, width: size, backgroundColor: 'red' }} />}
       </div>
     );
   }
@@ -232,6 +239,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
             position={options.overlay_position}
             size={options.overlay_size}
             tooltip={values[0].tooltip}
+            showOverlay={options.show_overlay}
           />
         </div>
       );
@@ -250,6 +258,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
               position={options.overlay_position}
               size={options.overlay_size}
               tooltip={value.tooltip}
+              showOverlay={options.show_overlay}
             />
           );
         })}
