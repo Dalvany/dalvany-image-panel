@@ -1,15 +1,91 @@
 import React, { PureComponent } from 'react';
 import { dateTimeFormat, dateTimeFormatTimeAgo, Field, FieldType, PanelProps } from '@grafana/data';
-import { DynamicImageOptions } from './types';
+import { DynamicImageOptions, Position, Size } from './types';
 // @ts-ignore
 import './css/image.css';
 
 interface Props extends PanelProps<DynamicImageOptions> {}
 
+interface ImageProps {
+  /** Image URL **/
+  url: string;
+  /** Tooltip text, if null no tooltip **/
+  tooltip?: string | null;
+  /** Alternative **/
+  alt: string;
+  /** Width in px of the image **/
+  width: number;
+  /** Height in px of the image **/
+  height: number;
+  /** Handle 'singleFill' use 100% instead of height and width **/
+  useMax: boolean;
+  /** Position of the overlay **/
+  position: Position;
+  /** Size of the overlay **/
+  size: Size;
+}
+
 export interface Value {
   icon: string;
   alt: string;
-  tooltip: string;
+  tooltip?: string | null;
+}
+
+export class Image extends PureComponent<ImageProps> {
+  handleError(e) {
+    console.error('Error loading ' + e.target.src);
+  }
+
+  render() {
+    const { url, tooltip, alt, width, height, useMax, size } = this.props;
+    let w = width + 'px';
+    if (useMax) {
+      w = '100%';
+    }
+    let h = height + 'px';
+    if (useMax) {
+      h = '100%';
+    }
+    if (tooltip === null || tooltip === '') {
+      return (
+        <div style={{ height: h, width: w, position: 'relative' }}>
+          <img
+            style={{
+              height: '100%',
+              width: '100%',
+              pointerEvents: 'auto',
+              position: 'absolute',
+              top: '0',
+              left: '0',
+            }}
+            onError={(e) => this.handleError(e)}
+            src={url}
+            alt={alt}
+          />
+          <div style={{ float: 'right', height: size, width: size, backgroundColor: 'red' }} />
+        </div>
+      );
+    }
+    return (
+      <div style={{ height: h, width: w, position: 'relative' }}>
+        <img
+          style={{
+            height: '100%',
+            width: '100%',
+            pointerEvents: 'auto',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+          }}
+          onError={(e) => this.handleError(e)}
+          src={url}
+          title={tooltip}
+          alt={alt}
+        />
+        <div style={{ float: 'right', height: size, width: size, backgroundColor: 'red' }} />
+      </div>
+    );
+  }
 }
 
 export class DynamicImagePanel extends PureComponent<Props> {
@@ -104,24 +180,31 @@ export class DynamicImagePanel extends PureComponent<Props> {
     let values: Value[] = [];
     for (let i = 0; i < max; i++) {
       let t = '';
-      if (options.tooltip && options.tooltip_include_date) {
-        if (options.tooltip_date_elapsed) {
-          t = dateTimeFormatTimeAgo(data.series[0].fields[time_index].values.get(i));
-        } else {
-          t = dateTimeFormat(data.series[0].fields[time_index].values.get(i), { timeZone: 'browser' });
+      if (options.tooltip) {
+        if (options.tooltip_include_date) {
+          if (options.tooltip_date_elapsed) {
+            t = dateTimeFormatTimeAgo(data.series[0].fields[time_index].values.get(i));
+          } else {
+            t = dateTimeFormat(data.series[0].fields[time_index].values.get(i), { timeZone: 'browser' });
+          }
         }
-      }
-      if (options.tooltip && options.tooltip_include_field) {
-        if (t !== '') {
-          t = t + ' - ';
+        if (options.tooltip_include_field) {
+          if (t !== '') {
+            t = t + ' - ';
+          }
+          t = t + data.series[0].fields[tooltip_index].values.get(i);
         }
-        t = t + data.series[0].fields[tooltip_index].values.get(i);
+        values.push({
+          icon: data.series[0].fields[icon_index].values.get(i),
+          alt: data.series[0].fields[alt_index].values.get(i),
+          tooltip: t,
+        });
+      } else {
+        values.push({
+          icon: data.series[0].fields[icon_index].values.get(i),
+          alt: data.series[0].fields[alt_index].values.get(i),
+        });
       }
-      values.push({
-        icon: data.series[0].fields[icon_index].values.get(i),
-        alt: data.series[0].fields[alt_index].values.get(i),
-        tooltip: t,
-      });
     }
 
     let start = options.baseUrl === undefined ? '' : options.baseUrl;
@@ -134,53 +217,41 @@ export class DynamicImagePanel extends PureComponent<Props> {
       throw new Error('No data found in response. Please check your query');
     }
 
-    if (options.singleFill && values.length === 1) {
-      if (options.tooltip) {
-        return (
-          <div className="image-container full">
-            <img
-              onError={(e) => this.handleError(e)}
-              src={start + values[0].icon + end}
-              alt={values[0].alt}
-              title={values[0].tooltip}
-            />
-          </div>
-        );
-      } else {
-        return (
-          <div className="image-container full">
-            <img onError={(e) => this.handleError(e)} src={start + values[0].icon + end} alt={values[0].alt} />
-          </div>
-        );
-      }
-    }
-
     let w = Number(this.props.replaceVariables(options.width));
     let h = Number(this.props.replaceVariables(options.height));
+
+    if (options.singleFill && values.length === 1) {
+      return (
+        <div className="image-container full">
+          <Image
+            url={start + values[0].icon + end}
+            alt={values[0].alt}
+            width={w}
+            height={h}
+            useMax={true}
+            position={options.overlay_position}
+            size={options.overlay_size}
+            tooltip={values[0].tooltip}
+          />
+        </div>
+      );
+    }
 
     return (
       <div className="container">
         {values.map((value) => {
-          if (options.tooltip) {
-            return (
-              <img
-                onError={(e) => this.handleError(e)}
-                src={start + value.icon + end}
-                style={{ width: w + 'px', height: h + 'px', pointerEvents: 'auto' }}
-                alt={value.alt}
-                title={value.tooltip}
-              />
-            );
-          } else {
-            return (
-              <img
-                onError={(e) => this.handleError(e)}
-                src={start + value.icon + end}
-                style={{ width: w + 'px', height: h + 'px' }}
-                alt={value.alt}
-              />
-            );
-          }
+          return (
+            <Image
+              url={start + value.icon + end}
+              alt={value.alt}
+              width={w}
+              height={h}
+              useMax={false}
+              position={options.overlay_position}
+              size={options.overlay_size}
+              tooltip={value.tooltip}
+            />
+          );
         })}
       </div>
     );

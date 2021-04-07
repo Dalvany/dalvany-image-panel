@@ -1,5 +1,5 @@
 import { FieldOverrideContext, getFieldDisplayName, PanelPlugin } from '@grafana/data';
-import { DynamicImageOptions } from './types';
+import { DynamicImageOptions, Position, Size } from './types';
 import { DynamicImagePanel } from './DynamicImagePanel';
 
 function listFields(context: FieldOverrideContext, first: any) {
@@ -138,6 +138,38 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       name: 'Show overlay',
       description: 'Display a small colored square on the corner of pictures',
       defaultValue: false,
+      category: ['Overlay'],
+    })
+    .addSelect({
+      path: 'overlay_position',
+      name: 'Position',
+      description: 'Position of the overlay',
+      defaultValue: Position.TOP_RIGHT,
+      settings: {
+        allowCustomValue: false,
+        options: [
+          { value: Position.TOP_LEFT, label: Position.TOP_LEFT },
+          { value: Position.TOP_RIGHT, label: Position.TOP_RIGHT },
+          { value: Position.BOTTOM_LEFT, label: Position.BOTTOM_LEFT },
+          { value: Position.BOTTOM_RIGHT, label: Position.BOTTOM_RIGHT },
+        ],
+      },
+      showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
+    })
+    .addRadio({
+      path: 'overlay_size',
+      name: 'Size',
+      description: 'Size of the overlay',
+      defaultValue: Size.SMALL,
+      settings: {
+        options: [
+          { value: Size.SMALL, label: Size.SMALL },
+          { value: Size.MEDIUM, label: Size.MEDIUM },
+          { value: Size.BIG, label: Size.BIG },
+        ],
+      },
+      showIf: (currentConfig) => currentConfig.show_overlay,
       category: ['Overlay'],
     })
     .addSelect({
