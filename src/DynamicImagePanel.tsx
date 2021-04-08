@@ -48,9 +48,14 @@ export class Image extends PureComponent<ImageProps> {
     if (useMax) {
       h = '100%';
     }
+
+    let va = 'top-overlay';
     let cl = 'right-overlay';
     if (position === Position.TOP_LEFT || position === Position.BOTTOM_LEFT) {
       cl = 'left-overlay';
+    }
+    if (position === Position.BOTTOM_LEFT || position === Position.BOTTOM_RIGHT) {
+      va = 'bottom-overlay';
     }
 
     if (tooltip === null || tooltip === '') {
@@ -69,7 +74,17 @@ export class Image extends PureComponent<ImageProps> {
             src={url}
             alt={alt}
           />
-          {showOverlay && <div className={cl} style={{ height: size, width: size, backgroundColor: 'red' }} />}
+          {showOverlay && (
+            <div
+              className={cl + ' ' + va}
+              style={{
+                height: size,
+                width: size,
+                backgroundColor: 'red',
+                position: 'absolute',
+              }}
+            />
+          )}
         </div>
       );
     }
@@ -89,7 +104,17 @@ export class Image extends PureComponent<ImageProps> {
           title={tooltip}
           alt={alt}
         />
-        {showOverlay && <div className={cl} style={{ height: size, width: size, backgroundColor: 'red' }} />}
+        {showOverlay && (
+          <div
+            className={cl + ' ' + va}
+            style={{
+              height: size,
+              width: size,
+              backgroundColor: 'red',
+              position: 'absolute',
+            }}
+          />
+        )}
       </div>
     );
   }
@@ -226,25 +251,6 @@ export class DynamicImagePanel extends PureComponent<Props> {
 
     let w = Number(this.props.replaceVariables(options.width));
     let h = Number(this.props.replaceVariables(options.height));
-
-    if (options.singleFill && values.length === 1) {
-      return (
-        <div className="image-container full">
-          <Image
-            url={start + values[0].icon + end}
-            alt={values[0].alt}
-            width={w}
-            height={h}
-            useMax={true}
-            position={options.overlay_position}
-            size={options.overlay_size}
-            tooltip={values[0].tooltip}
-            showOverlay={options.show_overlay}
-          />
-        </div>
-      );
-    }
-
     return (
       <div className="container">
         {values.map((value) => {
@@ -254,9 +260,9 @@ export class DynamicImagePanel extends PureComponent<Props> {
               alt={value.alt}
               width={w}
               height={h}
-              useMax={false}
-              position={options.overlay_position}
-              size={options.overlay_size}
+              useMax={options.singleFill && values.length === 1}
+              position={options.overlay.overlay_position}
+              size={options.overlay.overlay_size}
               tooltip={value.tooltip}
               showOverlay={options.show_overlay}
             />

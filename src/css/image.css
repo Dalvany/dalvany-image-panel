@@ -24,9 +24,17 @@
 }
 
 .left-overlay {
-    float: left;
+    left: 0;
 }
 
 .right-overlay {
-    float: right;
+    right: 0;
+}
+
+.top-overlay {
+    top: 0;
+}
+
+.bottom-overlay {
+    bottom: 0;
 }

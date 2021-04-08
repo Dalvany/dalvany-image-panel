@@ -11,6 +11,12 @@ export enum Size {
   SMALL = '5%',
 }
 
+export interface OverlayOptions {
+  overlay_field: string;
+  overlay_position: Position;
+  overlay_size: Size;
+}
+
 export interface DynamicImageOptions {
   baseUrl?: string;
   suffix?: string;
@@ -25,7 +31,5 @@ export interface DynamicImageOptions {
   tooltip_include_date: boolean;
   tooltip_date_elapsed: boolean;
   show_overlay: boolean;
-  overlay_field: string;
-  overlay_position: Position;
-  overlay_size: Size;
+  overlay: OverlayOptions;
 }

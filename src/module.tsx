@@ -141,7 +141,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Overlay'],
     })
     .addSelect({
-      path: 'overlay_position',
+      path: 'overlay.overlay_position',
       name: 'Position',
       description: 'Position of the overlay',
       defaultValue: Position.TOP_RIGHT,
@@ -158,7 +158,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Overlay'],
     })
     .addRadio({
-      path: 'overlay_size',
+      path: 'overlay.overlay_size',
       name: 'Size',
       description: 'Size of the overlay',
       defaultValue: Size.SMALL,
@@ -173,7 +173,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Overlay'],
     })
     .addSelect({
-      path: 'overlay_field',
+      path: 'overlay.overlay_field',
       name: 'Overlay field',
       description: 'Field to use for color mapping',
       settings: {
