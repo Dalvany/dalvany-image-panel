@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { dateTimeFormat, dateTimeFormatTimeAgo, Field, FieldType, PanelProps } from '@grafana/data';
-import { DynamicImageOptions, Position, Size } from './types';
+import { DynamicImageOptions, Position } from './types';
 // @ts-ignore
 import './css/image.css';
+import { Size } from './OverlayConfigEditor';
 
 interface Props extends PanelProps<DynamicImageOptions> {}
 
@@ -23,8 +24,10 @@ interface ImageProps {
   showOverlay: boolean;
   /** Position of the overlay **/
   position: Position;
-  /** Size of the overlay **/
-  size: Size;
+  /** Width of the overlay **/
+  overlay_width: Size;
+  /** Height of the overlay **/
+  overlay_height: Size;
 }
 
 export interface Value {
@@ -35,11 +38,22 @@ export interface Value {
 
 export class Image extends PureComponent<ImageProps> {
   handleError(e) {
-    console.error('Error loading ' + e.target.src);
+    console.warn('Error loading ' + e.target.src);
   }
 
   render() {
-    const { url, tooltip, alt, width, height, useMax, size, position, showOverlay } = this.props;
+    const {
+      url,
+      tooltip,
+      alt,
+      width,
+      height,
+      useMax,
+      overlay_width,
+      overlay_height,
+      position,
+      showOverlay,
+    } = this.props;
     let w = width + 'px';
     if (useMax) {
       w = '100%';
@@ -57,6 +71,9 @@ export class Image extends PureComponent<ImageProps> {
     if (position === Position.BOTTOM_LEFT || position === Position.BOTTOM_RIGHT) {
       va = 'bottom-overlay';
     }
+
+    let ow = (overlay_width?.size ?? '5') + (overlay_width?.unit ?? '%');
+    let oh = (overlay_height?.size ?? '5') + (overlay_height?.unit ?? '%');
 
     if (tooltip === null || tooltip === '') {
       return (
@@ -78,8 +95,8 @@ export class Image extends PureComponent<ImageProps> {
             <div
               className={cl + ' ' + va}
               style={{
-                height: size,
-                width: size,
+                height: oh,
+                width: ow,
                 backgroundColor: 'red',
                 position: 'absolute',
               }}
@@ -108,8 +125,8 @@ export class Image extends PureComponent<ImageProps> {
           <div
             className={cl + ' ' + va}
             style={{
-              height: size,
-              width: size,
+              height: oh,
+              width: ow,
               backgroundColor: 'red',
               position: 'absolute',
             }}
@@ -261,8 +278,9 @@ export class DynamicImagePanel extends PureComponent<Props> {
               width={w}
               height={h}
               useMax={options.singleFill && values.length === 1}
-              position={options.overlay.overlay_position}
-              size={options.overlay.overlay_size}
+              position={options.overlay.position}
+              overlay_width={options.overlay.width}
+              overlay_height={options.overlay.height}
               tooltip={value.tooltip}
               showOverlay={options.show_overlay}
             />

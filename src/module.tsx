@@ -1,6 +1,7 @@
 import { FieldOverrideContext, getFieldDisplayName, PanelPlugin } from '@grafana/data';
-import { DynamicImageOptions, Position, Size } from './types';
+import { DynamicImageOptions, Position } from './types';
 import { DynamicImagePanel } from './DynamicImagePanel';
+import { SizeEditor } from './OverlayConfigEditor';
 
 function listFields(context: FieldOverrideContext, first: any) {
   const options = [first] as any;
@@ -141,7 +142,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Overlay'],
     })
     .addSelect({
-      path: 'overlay.overlay_position',
+      path: 'overlay.position',
       name: 'Position',
       description: 'Position of the overlay',
       defaultValue: Position.TOP_RIGHT,
@@ -157,23 +158,32 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       showIf: (currentConfig) => currentConfig.show_overlay,
       category: ['Overlay'],
     })
-    .addRadio({
-      path: 'overlay.overlay_size',
-      name: 'Size',
-      description: 'Size of the overlay',
-      defaultValue: Size.SMALL,
+    .addCustomEditor({
+      editor: SizeEditor,
+      id: 'overlay.width',
+      name: 'Width',
+      path: 'overlay.width',
       settings: {
-        options: [
-          { value: Size.SMALL, label: Size.SMALL },
-          { value: Size.MEDIUM, label: Size.MEDIUM },
-          { value: Size.BIG, label: Size.BIG },
-        ],
+        defaultSize: 5,
+        defaultUnit: '%',
+      },
+      showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
+    })
+    .addCustomEditor({
+      editor: SizeEditor,
+      id: 'overlay.height',
+      name: 'Height',
+      path: 'overlay.height',
+      settings: {
+        defaultSize: 5,
+        defaultUnit: '%',
       },
       showIf: (currentConfig) => currentConfig.show_overlay,
       category: ['Overlay'],
     })
     .addSelect({
-      path: 'overlay.overlay_field',
+      path: 'overlay.field',
       name: 'Overlay field',
       description: 'Field to use for color mapping',
       settings: {

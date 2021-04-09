@@ -1,3 +1,5 @@
+import { Size } from './OverlayConfigEditor';
+
 export enum Position {
   TOP_LEFT = 'Top left',
   TOP_RIGHT = 'Top right',
@@ -5,16 +7,11 @@ export enum Position {
   BOTTOM_RIGHT = 'Bottom right',
 }
 
-export enum Size {
-  BIG = '33%',
-  MEDIUM = '10%',
-  SMALL = '5%',
-}
-
 export interface OverlayOptions {
-  overlay_field: string;
-  overlay_position: Position;
-  overlay_size: Size;
+  field: string;
+  position: Position;
+  width: Size;
+  height: Size;
 }
 
 export interface DynamicImageOptions {
