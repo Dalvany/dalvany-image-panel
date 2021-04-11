@@ -1,4 +1,5 @@
 import { Size } from './OverlayConfigEditor';
+import { FieldType, ThresholdsConfig } from '@grafana/data';
 
 export enum Position {
   TOP_LEFT = 'Top left',
@@ -8,10 +9,16 @@ export enum Position {
 }
 
 export interface OverlayOptions {
-  field: string;
+  field: FieldDefinition;
   position: Position;
   width: Size;
   height: Size;
+  thresholds: ThresholdsConfig;
+}
+
+export interface FieldDefinition {
+  name: string;
+  type: FieldType;
 }
 
 export interface DynamicImageOptions {

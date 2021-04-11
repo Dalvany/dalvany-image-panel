@@ -1,9 +1,15 @@
-import { FieldOverrideContext, getFieldDisplayName, PanelPlugin } from '@grafana/data';
+import {
+  FieldOverrideContext,
+  FieldType,
+  getFieldDisplayName,
+  PanelPlugin,
+  ThresholdsMode,
+} from '@grafana/data';
 import { DynamicImageOptions, Position } from './types';
 import { DynamicImagePanel } from './DynamicImagePanel';
 import { SizeEditor } from './OverlayConfigEditor';
 
-function listFields(context: FieldOverrideContext, first: any) {
+function listFields(context: FieldOverrideContext, first?: any) {
   const options = [first] as any;
 
   if (context && context.data) {
@@ -16,6 +22,35 @@ function listFields(context: FieldOverrideContext, first: any) {
   }
 
   return options;
+}
+
+function listFieldsNew(context: FieldOverrideContext) {
+  const options = [] as any;
+
+  if (context && context.data) {
+    for (const frame of context.data) {
+      for (const field of frame.fields) {
+        const name = getFieldDisplayName(field, frame, context.data);
+        options.push({ value: { name: name, type: field.type }, label: name });
+      }
+    }
+  }
+
+  return options;
+}
+
+function findFirstNonTimeField(context: FieldOverrideContext) {
+  if (context && context.data) {
+    for (const frame of context.data) {
+      for (const field of frame.fields) {
+        if (field.type !== FieldType.time) {
+          return { name: field.name, type: field.type };
+        }
+      }
+    }
+  }
+
+  return {};
 }
 
 export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).setPanelOptions((builder) => {
@@ -163,9 +198,10 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       id: 'overlay.width',
       name: 'Width',
       path: 'overlay.width',
-      settings: {
-        defaultSize: 5,
-        defaultUnit: '%',
+      description: 'Width of the overlay',
+      defaultValue: {
+        size: 5,
+        unit: '%',
       },
       showIf: (currentConfig) => currentConfig.show_overlay,
       category: ['Overlay'],
@@ -175,9 +211,10 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       id: 'overlay.height',
       name: 'Height',
       path: 'overlay.height',
-      settings: {
-        defaultSize: 5,
-        defaultUnit: '%',
+      description: 'Height of the overlay',
+      defaultValue: {
+        size: 5,
+        unit: '%',
       },
       showIf: (currentConfig) => currentConfig.show_overlay,
       category: ['Overlay'],
@@ -190,11 +227,27 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         allowCustomValue: false,
         options: [],
         getOptions: async (context: FieldOverrideContext) => {
-          return Promise.resolve(listFields(context, { value: '', label: 'First non time field' }));
+          return Promise.resolve(listFieldsNew(context));
         },
       },
-      defaultValue: '',
       showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
+    })
+    .addCustomEditor({
+      id: 'overlay.thresholds',
+      path: 'overlay.thresholds',
+      name: 'Thresholds',
+      description: 'Set thresholds for binding overlay color',
+      editor: builder.getRegistry().get('thresholds').editor as any,
+      defaultValue: {
+        mode: ThresholdsMode.Absolute,
+        steps: [],
+      },
+      showIf: (currentConfig) =>
+        currentConfig.show_overlay &&
+        currentConfig.overlay !== null &&
+        currentConfig.overlay.field !== null &&
+        currentConfig.overlay.field.type === FieldType.number,
       category: ['Overlay'],
     });
 });

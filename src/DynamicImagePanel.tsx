@@ -273,6 +273,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         {values.map((value) => {
           return (
             <Image
+              key={''}
               url={start + value.icon + end}
               alt={value.alt}
               width={w}

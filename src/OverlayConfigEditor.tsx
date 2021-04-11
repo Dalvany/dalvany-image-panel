@@ -7,21 +7,8 @@ export interface Size {
   unit: string;
 }
 
-interface Settings {
-  defaultSize: number;
-  defaultUnit: string;
-}
-
-export const SizeEditor: React.FC<StandardEditorProps<Size, Settings>> = ({ item, value, onChange }) => {
+export const SizeEditor: React.FC<StandardEditorProps<Size>> = ({ value, onChange }) => {
   let values = new Array<SelectableValue>(2);
-
-  if (value === undefined) {
-    value = {
-      size: item.settings?.defaultSize ?? 5,
-      unit: item.settings?.defaultUnit ?? '%',
-    };
-    onChange(value);
-  }
 
   let px: SelectableValue<string> = {
     label: 'px',
