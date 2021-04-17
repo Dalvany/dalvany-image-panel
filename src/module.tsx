@@ -4,12 +4,11 @@ import {
   getFieldDisplayName,
   guessFieldTypeForField,
   PanelPlugin,
-  standardEditorsRegistry,
-  ThresholdsMode,
 } from '@grafana/data';
 import { DynamicImageOptions, Position } from './types';
 import { DynamicImagePanel } from './DynamicImagePanel';
-import { BindingColorEditor, SizeEditor } from './OverlayConfigEditor';
+import { SizeEditor } from './OverlayConfigEditor';
+import { ColorBindingEditor } from './ColorBinding';
 
 function listFields(context: FieldOverrideContext, first?: any) {
   const options = [first] as any;
@@ -243,7 +242,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel)
         path: 'overlay.thresholds',
         name: 'Thresholds/binding',
         description: 'Set thresholds for binding overlay color',
-        editor: BindingColorEditor,
+        editor: ColorBindingEditor,
         showIf: (currentConfig) =>
           currentConfig.show_overlay &&
           currentConfig.overlay !== undefined &&

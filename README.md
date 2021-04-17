@@ -60,6 +60,10 @@ Follow instructions from [grafana plugin web page](https://grafana.com/grafana/p
 -   Use the same tooltip as graph panel
 -   Auto select first field instead of having a 'First non time field'
 
+# License
+
+- Color binding component is a modification of grafana's ThresholdsEditor thus under Apache 2.0 license.
+
 # Credits
 
 Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.  
