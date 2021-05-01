@@ -1,0 +1,8 @@
+grafana:
+  image: grafana/grafana:latest
+  ports:
+    - "3000:3000"
+  volumes:
+    - ./dist:/var/lib/grafana/plugins/dalvany-image-panel
+  environment:
+    - TERM=linux

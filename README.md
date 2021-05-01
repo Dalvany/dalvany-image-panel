@@ -68,3 +68,7 @@ Follow instructions from [grafana plugin web page](https://grafana.com/grafana/p
 
 Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.  
 Github workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
+
+# Plugin development : resources
+* [Documentation](https://grafana.com/docs/grafana/latest/developers/plugins/?pg=docs)
+* ["Storybook"](https://developers.grafana.com/ui/latest/index.html)

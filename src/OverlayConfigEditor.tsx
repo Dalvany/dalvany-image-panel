@@ -1,25 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StandardEditorProps, SelectableValue } from '@grafana/data';
-import { Button, ColorPicker, Icon, Input, RadioButtonGroup } from '@grafana/ui';
-
-export interface Size {
-  size: number;
-  unit: string;
-}
-
-export interface EditorProps {
-  binding: Bindings;
-  onChange: (value?: Bindings) => void;
-}
-
-export interface Bindings {
-  bindings: Binding[];
-}
-
-export interface Binding {
-  color: string;
-  value?: string | number;
-}
+import { Button, ColorPicker, Icon, Input, RadioButtonGroup, VerticalGroup } from '@grafana/ui';
+import { Binding, Bindings, EditorProps, Size } from './types';
 
 export const SizeEditor: React.FC<StandardEditorProps<Size>> = ({ value, onChange }) => {
   let values = new Array<SelectableValue>(2);
@@ -122,14 +104,12 @@ class BindingComponentEditor extends PureComponent<EditorProps> {
     }
 
     return (
-      <div>
-        <div>{d}</div>
-        <div>
-          <Button className={'css-stylot-button'} onClick={this.addBinding}>
-            Add binding
-          </Button>
-        </div>
-      </div>
+      <VerticalGroup>
+        <Button variant={'secondary'} size={'sm'} fullWidth={true} icon={'plus'} onClick={this.addBinding}>
+          Add binding
+        </Button>
+        <VerticalGroup>{d}</VerticalGroup>
+      </VerticalGroup>
     );
   }
 }

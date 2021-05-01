@@ -1,4 +1,3 @@
-import { Size } from './OverlayConfigEditor';
 import { FieldType, ThresholdsConfig } from '@grafana/data';
 
 export enum Position {
@@ -36,4 +35,23 @@ export interface DynamicImageOptions {
   tooltip_date_elapsed: boolean;
   show_overlay: boolean;
   overlay: OverlayOptions;
+}
+
+export interface Size {
+  size: number;
+  unit: string;
+}
+
+export interface EditorProps {
+  binding: Bindings;
+  onChange: (value?: Bindings) => void;
+}
+
+export interface Bindings {
+  bindings: Binding[];
+}
+
+export interface Binding {
+  color: string;
+  value?: string | number;
 }
