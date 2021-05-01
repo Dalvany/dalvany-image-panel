@@ -1,5 +1,3 @@
-import { FieldType, ThresholdsConfig } from '@grafana/data';
-
 export enum Position {
   TOP_LEFT = 'Top left',
   TOP_RIGHT = 'Top right',
@@ -8,16 +6,31 @@ export enum Position {
 }
 
 export interface OverlayOptions {
-  field: FieldDefinition;
+  field: string;
   position: Position;
   width: Size;
   height: Size;
-  thresholds: ThresholdsConfig;
+  mappings: Mappings;
 }
 
-export interface FieldDefinition {
-  name: string;
-  type: FieldType;
+export interface Size {
+  size: number;
+  unit: string;
+}
+
+export interface EditorProps {
+  mapping: Mappings;
+  onChange: (value?: Mappings) => void;
+}
+
+export interface Mappings {
+  bindings: Mapping[];
+  unmapped: string;
+}
+
+export interface Mapping {
+  color: string;
+  value?: string | number;
 }
 
 export interface DynamicImageOptions {
@@ -35,23 +48,4 @@ export interface DynamicImageOptions {
   tooltip_date_elapsed: boolean;
   show_overlay: boolean;
   overlay: OverlayOptions;
-}
-
-export interface Size {
-  size: number;
-  unit: string;
-}
-
-export interface EditorProps {
-  binding: Bindings;
-  onChange: (value?: Bindings) => void;
-}
-
-export interface Bindings {
-  bindings: Binding[];
-}
-
-export interface Binding {
-  color: string;
-  value?: string | number;
 }

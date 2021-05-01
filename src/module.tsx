@@ -1,10 +1,4 @@
-import {
-  FieldOverrideContext,
-  FieldType,
-  getFieldDisplayName,
-  guessFieldTypeForField,
-  PanelPlugin,
-} from '@grafana/data';
+import { FieldOverrideContext, FieldType, getFieldDisplayName, PanelPlugin } from '@grafana/data';
 import { DynamicImageOptions, Position } from './types';
 import { DynamicImagePanel } from './DynamicImagePanel';
 import { BindingEditor, SizeEditor } from './OverlayConfigEditor';
@@ -24,34 +18,22 @@ function listFields(context: FieldOverrideContext, first?: any) {
   return options;
 }
 
-function listFieldsNew(context: FieldOverrideContext) {
+function listFieldsNew(context: FieldOverrideContext, includeTime: boolean) {
   const options = [] as any;
 
   if (context && context.data) {
     for (const frame of context.data) {
       for (const field of frame.fields) {
-        const name = getFieldDisplayName(field, frame, context.data);
-        const t = guessFieldTypeForField(field);
-        options.push({ value: { name: name, type: t }, label: name });
-      }
-    }
-  }
-
-  return options;
-}
-
-function findFirstNonTimeField(context: FieldOverrideContext) {
-  if (context && context.data) {
-    for (const frame of context.data) {
-      for (const field of frame.fields) {
-        if (field.type !== FieldType.time) {
-          return { name: field.name, type: field.type };
+        if (includeTime || field.type !== FieldType.time) {
+          const name = getFieldDisplayName(field, frame, context.data);
+          //const t = guessFieldTypeForField(field);
+          options.push({ value: name, label: name });
         }
       }
     }
   }
 
-  return {};
+  return options;
 }
 
 export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).setPanelOptions((builder) => {
@@ -228,17 +210,17 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         allowCustomValue: false,
         options: [],
         getOptions: async (context: FieldOverrideContext) => {
-          return Promise.resolve(listFieldsNew(context));
+          return Promise.resolve(listFieldsNew(context, false));
         },
       },
       showIf: (currentConfig) => currentConfig.show_overlay,
       category: ['Overlay'],
     })
     .addCustomEditor({
-      id: 'overlay.thresholds',
-      path: 'overlay.thresholds',
+      id: 'overlay.mappings',
+      path: 'overlay.mappings',
       name: 'Binding',
-      description: 'Set binding (act as threshold if values are numbers) overlay color',
+      description: 'Set color mapping for overlay (act as threshold if values are numbers)',
       editor: BindingEditor,
       showIf: (currentConfig) =>
         currentConfig.show_overlay && currentConfig.overlay !== undefined && currentConfig.overlay.field !== undefined,
