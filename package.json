@@ -10,7 +10,8 @@
   },
   "author": "Dalvany",
   "license": "WTFPL",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "@grafana/data": "^7.0.0",
     "@grafana/toolkit": "7.0.0",

@@ -29,8 +29,20 @@
     ],
     "screenshots": [
       {
-        "name": "Screenshot",
-        "path": "img/screenshot.png"
+        "name": "Multiple results",
+        "path": "img/screenshot01.png"
+      },
+      {
+        "name": "Single result with single fill enable",
+        "path": "img/screenshot02.png"
+      },
+      {
+        "name": "Single result with single fill disable",
+        "path": "img/screenshot03.png"
+      },
+      {
+        "name": "Overlay",
+        "path": "img/screenshot04.png"
       }
     ],
     "version": "%VERSION%",

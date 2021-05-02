@@ -1,8 +1,9 @@
-import { FieldOverrideContext, getFieldDisplayName, PanelPlugin } from '@grafana/data';
-import { DynamicImageOptions } from './types';
+import { FieldOverrideContext, FieldType, getFieldDisplayName, PanelPlugin } from '@grafana/data';
+import { DynamicImageOptions, Position, UNBOUNDED_DEFAULT_COLOR } from './types';
 import { DynamicImagePanel } from './DynamicImagePanel';
+import { BindingEditor, SizeEditor } from './OverlayConfigEditor';
 
-function listFields(context: FieldOverrideContext, first: any) {
+function listFields(context: FieldOverrideContext, first?: any) {
   const options = [first] as any;
 
   if (context && context.data) {
@@ -10,6 +11,24 @@ function listFields(context: FieldOverrideContext, first: any) {
       for (const field of frame.fields) {
         const name = getFieldDisplayName(field, frame, context.data);
         options.push({ value: name, label: name });
+      }
+    }
+  }
+
+  return options;
+}
+
+function listFieldsNew(context: FieldOverrideContext, includeTime: boolean) {
+  const options = [] as any;
+
+  if (context && context.data) {
+    for (const frame of context.data) {
+      for (const field of frame.fields) {
+        if (includeTime || field.type !== FieldType.time) {
+          const name = getFieldDisplayName(field, frame, context.data);
+          //const t = guessFieldTypeForField(field);
+          options.push({ value: name, label: name });
+        }
       }
     }
   }
@@ -132,5 +151,84 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       defaultValue: false,
       showIf: (currentConfig) => currentConfig.tooltip && currentConfig.tooltip_include_date,
       category: ['Image tooltip options'],
+    })
+    .addBooleanSwitch({
+      path: 'show_overlay',
+      name: 'Show overlay',
+      description: 'Display a small colored square on the corner of pictures',
+      defaultValue: false,
+      category: ['Overlay'],
+    })
+    .addSelect({
+      path: 'overlay.position',
+      name: 'Position',
+      description: 'Position of the overlay',
+      defaultValue: Position.TOP_RIGHT,
+      settings: {
+        allowCustomValue: false,
+        options: [
+          { value: Position.TOP_LEFT, label: Position.TOP_LEFT },
+          { value: Position.TOP_RIGHT, label: Position.TOP_RIGHT },
+          { value: Position.BOTTOM_LEFT, label: Position.BOTTOM_LEFT },
+          { value: Position.BOTTOM_RIGHT, label: Position.BOTTOM_RIGHT },
+        ],
+      },
+      showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
+    })
+    .addCustomEditor({
+      editor: SizeEditor,
+      id: 'overlay.width',
+      name: 'Width',
+      path: 'overlay.width',
+      description: 'Width of the overlay',
+      defaultValue: {
+        size: 5,
+        unit: '%',
+      },
+      showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
+    })
+    .addCustomEditor({
+      editor: SizeEditor,
+      id: 'overlay.height',
+      name: 'Height',
+      path: 'overlay.height',
+      description: 'Height of the overlay',
+      defaultValue: {
+        size: 5,
+        unit: '%',
+      },
+      showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
+    })
+    .addSelect({
+      path: 'overlay.field',
+      name: 'Overlay field',
+      description: 'Field to use for color mapping',
+      settings: {
+        allowCustomValue: false,
+        options: [],
+        getOptions: async (context: FieldOverrideContext) => {
+          return Promise.resolve(listFieldsNew(context, false));
+        },
+      },
+      showIf: (currentConfig) => currentConfig.show_overlay,
+      category: ['Overlay'],
+    })
+    .addCustomEditor({
+      id: 'overlay.bindings',
+      path: 'overlay.bindings',
+      name: 'Binding',
+      description: 'Set color mapping for overlay (act as threshold if data are numbers)',
+      defaultValue: {
+        bindings: [],
+        unbounded: UNBOUNDED_DEFAULT_COLOR,
+        has_text: true,
+      },
+      editor: BindingEditor,
+      showIf: (currentConfig) =>
+        currentConfig.show_overlay && currentConfig.overlay !== undefined && currentConfig.overlay.field !== undefined,
+      category: ['Overlay'],
     });
 });
