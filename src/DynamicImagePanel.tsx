@@ -26,7 +26,7 @@ interface ImageProps {
   /** Height in px of the image **/
   height: number;
   /** Handle 'singleFill' use 100% instead of height and width **/
-  useMax: boolean;
+  use_max: boolean;
   /** Show overlay **/
   show_overlay: boolean;
   /** Position of the overlay **/
@@ -93,7 +93,7 @@ export class Image extends PureComponent<ImageProps> {
       alt,
       width,
       height,
-      useMax,
+      use_max,
       show_overlay,
       overlay_width,
       overlay_height,
@@ -103,11 +103,11 @@ export class Image extends PureComponent<ImageProps> {
       overlay_value,
     } = this.props;
     let w = width + 'px';
-    if (useMax) {
+    if (use_max) {
       w = '100%';
     }
     let h = height + 'px';
-    if (useMax) {
+    if (use_max) {
       h = '100%';
     }
 
@@ -143,13 +143,9 @@ export class Image extends PureComponent<ImageProps> {
       return (
         <div style={{ height: h, width: w, position: 'relative' }}>
           <img
+            className={'image-container'}
             style={{
-              height: '100%',
-              width: '100%',
               pointerEvents: 'auto',
-              position: 'absolute',
-              top: '0',
-              left: '0',
             }}
             onError={(e) => this.handleError(e)}
             src={url}
@@ -172,13 +168,9 @@ export class Image extends PureComponent<ImageProps> {
     return (
       <div style={{ height: h, width: w, position: 'relative' }}>
         <img
+          className={'image-container'}
           style={{
-            height: '100%',
-            width: '100%',
             pointerEvents: 'auto',
-            position: 'absolute',
-            top: '0',
-            left: '0',
           }}
           onError={(e) => this.handleError(e)}
           src={url}
@@ -361,7 +353,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
               alt={value.alt}
               width={w}
               height={h}
-              useMax={options.singleFill && values.length === 1}
+              use_max={options.singleFill && values.length === 1}
               tooltip={value.tooltip}
               show_overlay={options.show_overlay}
               overlay_position={options.overlay.position}

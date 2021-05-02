@@ -3,6 +3,7 @@
 ## 2.3.0
 
 - Fix tooltip.
+- Fix image size when single fill enable
 - Allow using variable for `base URL`, `Suffix`, `Image width` and `Image height`.
 - Now when something is wrong an error is thrown instead of displaying a div. This will cause grafana to display the
   error in the top left corner of the panel.
