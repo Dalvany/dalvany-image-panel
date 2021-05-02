@@ -10,7 +10,7 @@ export interface OverlayOptions {
   position: Position;
   width: Size;
   height: Size;
-  mappings: Mappings;
+  mappings: Bindings;
 }
 
 export interface Size {
@@ -19,18 +19,19 @@ export interface Size {
 }
 
 export interface EditorProps {
-  mapping: Mappings;
-  onChange: (value?: Mappings) => void;
+  bindings: Bindings;
+  onChange: (value?: Bindings) => void;
 }
 
-export interface Mappings {
-  bindings: Mapping[];
-  unmapped: string;
+export interface Bindings {
+  bindings: Binding[];
+  unbounded: string;
+  has_text: boolean;
 }
 
-export interface Mapping {
+export interface Binding {
   color: string;
-  value?: string | number;
+  value: string | number;
 }
 
 export interface DynamicImageOptions {

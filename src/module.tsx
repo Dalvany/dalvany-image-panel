@@ -220,7 +220,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       id: 'overlay.mappings',
       path: 'overlay.mappings',
       name: 'Binding',
-      description: 'Set color mapping for overlay (act as threshold if values are numbers)',
+      description: 'Set color mapping for overlay (act as threshold if data are numbers)',
       editor: BindingEditor,
       showIf: (currentConfig) =>
         currentConfig.show_overlay && currentConfig.overlay !== undefined && currentConfig.overlay.field !== undefined,
