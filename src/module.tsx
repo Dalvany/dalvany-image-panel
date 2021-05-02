@@ -1,5 +1,5 @@
 import { FieldOverrideContext, FieldType, getFieldDisplayName, PanelPlugin } from '@grafana/data';
-import { DynamicImageOptions, Position } from './types';
+import { DynamicImageOptions, Position, UNBOUNDED_DEFAULT_COLOR } from './types';
 import { DynamicImagePanel } from './DynamicImagePanel';
 import { BindingEditor, SizeEditor } from './OverlayConfigEditor';
 
@@ -217,10 +217,15 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Overlay'],
     })
     .addCustomEditor({
-      id: 'overlay.mappings',
-      path: 'overlay.mappings',
+      id: 'overlay.bindings',
+      path: 'overlay.bindings',
       name: 'Binding',
       description: 'Set color mapping for overlay (act as threshold if data are numbers)',
+      defaultValue: {
+        bindings: [],
+        unbounded: UNBOUNDED_DEFAULT_COLOR,
+        has_text: true,
+      },
       editor: BindingEditor,
       showIf: (currentConfig) =>
         currentConfig.show_overlay && currentConfig.overlay !== undefined && currentConfig.overlay.field !== undefined,

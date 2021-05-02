@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StandardEditorProps, SelectableValue } from '@grafana/data';
 import { Button, ColorPicker, HorizontalGroup, Icon, Input, RadioButtonGroup, VerticalGroup } from '@grafana/ui';
-import { Binding, Bindings, EditorProps, Size } from './types';
-
-const UNBOUNDED_DEFAULT_COLOR = '#66666620';
+import { Binding, Bindings, Size, UNBOUNDED_DEFAULT_COLOR } from './types';
 
 export const SizeEditor: React.FC<StandardEditorProps<Size>> = ({ value, onChange }) => {
   let values = new Array<SelectableValue>(2);
@@ -48,6 +46,11 @@ export const SizeEditor: React.FC<StandardEditorProps<Size>> = ({ value, onChang
     </HorizontalGroup>
   );
 };
+
+interface EditorProps {
+  bindings: Bindings;
+  onChange: (value?: Bindings) => void;
+}
 
 class BindingComponentEditor extends PureComponent<EditorProps> {
   /**

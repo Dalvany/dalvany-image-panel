@@ -1,3 +1,5 @@
+export const UNBOUNDED_DEFAULT_COLOR = '#66666620';
+
 export enum Position {
   TOP_LEFT = 'Top left',
   TOP_RIGHT = 'Top right',
@@ -10,17 +12,12 @@ export interface OverlayOptions {
   position: Position;
   width: Size;
   height: Size;
-  mappings: Bindings;
+  bindings: Bindings;
 }
 
 export interface Size {
   size: number;
   unit: string;
-}
-
-export interface EditorProps {
-  bindings: Bindings;
-  onChange: (value?: Bindings) => void;
 }
 
 export interface Bindings {
