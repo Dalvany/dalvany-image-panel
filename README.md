@@ -46,7 +46,7 @@ Options to add and customize a tooltip :
 
 ## Overlay options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_overlay.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_overlay.png)  
 Allow adding colored square as overlay on the corner of each image. Color is bound from values. By default, color is
 light transparent grey.  
 Binding behaves this way :
