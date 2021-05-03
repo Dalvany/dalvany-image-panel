@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
 import {
+  DataFrame,
   dateTimeFormat,
   dateTimeFormatTimeAgo,
   Field,
   FieldType,
+  getFieldDisplayName,
   guessFieldTypeForField,
   PanelProps,
 } from '@grafana/data';
@@ -194,13 +196,10 @@ export class Image extends PureComponent<ImageProps> {
 }
 
 export class DynamicImagePanel extends PureComponent<Props> {
-  getFieldIndex(field: string, fields: Field[]): number {
+  getFieldIndex(field: string, fields: Field[], dataframe: DataFrame): number {
     for (let i = 0; i < fields.length; i++) {
-      if (
-        (fields[i].type !== FieldType.time && field === '') ||
-        field === fields[i].name ||
-        field === fields[i].labels?.name
-      ) {
+      let n = getFieldDisplayName(fields[i], dataframe);
+      if ((fields[i].type !== FieldType.time && field === '') || field === n) {
         return i;
       }
     }
@@ -245,7 +244,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
     const max = data.series[0].fields[0].values.length;
 
     // Find icon field
-    let icon_index = this.getFieldIndex(options.icon_field, data.series[0].fields);
+    let icon_index = this.getFieldIndex(options.icon_field, data.series[0].fields, data.series[0]);
     if (icon_index === -1) {
       if (options.icon_field === '') {
         console.error('Missing non time field from data');
@@ -258,7 +257,9 @@ export class DynamicImagePanel extends PureComponent<Props> {
 
     // Find alt field
     let alt_index =
-      options.alt_field === '' ? icon_index : this.getFieldIndex(options.alt_field, data.series[0].fields);
+      options.alt_field === ''
+        ? icon_index
+        : this.getFieldIndex(options.alt_field, data.series[0].fields, data.series[0]);
     if (alt_index === -1) {
       console.error("Missing field '" + options.alt_field + "' from data for alt");
       throw new Error("Can't find " + options.alt_field + ' field for alt.');
@@ -267,7 +268,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
     // Find tooltip field (if no tooltip use icon field as we don't care about values)
     let tooltip_index =
       options.tooltip && options.tooltip_include_field && options.tooltip_field !== ''
-        ? this.getFieldIndex(options.tooltip_field, data.series[0].fields)
+        ? this.getFieldIndex(options.tooltip_field, data.series[0].fields, data.series[0])
         : icon_index;
     if (tooltip_index === -1) {
       console.error("Missing field '" + options.tooltip_field + "' from data for tooltip");
@@ -285,8 +286,8 @@ export class DynamicImagePanel extends PureComponent<Props> {
     // Find overlay field (if overlay is enable)
     let overlay_field_index = -2;
     let data_are_numbers = false;
-    if (options.show_overlay) {
-      overlay_field_index = this.getFieldIndex(options.overlay.field, data.series[0].fields);
+    if (options.show_overlay && options.overlay !== undefined && options.overlay.field !== undefined) {
+      overlay_field_index = this.getFieldIndex(options.overlay.field, data.series[0].fields, data.series[0]);
       if (overlay_field_index === -1) {
         console.error("Missing field '" + options.overlay.field + "' for overlay");
         throw new Error("Missing field '" + options.overlay.field + "' for overlay");
@@ -299,7 +300,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
     for (let i = 0; i < max; i++) {
       let t = '';
       let overlay_value = undefined;
-      if (options.show_overlay) {
+      if (options.show_overlay && options.overlay !== undefined && options.overlay.field !== undefined) {
         overlay_value = data.series[0].fields[overlay_field_index].values.get(i);
       }
       if (options.tooltip) {
