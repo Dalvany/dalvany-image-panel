@@ -18,8 +18,12 @@ function listFields(context: FieldOverrideContext, first?: any) {
   return options;
 }
 
-function listFieldsNew(context: FieldOverrideContext, includeTime: boolean) {
+function listFieldsNew(context: FieldOverrideContext, includeTime: boolean, first?: any) {
   const options = [] as any;
+
+  if (first !== undefined) {
+    options.push(first);
+  }
 
   if (context && context.data) {
     for (const frame of context.data) {
@@ -152,11 +156,18 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       showIf: (currentConfig) => currentConfig.tooltip && currentConfig.tooltip_include_date,
       category: ['Image tooltip options'],
     })
-    .addBooleanSwitch({
-      path: 'show_overlay',
-      name: 'Show overlay',
-      description: 'Display a small colored square on the corner of pictures',
-      defaultValue: false,
+    .addSelect({
+      path: 'overlay.field',
+      name: 'Overlay field',
+      description: 'Field to use for color mapping',
+      defaultValue: '',
+      settings: {
+        allowCustomValue: false,
+        options: [],
+        getOptions: async (context: FieldOverrideContext) => {
+          return Promise.resolve(listFieldsNew(context, false, { value: '', label: 'No overlay' }));
+        },
+      },
       category: ['Overlay'],
     })
     .addSelect({
@@ -173,7 +184,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
           { value: Position.BOTTOM_RIGHT, label: Position.BOTTOM_RIGHT },
         ],
       },
-      showIf: (currentConfig) => currentConfig.show_overlay,
+      showIf: (currentConfig) => currentConfig.overlay.field !== '',
       category: ['Overlay'],
     })
     .addCustomEditor({
@@ -186,7 +197,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         size: 5,
         unit: '%',
       },
-      showIf: (currentConfig) => currentConfig.show_overlay,
+      showIf: (currentConfig) => currentConfig.overlay.field !== '',
       category: ['Overlay'],
     })
     .addCustomEditor({
@@ -199,21 +210,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         size: 5,
         unit: '%',
       },
-      showIf: (currentConfig) => currentConfig.show_overlay,
-      category: ['Overlay'],
-    })
-    .addSelect({
-      path: 'overlay.field',
-      name: 'Overlay field',
-      description: 'Field to use for color mapping',
-      settings: {
-        allowCustomValue: false,
-        options: [],
-        getOptions: async (context: FieldOverrideContext) => {
-          return Promise.resolve(listFieldsNew(context, false));
-        },
-      },
-      showIf: (currentConfig) => currentConfig.show_overlay,
+      showIf: (currentConfig) => currentConfig.overlay.field !== '',
       category: ['Overlay'],
     })
     .addCustomEditor({
@@ -227,8 +224,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         has_text: true,
       },
       editor: BindingEditor,
-      showIf: (currentConfig) =>
-        currentConfig.show_overlay && currentConfig.overlay !== undefined && currentConfig.overlay.field !== undefined,
+      showIf: (currentConfig) => currentConfig.overlay.field !== '' && currentConfig.overlay.field !== undefined,
       category: ['Overlay'],
     });
 });

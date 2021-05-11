@@ -29,8 +29,6 @@ interface ImageProps {
   height: number;
   /** Handle 'singleFill' use 100% instead of height and width **/
   use_max: boolean;
-  /** Show overlay **/
-  show_overlay: boolean;
   /** Position of the overlay **/
   overlay_position: Position;
   /** Width of the overlay **/
@@ -96,7 +94,6 @@ export class Image extends PureComponent<ImageProps> {
       width,
       height,
       use_max,
-      show_overlay,
       overlay_width,
       overlay_height,
       overlay_position,
@@ -128,14 +125,14 @@ export class Image extends PureComponent<ImageProps> {
     // Handles overlay...
     let overlay_color: string | undefined = undefined;
     let bindings_contains_string = true;
-    if (show_overlay) {
+    if (overlay_value !== undefined) {
       overlay_color = overlay_bindings.unbounded;
       bindings_contains_string = overlay_bindings.has_text;
 
       // Find binding colors...
-      if (!bindings_contains_string && overlay_values_are_number && overlay_value !== undefined) {
+      if (!bindings_contains_string && overlay_values_are_number) {
         overlay_color = this.findBindingColorFromNumber(overlay_value as number);
-      } else if (overlay_value !== undefined) {
+      } else {
         overlay_color = this.findBindingColorFromString(overlay_value.toString());
       }
     }
@@ -153,7 +150,7 @@ export class Image extends PureComponent<ImageProps> {
             src={url}
             alt={alt}
           />
-          {show_overlay && (
+          {overlay_value !== undefined && (
             <div
               className={cl + ' ' + va}
               style={{
@@ -179,7 +176,7 @@ export class Image extends PureComponent<ImageProps> {
           title={tooltip}
           alt={alt}
         />
-        {show_overlay && (
+        {overlay_value !== undefined && (
           <div
             className={cl + ' ' + va}
             style={{
@@ -286,7 +283,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
     // Find overlay field (if overlay is enable)
     let overlay_field_index = -2;
     let data_are_numbers = false;
-    if (options.show_overlay && options.overlay !== undefined && options.overlay.field !== undefined) {
+    if (options.overlay.field !== '') {
       overlay_field_index = this.getFieldIndex(options.overlay.field, data.series[0].fields, data.series[0]);
       if (overlay_field_index === -1) {
         console.error("Missing field '" + options.overlay.field + "' for overlay");
@@ -300,7 +297,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
     for (let i = 0; i < max; i++) {
       let t = '';
       let overlay_value = undefined;
-      if (options.show_overlay && options.overlay !== undefined && options.overlay.field !== undefined) {
+      if (options.overlay.field !== '') {
         overlay_value = data.series[0].fields[overlay_field_index].values.get(i);
       }
       if (options.tooltip) {
@@ -356,7 +353,6 @@ export class DynamicImagePanel extends PureComponent<Props> {
               height={h}
               use_max={options.singleFill && values.length === 1}
               tooltip={value.tooltip}
-              show_overlay={options.show_overlay}
               overlay_position={options.overlay.position}
               overlay_width={options.overlay.width}
               overlay_height={options.overlay.height}
