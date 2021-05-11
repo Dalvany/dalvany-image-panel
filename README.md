@@ -59,12 +59,20 @@ Note : when leave an input field, values are sorted and empty input are removed.
 
 Options for binding :
 
-- Overlay field : select the data field to use for binding (time fields are removed). If no field is selected, overlay
+- Overlay field : select the data field to use for binding (time fields are removed). If `No overlay` is selected, overlay
   will not be shown.
 - Position : select the position of the overlay.
 - Width : allow to select the width of the overlay (in pixel or percent of the image size).
 - Height : allow to select the height of the overlay (in pixel or percent of the image size).
 - Binding : allow to choose the color for each values. Allow also to choose color for unmapped values.
+
+## Underline options
+
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_underline.png)
+Add a field value as underline. If text is wider than image then it will be truncated.
+
+- Underline field : field to use as underline. If `No underline` is selected, then underline will not be displayed.
+- Text size : size of the text
 
 # Screenshot
 
@@ -72,6 +80,7 @@ Options for binding :
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot02.png)
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot03.png)
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot04.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot05.png)
 
 # Install
 

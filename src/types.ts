@@ -31,6 +31,11 @@ export interface Binding {
   value: string | number;
 }
 
+export interface Underline {
+  field: string;
+  text_size: number;
+}
+
 export interface DynamicImageOptions {
   baseUrl?: string;
   suffix?: string;
@@ -45,4 +50,5 @@ export interface DynamicImageOptions {
   tooltip_include_date: boolean;
   tooltip_date_elapsed: boolean;
   overlay: OverlayOptions;
+  underline: Underline;
 }
