@@ -12,7 +12,8 @@ If queries select multiple fields, use the outer join transform.
 
 ## URL
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png)  
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png)
+
 Options for building image URL :
 
 - Base URL (optional) : the start of the URL where to fetch image. Can be left empty if `icon field` already contains
@@ -23,7 +24,8 @@ Options for building image URL :
 
 ## Image options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png)  
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png)
+
 Options that allow to choose how the image will be displayed :
 
 - Image width : the width of the image. This option support variable (beware that it needs to be a number)
@@ -34,7 +36,8 @@ Options that allow to choose how the image will be displayed :
 
 ## Image tooltip options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png)  
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png)
+
 Options to add and customize a tooltip :
 
 - Include tooltip : a tooltip will be display when the mouse hovers over the image
@@ -46,7 +49,8 @@ Options to add and customize a tooltip :
 
 ## Overlay options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_overlay.png)  
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_overlay.png)
+
 Allow adding colored square as overlay on the corner of each image. Color is bound from values. By default, color is
 light transparent grey.  
 Binding behaves this way :
@@ -59,8 +63,8 @@ Note : when leave an input field, values are sorted and empty input are removed.
 
 Options for binding :
 
-- Overlay field : select the data field to use for binding (time fields are removed). If `No overlay` is selected, overlay
-  will not be shown.
+- Overlay field : select the data field to use for binding (time fields are removed). If `No overlay` is selected,
+  overlay will not be shown.
 - Position : select the position of the overlay.
 - Width : allow to select the width of the overlay (in pixel or percent of the image size).
 - Height : allow to select the height of the overlay (in pixel or percent of the image size).
@@ -69,10 +73,11 @@ Options for binding :
 ## Underline options
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_underline.png)
+
 Add a field value as underline. If text is wider than image then it will be truncated.
 
 - Underline field : field to use as underline. If `No underline` is selected, then underline will not be displayed.
-- Text size : size of the text
+- Text size : size of the text.
 
 # Screenshot
 
