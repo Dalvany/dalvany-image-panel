@@ -44,6 +44,6 @@ export interface DynamicImageOptions {
   tooltip_field: string;
   tooltip_include_date: boolean;
   tooltip_date_elapsed: boolean;
-  show_overlay: boolean;
   overlay: OverlayOptions;
+  underline: string;
 }
