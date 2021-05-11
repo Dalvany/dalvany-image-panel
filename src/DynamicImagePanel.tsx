@@ -41,6 +41,10 @@ interface ImageProps {
   overlay_values_are_number: boolean;
   /** Overlay value **/
   overlay_value: string | number | undefined;
+  /** Underline field **/
+  underline_value: string | undefined;
+  /** Underline size **/
+  underline_size: number;
 }
 
 export interface Value {
@@ -48,6 +52,7 @@ export interface Value {
   alt: string;
   tooltip?: string | null;
   overlay?: string | number | undefined;
+  underline?: string | undefined;
 }
 
 export class Image extends PureComponent<ImageProps> {
@@ -100,6 +105,8 @@ export class Image extends PureComponent<ImageProps> {
       overlay_bindings,
       overlay_values_are_number,
       overlay_value,
+      underline_value,
+      underline_size,
     } = this.props;
     let w = width + 'px';
     if (use_max) {
@@ -140,16 +147,50 @@ export class Image extends PureComponent<ImageProps> {
 
     if (tooltip === null || tooltip === '') {
       return (
-        <div style={{ height: h, width: w, position: 'relative' }}>
-          <img
-            className={'image-container'}
-            style={{
-              pointerEvents: 'auto',
-            }}
-            onError={(e) => this.handleError(e)}
-            src={url}
-            alt={alt}
-          />
+        <div className={'div-container'}>
+          <div style={{ width: '100%', position: 'relative' }}>
+            <div style={{ height: h, width: w }}>
+              <img
+                className={'image-container'}
+                style={{
+                  pointerEvents: 'auto',
+                }}
+                onError={(e) => this.handleError(e)}
+                src={url}
+                alt={alt}
+              />
+              {overlay_value !== undefined && (
+                <div
+                  className={cl + ' ' + va}
+                  style={{
+                    height: oh,
+                    width: ow,
+                    backgroundColor: overlay_color,
+                    position: 'absolute',
+                  }}
+                />
+              )}
+            </div>
+          </div>
+          {underline_value !== undefined && <div style={{ fontSize: underline_size + 'px' }}>{underline_value}</div>}
+        </div>
+      );
+    }
+    return (
+      <div className={'div-container'}>
+        <div style={{ width: '100%', position: 'relative' }}>
+          <div style={{ height: h, width: w }}>
+            <img
+              className={'image-container'}
+              style={{
+                pointerEvents: 'auto',
+              }}
+              onError={(e) => this.handleError(e)}
+              src={url}
+              title={tooltip}
+              alt={alt}
+            />
+          </div>
           {overlay_value !== undefined && (
             <div
               className={cl + ' ' + va}
@@ -162,31 +203,7 @@ export class Image extends PureComponent<ImageProps> {
             />
           )}
         </div>
-      );
-    }
-    return (
-      <div style={{ height: h, width: w, position: 'relative' }}>
-        <img
-          className={'image-container'}
-          style={{
-            pointerEvents: 'auto',
-          }}
-          onError={(e) => this.handleError(e)}
-          src={url}
-          title={tooltip}
-          alt={alt}
-        />
-        {overlay_value !== undefined && (
-          <div
-            className={cl + ' ' + va}
-            style={{
-              height: oh,
-              width: ow,
-              backgroundColor: overlay_color,
-              position: 'absolute',
-            }}
-          />
-        )}
+        {underline_value !== undefined && <div style={{ fontSize: underline_size + 'px' }}>{underline_value}</div>}
       </div>
     );
   }
@@ -293,12 +310,27 @@ export class DynamicImagePanel extends PureComponent<Props> {
       data_are_numbers = r === FieldType.number;
     }
 
+    let underline_index = -1;
+    let underline_size = 14;
+    if (options.underline.field !== '') {
+      underline_size = options.underline.text_size;
+      underline_index = this.getFieldIndex(options.underline.field, data.series[0].fields, data.series[0]);
+      if (underline_index === -1) {
+        console.error("Missing field '" + options.overlay.field + "' for underline");
+        throw new Error("Missing field '" + options.overlay.field + "' for underline");
+      }
+    }
+
     let values: Value[] = [];
     for (let i = 0; i < max; i++) {
       let t = '';
       let overlay_value = undefined;
       if (options.overlay.field !== '') {
         overlay_value = data.series[0].fields[overlay_field_index].values.get(i);
+      }
+      let underline_value = undefined;
+      if (underline_index > -1) {
+        underline_value = data.series[0].fields[underline_index].values.get(i);
       }
       if (options.tooltip) {
         if (options.tooltip_include_date) {
@@ -319,12 +351,14 @@ export class DynamicImagePanel extends PureComponent<Props> {
           alt: data.series[0].fields[alt_index].values.get(i),
           tooltip: t,
           overlay: overlay_value,
+          underline: underline_value,
         });
       } else {
         values.push({
           icon: data.series[0].fields[icon_index].values.get(i),
           alt: data.series[0].fields[alt_index].values.get(i),
           overlay: overlay_value,
+          underline: underline_value,
         });
       }
     }
@@ -359,6 +393,8 @@ export class DynamicImagePanel extends PureComponent<Props> {
               overlay_bindings={options.overlay.bindings}
               overlay_values_are_number={data_are_numbers}
               overlay_value={value.overlay}
+              underline_value={value.underline}
+              underline_size={underline_size}
             />
           );
         })}

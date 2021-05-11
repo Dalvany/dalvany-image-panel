@@ -27,6 +27,7 @@ img.image-container {
     justify-content: flex-start;
     /* Other than hidden -> scroll bar ? */
     overflow: hidden;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -44,4 +45,11 @@ img.image-container {
 
 .bottom-overlay {
     bottom: 0;
+}
+
+.div-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
 }

@@ -226,5 +226,26 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       editor: BindingEditor,
       showIf: (currentConfig) => currentConfig.overlay.field !== '' && currentConfig.overlay.field !== undefined,
       category: ['Overlay'],
+    })
+    .addSelect({
+      path: 'underline.field',
+      name: 'Underline field',
+      description: 'Field to use for as underline',
+      defaultValue: '',
+      settings: {
+        allowCustomValue: false,
+        options: [],
+        getOptions: async (context: FieldOverrideContext) => {
+          return Promise.resolve(listFieldsNew(context, false, { value: '', label: 'No underline' }));
+        },
+      },
+      category: ['Underline'],
+    })
+    .addTextInput({
+      path: 'underline.text_size',
+      name: 'Text size',
+      description: 'Add a field value as underline',
+      defaultValue: '14',
+      category: ['Underline'],
     });
 });
