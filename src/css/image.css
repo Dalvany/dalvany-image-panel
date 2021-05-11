@@ -1,15 +1,12 @@
-.image-container {
-    display: block;
-    flex: none;
-}
-
 .full {
     height: 100%;
     width: 100%;
 }
 
-img.image-container {
+.image {
     object-fit: contain;
+    display: block;
+    flex: none;
     height: 100%;
     width: 100%;
     position: absolute;
@@ -50,6 +47,5 @@ img.image-container {
 .div-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin: 5px;
 }

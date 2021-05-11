@@ -147,50 +147,57 @@ export class Image extends PureComponent<ImageProps> {
 
     if (tooltip === null || tooltip === '') {
       return (
-        <div className={'div-container'}>
-          <div style={{ width: '100%', position: 'relative' }}>
-            <div style={{ height: h, width: w }}>
-              <img
-                className={'image-container'}
-                style={{
-                  pointerEvents: 'auto',
-                }}
-                onError={(e) => this.handleError(e)}
-                src={url}
-                alt={alt}
-              />
-              {overlay_value !== undefined && (
-                <div
-                  className={cl + ' ' + va}
-                  style={{
-                    height: oh,
-                    width: ow,
-                    backgroundColor: overlay_color,
-                    position: 'absolute',
-                  }}
-                />
-              )}
-            </div>
-          </div>
-          {underline_value !== undefined && <div style={{ fontSize: underline_size + 'px' }}>{underline_value}</div>}
-        </div>
-      );
-    }
-    return (
-      <div className={'div-container'}>
-        <div style={{ width: '100%', position: 'relative' }}>
-          <div style={{ height: h, width: w }}>
+        <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
+          <div style={{ height: h, width: w, position: 'relative' }}>
             <img
-              className={'image-container'}
+              className={'image'}
               style={{
                 pointerEvents: 'auto',
               }}
               onError={(e) => this.handleError(e)}
               src={url}
-              title={tooltip}
               alt={alt}
             />
+            {overlay_value !== undefined && (
+              <div
+                className={cl + ' ' + va}
+                style={{
+                  height: oh,
+                  width: ow,
+                  backgroundColor: overlay_color,
+                  position: 'absolute',
+                }}
+              />
+            )}
           </div>
+          {underline_value !== undefined && (
+            <div
+              style={{
+                textOverflow: 'ellipsis',
+                fontSize: underline_size,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+              }}
+            >
+              {underline_value}
+            </div>
+          )}
+        </div>
+      );
+    }
+    return (
+      <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
+        <div style={{ height: h, width: w, position: 'relative' }}>
+          <img
+            className={'image'}
+            style={{
+              pointerEvents: 'auto',
+            }}
+            onError={(e) => this.handleError(e)}
+            src={url}
+            title={tooltip}
+            alt={alt}
+          />
           {overlay_value !== undefined && (
             <div
               className={cl + ' ' + va}
@@ -203,7 +210,18 @@ export class Image extends PureComponent<ImageProps> {
             />
           )}
         </div>
-        {underline_value !== undefined && <div style={{ fontSize: underline_size + 'px' }}>{underline_value}</div>}
+        {underline_value !== undefined && (
+          <div
+            style={{
+              textOverflow: 'ellipsis',
+              fontSize: underline_size,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+            }}
+          >
+            {underline_value}
+          </div>
+        )}
       </div>
     );
   }

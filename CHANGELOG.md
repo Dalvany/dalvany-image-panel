@@ -2,6 +2,8 @@
 
 ## 2.3.0
 
+- Add a gap between image.
+- Add an underline.
 - Fix tooltip.
 - Fix image size when single fill enable
 - Allow using variable for `base URL`, `Suffix`, `Image width` and `Image height`.
