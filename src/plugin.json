@@ -43,6 +43,10 @@
       {
         "name": "Overlay",
         "path": "img/screenshot04.png"
+      },
+      {
+        "name": "Underline",
+        "path": "img/screenshot05.png"
       }
     ],
     "version": "%VERSION%",
