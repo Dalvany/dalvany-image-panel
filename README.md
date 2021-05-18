@@ -6,6 +6,10 @@
 Display an image by concatenation of an URL, a metric and a suffix.  
 The result will be : baseURL + icon field + suffix.
 
+Note : if new options doesn't show up or plugin seems in an older version, please uninstall, reinstall and then restart
+grafana (or if using docker, run a new container using the latest version of the plugin in GF_INSTALL_PLUGINS env
+variable)
+
 # Configuration
 
 If queries select multiple fields, use the outer join transform.
