@@ -7,14 +7,14 @@
     "test": "grafana-toolkit plugin:test",
     "dev": "grafana-toolkit plugin:dev",
     "watch": "grafana-toolkit plugin:dev --watch",
-    "sign": "npx @grafana/toolkit plugin:sign"
+    "sign": "grafana-toolkit plugin:sign"
   },
   "author": "Dalvany",
   "license": "WTFPL",
   "dependencies": {},
   "devDependencies": {
-    "@grafana/data": "^7.0.0",
-    "@grafana/toolkit": "7.0.0",
+    "@grafana/data": "^7.3.0",
+    "@grafana/toolkit": "7.3.0",
     "@grafana/ui": "^7.0.0",
     "@types/grafana": "github:CorpGlory/types-grafana.git",
     "@types/lodash": "4.14.149",
