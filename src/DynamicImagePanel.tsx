@@ -9,10 +9,9 @@ import {
   guessFieldTypeForField,
   PanelProps,
 } from '@grafana/data';
-import { Bindings, DynamicImageOptions, Position } from './types';
+import { Bindings, DynamicImageOptions, Position, Size } from './types';
 // @ts-ignore
 import './css/image.css';
-import { Size } from './OverlayConfigEditor';
 
 interface Props extends PanelProps<DynamicImageOptions> {}
 
