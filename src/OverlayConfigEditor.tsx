@@ -238,10 +238,11 @@ class BindingComponentEditor extends PureComponent<EditorProps> {
           let suffix = <Icon className={'trash-alt'} name="trash-alt" onClick={() => remove_function(idx)} />;
           return (
             <Input
+              key={idx}
               type={'text'}
               prefix={prefix}
               suffix={suffix}
-              onChange={(event) => change_text_function(idx, event.target.value)}
+              onChange={(event) => change_text_function(idx, (event.target as HTMLInputElement).value)}
               value={b.value === undefined ? '' : b.value}
               onBlur={() => reorder_function()}
             />
