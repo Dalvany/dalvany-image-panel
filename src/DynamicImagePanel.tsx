@@ -250,6 +250,19 @@ export class DynamicImagePanel extends PureComponent<Props> {
     console.error('Error loading ' + e.target.src);
   }
 
+  /**
+   * In case height or width are from an old version it will be a number.
+   * "replaceVariables" function need a string or there will be an e.replace
+   * is not a function.
+   */
+  intoString(data: number | string): string {
+    if (typeof data === 'number') {
+      return String(data);
+    }
+
+    return data;
+  }
+
   render() {
     const { options, data } = this.props;
 
@@ -390,8 +403,14 @@ export class DynamicImagePanel extends PureComponent<Props> {
       throw new Error('No data found in response. Please check your query');
     }
 
-    let w = Number(this.props.replaceVariables(options.width));
-    let h = Number(this.props.replaceVariables(options.height));
+    let tmp = options.width;
+    if (typeof tmp !== 'number') {
+      tmp = String(tmp);
+    }
+
+    // intoString to maintain compatibility (see comment on intoString)
+    let w = Number(this.props.replaceVariables(this.intoString(options.width)));
+    let h = Number(this.props.replaceVariables(this.intoString(options.height)));
     return (
       <div className="container">
         {values.map((value) => {
