@@ -412,7 +412,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
     let w = Number(this.props.replaceVariables(this.intoString(options.width)));
     let h = Number(this.props.replaceVariables(this.intoString(options.height)));
     return (
-      <div className="container">
+      <div className="main-container">
         {values.map((value) => {
           return (
             <Image
