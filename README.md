@@ -1,5 +1,7 @@
 [![Marketplace](https://img.shields.io/badge/dynamic/json?logo=grafana&color=205AD4&label=marketplace&prefix=v&query=%24.items%5B%3F%28%40.slug%20%3D%3D%20%22dalvany-image-panel%22%29%5D.version&url=https%3A%2F%2Fgrafana.com%2Fapi%2Fplugins)](https://grafana.com/grafana/plugins/dalvany-image-panel)
 [![Downloads](https://img.shields.io/badge/dynamic/json?logo=grafana&color=205AD4&label=downloads&query=%24.items%5B%3F%28%40.slug%20%3D%3D%20%22dalvany-image-panel%22%29%5D.downloads&url=https%3A%2F%2Fgrafana.com%2Fapi%2Fplugins)](https://grafana.com/grafana/plugins/dalvany-image-panel)
+[![CI](https://github.com/Dalvany/dalvany-image-panel/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Dalvany/dalvany-image-panel/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Dalvany/dalvany-image-panel/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/Dalvany/dalvany-image-panel/actions/workflows/codeql-analysis.yml)
 
 # Grafana image panel
 
