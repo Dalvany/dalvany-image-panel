@@ -144,6 +144,8 @@ export class Image extends PureComponent<ImageProps> {
     }
     // End handles overlay
 
+    let underline_size_px = underline_size + 'px';
+
     if (tooltip === null || tooltip === '') {
       return (
         <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
@@ -173,7 +175,7 @@ export class Image extends PureComponent<ImageProps> {
             <div
               style={{
                 textOverflow: 'ellipsis',
-                fontSize: underline_size,
+                fontSize: underline_size_px,
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
               }}
@@ -213,7 +215,7 @@ export class Image extends PureComponent<ImageProps> {
           <div
             style={{
               textOverflow: 'ellipsis',
-              fontSize: underline_size,
+              fontSize: underline_size_px,
               whiteSpace: 'nowrap',
               overflow: 'hidden',
             }}
