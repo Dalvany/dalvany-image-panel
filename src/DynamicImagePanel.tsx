@@ -414,6 +414,15 @@ export class DynamicImagePanel extends PureComponent<Props> {
     let end = options.suffix === undefined ? '' : options.suffix;
     end = this.props.replaceVariables(end);
 
+    let start_link;
+    let end_link;
+    if (options.open_url.enable) {
+      start_link = options.open_url.base_url === undefined ? '' : options.open_url.base_url;
+      start_link = this.props.replaceVariables(start_link);
+      end_link = options.open_url.suffix === undefined ? '' : options.open_url.suffix;
+      end_link = this.props.replaceVariables(end_link);
+    }
+
     if (!values || values.length === 0) {
       console.error('Serie contains no values');
       throw new Error('No data found in response. Please check your query');
@@ -432,7 +441,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         {values.map((value) => {
           let clickable;
           if (options.open_url.enable) {
-            clickable = options.open_url.base_url + value.link + options.open_url.suffix;
+            clickable = start_link + value.link + end_link;
           }
           return (
             <Image
