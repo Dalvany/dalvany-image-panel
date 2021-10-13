@@ -2057,6 +2057,11 @@
     react-input-autosize "^2.2.2"
     react-transition-group "^4.3.0"
 
+"@tweenjs/tween.js@^18.1.2":
+  version "18.6.4"
+  resolved "https://registry.yarnpkg.com/@tweenjs/tween.js/-/tween.js-18.6.4.tgz#40a3d0a93647124872dec8e0fd1bd5926695b6ca"
+  integrity sha512-lB9lMjuqjtuJrx7/kOkqQBtllspPIN+96OvTCeJ2j5FEzinoAXTdAMFnDAQT1KVPRlnYfBrqxtqP66vDM40xxQ==
+
 "@types/anymatch@*":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
@@ -11501,6 +11506,14 @@ react-select@4.3.0:
     prop-types "^15.6.0"
     react-input-autosize "^3.0.0"
     react-transition-group "^4.3.0"
+
+react-slideshow-image@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/react-slideshow-image/-/react-slideshow-image-3.5.1.tgz#24b33b55a9948fa02a436e5b77ec2c02af2c68fa"
+  integrity sha512-crf6q18ELIRziBP8Sr396xKyBW9+34rhbYnuN5ta69C1DivP+FEP7DcPu/POfxGekCP8gNuP4bneay9a9kuBXw==
+  dependencies:
+    "@tweenjs/tween.js" "^18.1.2"
+    resize-observer-polyfill "^1.5.1"
 
 react-storybook-addon-props-combinations@1.1.0:
   version "1.1.0"

@@ -11,7 +11,9 @@
   },
   "author": "Dalvany",
   "license": "WTFPL",
-  "dependencies": {},
+  "dependencies": {
+    "react-slideshow-image": "^3.5.1"
+  },
   "devDependencies": {
     "@grafana/data": "^7.0.0",
     "@grafana/toolkit": "8.0.0",

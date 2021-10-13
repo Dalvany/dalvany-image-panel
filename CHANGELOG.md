@@ -3,6 +3,7 @@
 ## 2.4.0
 
 - Allow to open an URL by clicking on the image [#33](https://github.com/Dalvany/dalvany-image-panel/issues/33).
+- Multiple image can now see with a slideshow [#35](https://github.com/Dalvany/dalvany-image-panel/issues/35).
 
 ## 2.3.0
 
