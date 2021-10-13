@@ -156,6 +156,44 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       showIf: (currentConfig) => currentConfig.tooltip && currentConfig.tooltip_include_date,
       category: ['Image tooltip options'],
     })
+    .addBooleanSwitch({
+      path: 'open_url.enable',
+      name: 'Click to open',
+      description: 'The image is clickable and can open an URL in a new tab',
+      defaultValue: false,
+      category: ['Link'],
+    })
+    .addTextInput({
+      path: 'open_url.base_url',
+      name: 'Base URL',
+      description: 'First part of the URL',
+      showIf: (currentConfig) => currentConfig.open_url.enable,
+      defaultValue: '',
+      category: ['Link'],
+    })
+    .addSelect({
+      path: 'open_url.metric_field',
+      name: 'Link field',
+      description: 'Field value to use in the link.',
+      settings: {
+        allowCustomValue: false,
+        options: [],
+        getOptions: async (context: FieldOverrideContext) => {
+          return Promise.resolve(listFields(context, { value: '', label: "Don't use a field" }));
+        },
+      },
+      defaultValue: '',
+      showIf: (currentConfig) => currentConfig.open_url.enable,
+      category: ['Link'],
+    })
+    .addTextInput({
+      path: 'open_url.suffix',
+      name: 'Suffix',
+      description: 'To append at the end of the URL',
+      defaultValue: '',
+      showIf: (currentConfig) => currentConfig.open_url.enable,
+      category: ['Link'],
+    })
     .addSelect({
       path: 'overlay.field',
       name: 'Overlay field',

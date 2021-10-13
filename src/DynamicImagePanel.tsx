@@ -19,7 +19,7 @@ interface ImageProps {
   /** Image URL **/
   url: string;
   /** Tooltip text, if null no tooltip **/
-  tooltip?: string | null;
+  tooltip?: string | undefined;
   /** Alternative **/
   alt: string;
   /** Width in px of the image **/
@@ -44,12 +44,18 @@ interface ImageProps {
   underline_value: string | undefined;
   /** Underline size **/
   underline_size: number;
+  /** Clickable link **/
+  link: string | undefined;
 }
 
-export interface Value {
+/**
+ * Interface that contains all values that depend on a metric field
+ */
+interface Value {
   icon: string;
   alt: string;
-  tooltip?: string | null;
+  link?: string | undefined;
+  tooltip?: string | undefined;
   overlay?: string | number | undefined;
   underline?: string | undefined;
 }
@@ -90,6 +96,58 @@ export class Image extends PureComponent<ImageProps> {
     return color;
   }
 
+  /**
+   * Create an image with the given parameters
+   * @param h Height of the image
+   * @param w Width of the image
+   * @param tooltip Tooltip text (undefined if no tooltip)
+   * @param url URL of the image
+   * @param alt Alt text
+   * @param overlay_value Value of the overlay
+   * @param classname Position of the overlay
+   * @param oh Height of the overlay
+   * @param ow Width of the overlay
+   * @param overlay_color Color of overlay
+   */
+  createImage(
+    h: string,
+    w: string,
+    tooltip: string | undefined,
+    url: string,
+    alt: string,
+    overlay_value: string | number | undefined,
+    classname: string,
+    oh: string,
+    ow: string,
+    overlay_color: string | undefined
+  ) {
+    return (
+      <div style={{ height: h, width: w, position: 'relative' }}>
+        <img
+          className={'image'}
+          style={{
+            pointerEvents: 'auto',
+          }}
+          title={tooltip}
+          onError={(e) => this.handleError(e)}
+          src={url}
+          alt={alt}
+        />
+        {overlay_value !== undefined && (
+          <div
+            className={classname}
+            style={{
+              height: oh,
+              width: ow,
+              backgroundColor: overlay_color,
+              position: 'absolute',
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+
   render() {
     const {
       url,
@@ -106,6 +164,7 @@ export class Image extends PureComponent<ImageProps> {
       overlay_value,
       underline_value,
       underline_size,
+      link,
     } = this.props;
     let w = width + 'px';
     if (use_max) {
@@ -146,71 +205,15 @@ export class Image extends PureComponent<ImageProps> {
 
     let underline_size_px = underline_size + 'px';
 
-    if (tooltip === null || tooltip === '') {
-      return (
-        <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
-          <div style={{ height: h, width: w, position: 'relative' }}>
-            <img
-              className={'image'}
-              style={{
-                pointerEvents: 'auto',
-              }}
-              onError={(e) => this.handleError(e)}
-              src={url}
-              alt={alt}
-            />
-            {overlay_value !== undefined && (
-              <div
-                className={cl + ' ' + va}
-                style={{
-                  height: oh,
-                  width: ow,
-                  backgroundColor: overlay_color,
-                  position: 'absolute',
-                }}
-              />
-            )}
-          </div>
-          {underline_value !== undefined && (
-            <div
-              style={{
-                textOverflow: 'ellipsis',
-                fontSize: underline_size_px,
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-              }}
-            >
-              {underline_value}
-            </div>
-          )}
-        </div>
-      );
-    }
     return (
       <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
-        <div style={{ height: h, width: w, position: 'relative' }}>
-          <img
-            className={'image'}
-            style={{
-              pointerEvents: 'auto',
-            }}
-            onError={(e) => this.handleError(e)}
-            src={url}
-            title={tooltip}
-            alt={alt}
-          />
-          {overlay_value !== undefined && (
-            <div
-              className={cl + ' ' + va}
-              style={{
-                height: oh,
-                width: ow,
-                backgroundColor: overlay_color,
-                position: 'absolute',
-              }}
-            />
-          )}
-        </div>
+        {link === undefined ? (
+          this.createImage(h, w, tooltip, url, alt, overlay_value, cl + ' ' + va, oh, ow, overlay_color)
+        ) : (
+          <a href={link} target={'_blank'} rel={'noreferrer noopener'}>
+            {this.createImage(h, w, tooltip, url, alt, overlay_value, cl + ' ' + va, oh, ow, overlay_color)}
+          </a>
+        )}
         {underline_value !== undefined && (
           <div
             style={{
@@ -321,6 +324,11 @@ export class DynamicImagePanel extends PureComponent<Props> {
       throw new Error("Can't find " + options.tooltip_field + ' field for tooltip.');
     }
 
+    let link_index =
+      options.open_url.enable && options.open_url.metric_field !== ''
+        ? this.getFieldIndex(options.open_url.metric_field, data.series[0].fields, data.series[0])
+        : -1;
+
     // Find time field for tooltip (if no tooltip or if it doesn't include time, use icon field as we don't care about values)
     let time_index =
       options.tooltip && options.tooltip_include_date ? this.getTimeFieldIndex(data.series[0].fields) : icon_index;
@@ -364,6 +372,10 @@ export class DynamicImagePanel extends PureComponent<Props> {
       if (underline_index > -1) {
         underline_value = data.series[0].fields[underline_index].values.get(i);
       }
+      let link_value = '';
+      if (options.open_url.enable && link_index !== -1) {
+        link_value = data.series[0].fields[link_index].values.get(i);
+      }
       if (options.tooltip) {
         if (options.tooltip_include_date) {
           if (options.tooltip_date_elapsed) {
@@ -382,6 +394,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
           icon: data.series[0].fields[icon_index].values.get(i),
           alt: data.series[0].fields[alt_index].values.get(i),
           tooltip: t,
+          link: link_value,
           overlay: overlay_value,
           underline: underline_value,
         });
@@ -389,6 +402,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
         values.push({
           icon: data.series[0].fields[icon_index].values.get(i),
           alt: data.series[0].fields[alt_index].values.get(i),
+          link: link_value,
           overlay: overlay_value,
           underline: underline_value,
         });
@@ -416,6 +430,10 @@ export class DynamicImagePanel extends PureComponent<Props> {
     return (
       <div className="main-container">
         {values.map((value) => {
+          let clickable;
+          if (options.open_url.enable) {
+            clickable = options.open_url.base_url + value.link + options.open_url.suffix;
+          }
           return (
             <Image
               key={''}
@@ -425,6 +443,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
               height={h}
               use_max={options.singleFill && values.length === 1}
               tooltip={value.tooltip}
+              link={clickable}
               overlay_position={options.overlay.position}
               overlay_width={options.overlay.width}
               overlay_height={options.overlay.height}

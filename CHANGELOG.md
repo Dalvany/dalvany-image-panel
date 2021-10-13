@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+- Allow to open an URL by clicking on the image [#33](https://github.com/Dalvany/dalvany-image-panel/issues/33).
+
 ## 2.3.0
 
 - Add a gap between image.
