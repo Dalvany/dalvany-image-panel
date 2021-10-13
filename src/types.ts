@@ -1,5 +1,8 @@
 export const UNBOUNDED_DEFAULT_COLOR = '#66666620';
 
+/**
+ * Positions for overlay
+ */
 export enum Position {
   TOP_LEFT = 'Top left',
   TOP_RIGHT = 'Top right',
@@ -7,6 +10,9 @@ export enum Position {
   BOTTOM_RIGHT = 'Bottom right',
 }
 
+/**
+ * Options for overlay
+ */
 export interface OverlayOptions {
   field: string;
   position: Position;
@@ -15,27 +21,52 @@ export interface OverlayOptions {
   bindings: Bindings;
 }
 
+/**
+ * Size of overlay
+ */
 export interface Size {
   size: number;
   unit: string;
 }
 
+/**
+ * List of color binding for overlay
+ */
 export interface Bindings {
   bindings: Binding[];
   unbounded: string;
   has_text: boolean;
 }
 
+/**
+ * Overlay color binding for a value
+ */
 export interface Binding {
   color: string;
   value: string | number;
 }
 
+/**
+ * Options to show a text below images
+ */
 export interface Underline {
   field: string;
   text_size: number;
 }
 
+/**
+ * Options to open an url when clicking
+ */
+export interface OpenUrl {
+  enable: boolean;
+  base_url: string;
+  metric_field: string;
+  suffix: string;
+}
+
+/**
+ * Options
+ */
 export interface DynamicImageOptions {
   baseUrl?: string;
   suffix?: string;
@@ -51,4 +82,5 @@ export interface DynamicImageOptions {
   tooltip_date_elapsed: boolean;
   overlay: OverlayOptions;
   underline: Underline;
+  open_url: OpenUrl;
 }

@@ -53,6 +53,20 @@ Options to add and customize a tooltip :
 - Include date : the tooltip will include the date and time
 - As elapsed : the date will be displayed as an elapsed date (i.e. 4h hours ago)
 
+## Image link options
+
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_link.png)
+
+It allows to open a link into a new tab. It works like the image URL : it concatenates 3 elements (a base URL, a metric
+value and a suffix).
+
+- Click to open : enable link support.
+- Base URL (optional) : the start of the URL where to fetch image. Can be left empty if `icon field` already contains
+  the base URL. This option support variable.
+- Link field : field that contains the value. The special value `Don't use a field` allow not to use any field, the
+  result will be the same link for all images. This is the default value.
+- Suffix (optional) : string to add at the end. This option support variable.
+
 ## Overlay options
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_overlay.png)
