@@ -40,6 +40,16 @@ Options that allow to choose how the image will be displayed :
 - Alt field : field to use as `alt`. The special value `Use icon field`
   will use the same field as `Icon field`. This is the default value.
 
+## Slideshow options
+
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_slideshow.png)
+
+Options for slideshow :
+
+- Enable slideshow : enable the slideshow.
+- Duration : configure how long (in milliseconds) an image will be shown.
+- Pause on hover : when enabled, if the mouse is over an image, the slideshow will pause.
+
 ## Image tooltip options
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png)

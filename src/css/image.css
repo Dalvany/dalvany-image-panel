@@ -18,14 +18,10 @@
     display: flex;
 }
 
-.main-container {
+.no-slideshow {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    /* Other than hidden -> scroll bar ? */
-    overflow: hidden;
-    overflow-y: auto;
-    height: 100%;
 }
 
 .left-overlay {
@@ -48,4 +44,16 @@
     display: flex;
     flex-direction: column;
     margin: 5px;
+}
+
+.main-container {
+    /* Other than hidden -> scroll bar ? */
+    overflow: hidden;
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* Fix slideshow height (is there a better way of doing that ?) */
+#slideshow-wrapper div {
+    height: inherit;
 }

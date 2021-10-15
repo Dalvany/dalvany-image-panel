@@ -9,9 +9,16 @@ import {
   guessFieldTypeForField,
   PanelProps,
 } from '@grafana/data';
-import { Bindings, DynamicImageOptions, Position, Size } from './types';
-// @ts-ignore
+import { Bindings, DynamicImageOptions, Position, Size } from 'types';
 import './css/image.css';
+
+// @ts-ignore
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
+
+// @ts-ignore
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 
 interface Props extends PanelProps<DynamicImageOptions> {}
 
@@ -210,7 +217,7 @@ export class Image extends PureComponent<ImageProps> {
         {link === undefined ? (
           this.createImage(h, w, tooltip, url, alt, overlay_value, cl + ' ' + va, oh, ow, overlay_color)
         ) : (
-          <a href={link} target={'_blank'} rel={'noreferrer noopener'}>
+          <a href={link} target={'_blank'} rel={'noreferrer noopener'} style={{ height: '100%' }}>
             {this.createImage(h, w, tooltip, url, alt, overlay_value, cl + ' ' + va, oh, ow, overlay_color)}
           </a>
         )}
@@ -428,6 +435,9 @@ export class DynamicImagePanel extends PureComponent<Props> {
       throw new Error('No data found in response. Please check your query');
     }
 
+    let use_max = options.singleFill && (values.length === 1 || options.slideshow.enable);
+
+    //TODO Remove
     let tmp = options.width;
     if (typeof tmp !== 'number') {
       tmp = String(tmp);
@@ -436,8 +446,44 @@ export class DynamicImagePanel extends PureComponent<Props> {
     // intoString to maintain compatibility (see comment on intoString)
     let w = Number(this.props.replaceVariables(this.intoString(options.width)));
     let h = Number(this.props.replaceVariables(this.intoString(options.height)));
+    if (options.slideshow.enable) {
+      return (
+        <div id={'slideshow-wrapper'} className={'main-container'}>
+          <Slide duration={options.slideshow.duration} pauseOnHover={options.slideshow.pauseOnHover}>
+            {values.map((value) => {
+              let clickable;
+              if (options.open_url.enable) {
+                clickable = start_link + value.link + end_link;
+              }
+              return (
+                <div key={''} className={'full-height'} style={{ display: 'flex' }}>
+                  <Image
+                    key={''}
+                    url={start + value.icon + end}
+                    alt={value.alt}
+                    width={w}
+                    height={h}
+                    use_max={use_max}
+                    tooltip={value.tooltip}
+                    link={clickable}
+                    overlay_position={options.overlay.position}
+                    overlay_width={options.overlay.width}
+                    overlay_height={options.overlay.height}
+                    overlay_bindings={options.overlay.bindings}
+                    overlay_values_are_number={data_are_numbers}
+                    overlay_value={value.overlay}
+                    underline_value={value.underline}
+                    underline_size={underline_size}
+                  />
+                </div>
+              );
+            })}
+          </Slide>
+        </div>
+      );
+    }
     return (
-      <div className="main-container">
+      <div className="main-container no-slideshow">
         {values.map((value) => {
           let clickable;
           if (options.open_url.enable) {
@@ -450,7 +496,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
               alt={value.alt}
               width={w}
               height={h}
-              use_max={options.singleFill && values.length === 1}
+              use_max={use_max}
               tooltip={value.tooltip}
               link={clickable}
               overlay_position={options.overlay.position}
