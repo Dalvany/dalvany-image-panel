@@ -13,10 +13,6 @@ import { Bindings, DynamicImageOptions, Position, Size } from 'types';
 import './css/image.css';
 
 // @ts-ignore
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
-
-// @ts-ignore
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 
