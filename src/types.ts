@@ -64,6 +64,12 @@ export interface OpenUrl {
   suffix: string;
 }
 
+export interface Slideshow {
+  enable: boolean;
+  duration: number;
+  pauseOnHover: boolean;
+}
+
 /**
  * Options
  */
@@ -83,4 +89,5 @@ export interface DynamicImageOptions {
   overlay: OverlayOptions;
   underline: Underline;
   open_url: OpenUrl;
+  slideshow: Slideshow;
 }

@@ -40,6 +40,16 @@ Options that allow to choose how the image will be displayed :
 - Alt field : field to use as `alt`. The special value `Use icon field`
   will use the same field as `Icon field`. This is the default value.
 
+## Slideshow options
+
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_slideshow.png)
+
+Options for slideshow :
+
+- Enable slideshow : enable the slideshow.
+- Duration : configure how long (in milliseconds) an image will be shown.
+- Pause on hover : when enabled, if the mouse is over an image, the slideshow will pause.
+
 ## Image tooltip options
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png)
@@ -112,11 +122,6 @@ Add a field value as underline. If text is wider than image then it will be trun
 Follow instructions
 from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/?tab=installation)
 
-# TODO
-
-- Use the same tooltip as graph panel
-- Auto select first field instead of having a 'First non time field'
-
 # License
 
 - Color binding component is a modification of grafana's ThresholdsEditor thus under Apache 2.0 license.
@@ -124,6 +129,7 @@ from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image
 # Credits
 
 Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.  
+[Slideshow](https://github.com/femioladeji/react-slideshow) is under Apache 2.0 license.  
 Github workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
 
 # Plugin development : resources

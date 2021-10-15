@@ -90,9 +90,32 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Image options'],
     })
     .addBooleanSwitch({
+      path: 'slideshow.enable',
+      name: 'Enable slideshow',
+      description: 'Display images in a slideshow',
+      defaultValue: false,
+      category: ['Slideshow'],
+    })
+    .addNumberInput({
+      path: 'slideshow.duration',
+      name: 'Duration',
+      description: 'How long an image will be display (in milliseconds)',
+      defaultValue: 5000,
+      showIf: (currentConfig) => currentConfig.slideshow.enable,
+      category: ['Slideshow'],
+    })
+    .addBooleanSwitch({
+      path: 'slideshow.pauseOnHover',
+      name: 'Pause on hover',
+      description: "Don't change image when the mouse is over",
+      defaultValue: true,
+      showIf: (currentConfig) => currentConfig.slideshow.enable,
+      category: ['Slideshow'],
+    })
+    .addBooleanSwitch({
       path: 'singleFill',
       name: 'Single fill',
-      description: 'If there is a single image, it will try to fill panel',
+      description: 'If there is a single image or slideshow is enabled, it will try to fill panel',
       defaultValue: true,
       category: ['Image options'],
     })
