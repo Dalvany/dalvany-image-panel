@@ -47,7 +47,9 @@ Options that allow to choose how the image will be displayed :
 Options for slideshow :
 
 - Enable slideshow : enable the slideshow.
-- Duration : configure how long (in milliseconds) an image will be shown.
+- Duration : configure how long (in milliseconds) an image will be shown. Can't be `0`.
+- Transition : which transition animation to use
+- Transition duration : how long the transition will take (in milliseconds). Can't be `0`.
 - Pause on hover : when enabled, if the mouse is over an image, the slideshow will pause.
 
 ## Image tooltip options

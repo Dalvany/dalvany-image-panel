@@ -10,6 +10,11 @@ export enum Position {
   BOTTOM_RIGHT = 'Bottom right',
 }
 
+export enum Transition {
+  SLIDE = 'Slide',
+  FADE = 'Fade',
+}
+
 /**
  * Options for overlay
  */
@@ -67,7 +72,9 @@ export interface OpenUrl {
 export interface Slideshow {
   enable: boolean;
   duration: number;
+  transition_duration: number;
   pauseOnHover: boolean;
+  transition: Transition;
 }
 
 /**
