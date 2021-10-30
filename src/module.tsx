@@ -1,7 +1,7 @@
 import { FieldOverrideContext, FieldType, getFieldDisplayName, PanelPlugin } from '@grafana/data';
-import { DynamicImageOptions, Position, UNBOUNDED_DEFAULT_COLOR } from './types';
-import { DynamicImagePanel } from './DynamicImagePanel';
-import { BindingEditor, SizeEditor } from './OverlayConfigEditor';
+import { DynamicImageOptions, Position, Transition, UNBOUNDED_DEFAULT_COLOR } from 'types';
+import { DynamicImagePanel } from 'DynamicImagePanel';
+import { BindingEditor, SizeEditor } from 'OverlayConfigEditor';
 
 function listFields(context: FieldOverrideContext, first?: any) {
   const options = [first] as any;
@@ -99,8 +99,38 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
     .addNumberInput({
       path: 'slideshow.duration',
       name: 'Duration',
-      description: 'How long an image will be display (in milliseconds)',
+      description: "How long an image will be display (in milliseconds). Can't be 0.",
       defaultValue: 5000,
+      settings: {
+        min: 1,
+        integer: true,
+      },
+      showIf: (currentConfig) => currentConfig.slideshow.enable,
+      category: ['Slideshow'],
+    })
+    .addRadio({
+      path: 'slideshow.transition',
+      name: 'Transition',
+      description: 'Transition to use between each images',
+      defaultValue: Transition.SLIDE,
+      settings: {
+        options: [
+          { value: Transition.SLIDE, label: Transition.SLIDE },
+          { value: Transition.FADE, label: Transition.FADE },
+        ],
+      },
+      showIf: (currentConfig) => currentConfig.slideshow.enable,
+      category: ['Slideshow'],
+    })
+    .addNumberInput({
+      path: 'slideshow.transition_duration',
+      name: 'Transition duration',
+      description: "How long the transition will take (in milliseconds). Can't be 0.",
+      defaultValue: 1000,
+      settings: {
+        min: 1,
+        integer: true,
+      },
       showIf: (currentConfig) => currentConfig.slideshow.enable,
       category: ['Slideshow'],
     })
