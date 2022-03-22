@@ -15,9 +15,9 @@
     "react-slideshow-image": "^3.5.1"
   },
   "devDependencies": {
-    "@grafana/data": "^7.0.0",
+    "@grafana/data": "^8.0.0",
     "@grafana/toolkit": "8.0.0",
-    "@grafana/ui": "^7.0.0",
+    "@grafana/ui": "^8.0.0",
     "@types/grafana": "github:CorpGlory/types-grafana.git",
     "@types/lodash": "4.14.149",
     "eslint-plugin-prettier": "^3.1.3",
