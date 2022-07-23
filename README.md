@@ -91,7 +91,8 @@ Binding behaves this way :
   grafana's threshold.
 - Otherwise, it is a simple mapping.
 
-Note : when leave an input field, values are sorted and empty input are removed.
+Note : when leave an input field, values are sorted and empty input are removed so beware that when choosing the color
+bindings are not reordered.
 
 Options for binding :
 
@@ -100,7 +101,10 @@ Options for binding :
 - Position : select the position of the overlay.
 - Width : allow to select the width of the overlay (in pixel or percent of the image size).
 - Height : allow to select the height of the overlay (in pixel or percent of the image size).
-- Binding : allow to choose the color for each values. Allow also to choose color for unmapped values.
+- Binding : allow to choose the color for each value. Allow also to choose color for unmapped values.
+
+Note : when leave an input field, values are sorted and empty input are removed so beware that when choosing the color
+bindings are not reordered.
 
 ## Underline options
 
@@ -110,6 +114,13 @@ Add a field value as underline. If text is wider than image then it will be trun
 
 - Underline field : field to use as underline. If `No underline` is selected, then underline will not be displayed.
 - Text size : size of the text.
+- Text align : horizontal underline alignment. Default to `left`.
+- Binding field : allow to use a field to bind text color.
+- Binding : this configuration will appear if `Underline`'s `Binding field` is set to a field. It will allow to
+map values to color.
+
+Note : when leave an input field, values are sorted and empty input are removed so beware that when choosing the color
+bindings are not reordered.
 
 # Screenshot
 
