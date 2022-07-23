@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.5.0
+
+- Allow to choose underline horizontal alignment.
+- Allow to map underline text color based on metric value.
+
 ## 2.4.0
 
 - Allow to open an URL by clicking on the image [#33](https://github.com/Dalvany/dalvany-image-panel/issues/33).
