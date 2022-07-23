@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StandardEditorProps, SelectableValue } from '@grafana/data';
 import { Button, ColorPicker, HorizontalGroup, Icon, Input, RadioButtonGroup, VerticalGroup } from '@grafana/ui';
-import { Binding, Bindings, Size, UNBOUNDED_DEFAULT_COLOR } from './types';
+import { Binding, Bindings, Size, UNBOUNDED_OVERLAY_DEFAULT_COLOR } from 'types';
 
 export const SizeEditor: React.FC<StandardEditorProps<Size>> = ({ value, onChange }) => {
   let values = new Array<SelectableValue>(2);
@@ -273,7 +273,7 @@ export const BindingEditor: React.FC<StandardEditorProps<Bindings>> = ({ value, 
   if (v === undefined) {
     v = {
       bindings: [],
-      unbounded: UNBOUNDED_DEFAULT_COLOR,
+      unbounded: UNBOUNDED_OVERLAY_DEFAULT_COLOR,
       has_text: true,
     };
   }

@@ -1,5 +1,11 @@
 import { FieldOverrideContext, FieldType, getFieldDisplayName, PanelPlugin } from '@grafana/data';
-import { DynamicImageOptions, Position, Transition, UNBOUNDED_DEFAULT_COLOR } from 'types';
+import {
+  DynamicImageOptions,
+  Position,
+  TEXT_UNBOUNDED_DEFAULT_COLOR,
+  Transition,
+  UNBOUNDED_OVERLAY_DEFAULT_COLOR,
+} from 'types';
 import { DynamicImagePanel } from 'DynamicImagePanel';
 import { BindingEditor, SizeEditor } from 'OverlayConfigEditor';
 
@@ -311,7 +317,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       description: 'Set color mapping for overlay (act as threshold if data are numbers)',
       defaultValue: {
         bindings: [],
-        unbounded: UNBOUNDED_DEFAULT_COLOR,
+        unbounded: UNBOUNDED_OVERLAY_DEFAULT_COLOR,
         has_text: true,
       },
       editor: BindingEditor,
@@ -337,6 +343,56 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       name: 'Text size',
       description: 'Add a field value as underline',
       defaultValue: '14',
+      showIf: (currentConfig) => currentConfig.underline.field !== '' && currentConfig.underline.field !== undefined,
+      category: ['Underline'],
+    })
+    .addSelect({
+      path: 'underline.text_align',
+      name: 'Text align',
+      description: 'Horizontal underline alignment',
+      defaultValue: 'left',
+      settings: {
+        allowCustomValue: false,
+        options: [
+          { value: 'left', label: 'Left' },
+          { value: 'center', label: 'Center' },
+          { value: 'right', label: 'Right' },
+        ],
+      },
+      showIf: (currentConfig) => currentConfig.underline.field !== '' && currentConfig.underline.field !== undefined,
+      category: ['Underline'],
+    })
+    .addSelect({
+      path: 'underline.bindings_field',
+      name: 'Binding field',
+      description: 'Data field to use for color binding of underline text.',
+      defaultValue: '',
+      settings: {
+        allowCustomValue: false,
+        options: [],
+        getOptions: async (context: FieldOverrideContext) => {
+          return Promise.resolve(listFieldsNew(context, false, { value: '', label: 'No binding' }));
+        },
+      },
+      showIf: (currentConfig) => currentConfig.underline.field !== '' && currentConfig.underline.field !== undefined,
+      category: ['Underline'],
+    })
+    .addCustomEditor({
+      id: 'underline.bindings',
+      path: 'underline.bindings',
+      name: 'Binding',
+      description: 'Set color mapping for underline text (act as threshold if data are numbers)',
+      defaultValue: {
+        bindings: [],
+        unbounded: TEXT_UNBOUNDED_DEFAULT_COLOR,
+        has_text: true,
+      },
+      editor: BindingEditor,
+      showIf: (currentConfig) =>
+        currentConfig.underline.field !== '' &&
+        currentConfig.underline.field !== undefined &&
+        currentConfig.underline.bindings_field !== undefined &&
+        currentConfig.underline.bindings_field !== '',
       category: ['Underline'],
     });
 });

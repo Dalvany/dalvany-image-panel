@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Property } from 'csstype';
 import {
   DataFrame,
   dateTimeFormat,
@@ -9,7 +10,7 @@ import {
   guessFieldTypeForField,
   PanelProps,
 } from '@grafana/data';
-import { Bindings, DynamicImageOptions, Position, Size, Transition } from 'types';
+import { Bindings, DynamicImageOptions, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR, Transition } from 'types';
 import './css/image.css';
 
 // @ts-ignore
@@ -40,13 +41,21 @@ interface ImageProps {
   /** Overlay bindings **/
   overlay_bindings: Bindings;
   /** Overlay field values are numbers ? **/
-  overlay_values_are_number: boolean;
+  overlay_values_are_numbers: boolean;
   /** Overlay value **/
   overlay_value: string | number | undefined;
   /** Underline field **/
   underline_value: string | undefined;
   /** Underline size **/
   underline_size: number;
+  /** Underline text alignment **/
+  underline_alignment: Property.TextAlign;
+  /** Underline text color binding **/
+  underline_bindings: Bindings | undefined;
+  /** Underline binding values are numbers ? **/
+  underline_binding_values_are_numbers: boolean;
+  /** Underline binding value **/
+  underline_binding_value: string | number | undefined;
   /** Clickable link **/
   link: string | undefined;
 }
@@ -61,6 +70,7 @@ interface Value {
   tooltip?: string | undefined;
   overlay?: string | number | undefined;
   underline?: string | undefined;
+  underline_binding?: string | number | undefined;
 }
 
 export class Image extends PureComponent<ImageProps> {
@@ -68,13 +78,11 @@ export class Image extends PureComponent<ImageProps> {
     console.warn('Error loading ' + e.target.src);
   }
 
-  findBindingColorFromNumber(value: number): string {
-    const { overlay_bindings } = this.props;
-
-    let color = overlay_bindings.unbounded;
-    for (let i = 0; i < overlay_bindings.bindings.length; i++) {
-      if (value >= overlay_bindings.bindings[i].value) {
-        color = overlay_bindings.bindings[i].color;
+  findBindingColorFromNumber(value: number, binding: Bindings): string {
+    let color = binding.unbounded;
+    for (let i = 0; i < binding.bindings.length; i++) {
+      if (value >= binding.bindings[i].value) {
+        color = binding.bindings[i].color;
       } else {
         // Stop now
         break;
@@ -84,13 +92,11 @@ export class Image extends PureComponent<ImageProps> {
     return color;
   }
 
-  findBindingColorFromString(value: string): string {
-    const { overlay_bindings } = this.props;
-
-    let color = overlay_bindings.unbounded;
-    for (let i = 0; i < overlay_bindings.bindings.length; i++) {
-      if (value === overlay_bindings.bindings[i].value) {
-        color = overlay_bindings.bindings[i].color;
+  findBindingColorFromString(value: string, binding: Bindings): string {
+    let color = binding.unbounded;
+    for (let i = 0; i < binding.bindings.length; i++) {
+      if (value === binding.bindings[i].value) {
+        color = binding.bindings[i].color;
         // Stop now
         break;
       }
@@ -163,10 +169,14 @@ export class Image extends PureComponent<ImageProps> {
       overlay_height,
       overlay_position,
       overlay_bindings,
-      overlay_values_are_number,
+      overlay_values_are_numbers,
       overlay_value,
       underline_value,
       underline_size,
+      underline_alignment,
+      underline_bindings,
+      underline_binding_values_are_numbers,
+      underline_binding_value,
       link,
     } = this.props;
     let w = width + 'px';
@@ -198,15 +208,29 @@ export class Image extends PureComponent<ImageProps> {
       bindings_contains_string = overlay_bindings.has_text;
 
       // Find binding colors...
-      if (!bindings_contains_string && overlay_values_are_number) {
-        overlay_color = this.findBindingColorFromNumber(overlay_value as number);
+      if (!bindings_contains_string && overlay_values_are_numbers) {
+        overlay_color = this.findBindingColorFromNumber(overlay_value as number, overlay_bindings);
       } else {
-        overlay_color = this.findBindingColorFromString(overlay_value.toString());
+        overlay_color = this.findBindingColorFromString(overlay_value.toString(), overlay_bindings);
       }
     }
     // End handles overlay
 
     let underline_size_px = underline_size + 'px';
+    // Handle underline binding
+    let underline_color: string = TEXT_UNBOUNDED_DEFAULT_COLOR;
+    bindings_contains_string = true;
+    if (underline_binding_value !== undefined && underline_bindings !== undefined) {
+      underline_color = underline_bindings?.unbounded;
+      bindings_contains_string = underline_bindings?.has_text;
+
+      // Find color
+      if (!bindings_contains_string && underline_binding_values_are_numbers) {
+        underline_color = this.findBindingColorFromNumber(underline_binding_value as number, underline_bindings);
+      } else {
+        underline_color = this.findBindingColorFromString(underline_binding_value.toString(), underline_bindings);
+      }
+    }
 
     return (
       <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
@@ -224,6 +248,8 @@ export class Image extends PureComponent<ImageProps> {
               fontSize: underline_size_px,
               whiteSpace: 'nowrap',
               overflow: 'hidden',
+              textAlign: underline_alignment,
+              color: underline_color,
             }}
           >
             {underline_value}
@@ -355,12 +381,31 @@ export class DynamicImagePanel extends PureComponent<Props> {
 
     let underline_index = -1;
     let underline_size = 14;
+    let underline_alignment: Property.TextAlign = 'left';
+    let underline_binding_index = -1;
+    let underline_binding_are_numbers = false;
     if (options.underline.field !== '') {
       underline_size = options.underline.text_size;
       underline_index = this.getFieldIndex(options.underline.field, data.series[0].fields, data.series[0]);
       if (underline_index === -1) {
-        console.error("Missing field '" + options.overlay.field + "' for underline");
-        throw new Error("Missing field '" + options.overlay.field + "' for underline");
+        console.error("Missing field '" + options.underline.field + "' for underline");
+        throw new Error("Missing field '" + options.underline.field + "' for underline");
+      }
+      if (options.underline.text_align !== undefined) {
+        underline_alignment = options.underline.text_align;
+      }
+      if (options.underline.bindings_field !== undefined) {
+        underline_binding_index = this.getFieldIndex(
+          options.underline.bindings_field,
+          data.series[0].fields,
+          data.series[0]
+        );
+        if (underline_binding_index === -1) {
+          console.error("Missing field '" + options.underline.bindings_field + "' for underline binding");
+          throw new Error("Missing field '" + options.underline.bindings_field + "' for underline binding");
+        }
+        let r = guessFieldTypeForField(data.series[0].fields[underline_binding_index]);
+        underline_binding_are_numbers = r === FieldType.number;
       }
     }
 
@@ -374,6 +419,10 @@ export class DynamicImagePanel extends PureComponent<Props> {
       let underline_value = undefined;
       if (underline_index > -1) {
         underline_value = data.series[0].fields[underline_index].values.get(i);
+      }
+      let underline_binding_value = undefined;
+      if (underline_binding_index > -1) {
+        underline_binding_value = data.series[0].fields[underline_binding_index].values.get(i);
       }
       let link_value = '';
       if (options.open_url.enable && link_index !== -1) {
@@ -400,6 +449,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
           link: link_value,
           overlay: overlay_value,
           underline: underline_value,
+          underline_binding: underline_binding_value,
         });
       } else {
         values.push({
@@ -408,6 +458,7 @@ export class DynamicImagePanel extends PureComponent<Props> {
           link: link_value,
           overlay: overlay_value,
           underline: underline_value,
+          underline_binding: underline_binding_value,
         });
       }
     }
@@ -457,10 +508,14 @@ export class DynamicImagePanel extends PureComponent<Props> {
               overlay_width={options.overlay.width}
               overlay_height={options.overlay.height}
               overlay_bindings={options.overlay.bindings}
-              overlay_values_are_number={data_are_numbers}
+              overlay_values_are_numbers={data_are_numbers}
               overlay_value={value.overlay}
               underline_value={value.underline}
               underline_size={underline_size}
+              underline_alignment={underline_alignment}
+              underline_bindings={options.underline.bindings}
+              underline_binding_values_are_numbers={underline_binding_are_numbers}
+              underline_binding_value={value.underline_binding}
             />
           </div>
         );
@@ -499,10 +554,14 @@ export class DynamicImagePanel extends PureComponent<Props> {
               overlay_width={options.overlay.width}
               overlay_height={options.overlay.height}
               overlay_bindings={options.overlay.bindings}
-              overlay_values_are_number={data_are_numbers}
+              overlay_values_are_numbers={data_are_numbers}
               overlay_value={value.overlay}
               underline_value={value.underline}
               underline_size={underline_size}
+              underline_alignment={underline_alignment}
+              underline_bindings={options.underline.bindings}
+              underline_binding_values_are_numbers={underline_binding_are_numbers}
+              underline_binding_value={value.underline_binding}
             />
           );
         })}

@@ -1,4 +1,7 @@
-export const UNBOUNDED_DEFAULT_COLOR = '#66666620';
+import { Property } from 'csstype';
+
+export const UNBOUNDED_OVERLAY_DEFAULT_COLOR = '#66666620';
+export const TEXT_UNBOUNDED_DEFAULT_COLOR = '#CCCCDCFF';
 
 /**
  * Positions for overlay
@@ -57,6 +60,9 @@ export interface Binding {
 export interface Underline {
   field: string;
   text_size: number;
+  text_align?: Property.TextAlign;
+  bindings_field?: string;
+  bindings?: Bindings;
 }
 
 /**
