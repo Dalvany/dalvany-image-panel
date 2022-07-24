@@ -2,8 +2,8 @@
 
 ## 2.5.0
 
-- Allow to choose underline horizontal alignment.
-- Allow to map underline text color based on metric value.
+- Allow to choose underline horizontal alignment ([#46](https://github.com/Dalvany/dalvany-image-panel/issues/46)).
+- Allow to map underline text color based on metric value ([#46](https://github.com/Dalvany/dalvany-image-panel/issues/46)).
 
 ## 2.4.0
 
