@@ -83,6 +83,10 @@ export interface Slideshow {
   transition: Transition;
 }
 
+export interface SharedCrossSupport {
+  backgroundHighlight: string;
+}
+
 /**
  * Options
  */
@@ -103,4 +107,5 @@ export interface DynamicImageOptions {
   underline: Underline;
   open_url: OpenUrl;
   slideshow: Slideshow;
+  shared_cross_hair: SharedCrossSupport;
 }

@@ -5,7 +5,7 @@
 
 # Grafana image panel
 
-Display an image by concatenation of an URL, a metric and a suffix.  
+Display an image by concatenation of a URL, a metric and a suffix.  
 The result will be : baseURL + icon field + suffix.
 
 Note : if new options doesn't show up or plugin seems in an older version, please uninstall, reinstall and then restart
@@ -39,6 +39,12 @@ Options that allow to choose how the image will be displayed :
 - Single fill : if the query have a unique result, allow to fill the panel instead of using width and height above
 - Alt field : field to use as `alt`. The special value `Use icon field`
   will use the same field as `Icon field`. This is the default value.
+
+## Shared crosshair options
+
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_shared_crosshair.png)
+
+- Background highlight : the color to use as background image for shared crosshair (default to white with transparency)
 
 ## Slideshow options
 
@@ -117,23 +123,41 @@ Add a field value as underline. If text is wider than image then it will be trun
 - Text align : horizontal underline alignment. Default to `left`.
 - Binding field : allow to use a field to bind text color.
 - Binding : this configuration will appear if `Underline`'s `Binding field` is set to a field. It will allow to
-map values to color.
+  map values to color.
 
 Note : when leave an input field, values are sorted and empty input are removed so beware that when choosing the color
 bindings are not reordered.
 
 # Screenshot
 
+Multiple results
+
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot01.png)
+
+"Single fill"
+
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot02.png)
+
+One result with "single fill" disabled
+
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot03.png)
+
+Overlay
+
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot04.png)
+
+Underline
+
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot05.png)
+
+Shared crosshair support
+
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot06.png)
 
 # Install
 
-Follow instructions
-from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/?tab=installation)
+Follow instructions from
+[grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/?tab=installation)
 
 # License
 
@@ -143,6 +167,7 @@ from [grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image
 
 Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.  
 [Slideshow](https://github.com/femioladeji/react-slideshow) is under Apache 2.0 license.  
+
 Github workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
 
 # Plugin development : resources
