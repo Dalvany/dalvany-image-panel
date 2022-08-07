@@ -3,7 +3,7 @@
 ## 2.6.0
 
 - Partial support (it can only receive events) for "shared crosshair". Image background will change for the configured
-colored (default to #FFFFFF10). Note that the actual image should have transparency.
+colored (default to #FFFFFF10). Note that the actual image should have transparency. ([#16](https://github.com/Dalvany/dalvany-image-panel/issues/16)).
 
 ## 2.5.0
 
