@@ -70,7 +70,7 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
         },
       },
       // I don't know how I can get the first non time field here, so I put a
-      // "First non time value" on options in 'listFields' function and default
+      // "First non-time value" on options in 'listFields' function and default
       // to this 'special' value
       defaultValue: '',
       category: ['URL'],
@@ -94,6 +94,15 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       description: "Image height in pixel (potentially ignored if 'single fill')",
       defaultValue: '75',
       category: ['Image options'],
+    })
+    .addColorPicker({
+      path: 'shared_cross_hair.backgroundHighlight',
+      name: 'Background highlight',
+      description:
+        'Background color to use for shared crosshair. Note that the actual image should have' +
+        'transparency as background for this feature to work.',
+      defaultValue: '#FFFFFF10',
+      category: ['Shared crosshair support'],
     })
     .addBooleanSwitch({
       path: 'slideshow.enable',
