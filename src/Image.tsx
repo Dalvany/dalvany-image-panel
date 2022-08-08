@@ -108,13 +108,19 @@ function createImage(
   borderColor: string
 ) {
   return (
-    <div style={{ height: h, width: w, position: 'relative' }}>
+    <div
+      style={{
+        height: h,
+        width: w,
+        position: 'relative',
+        backgroundColor: backgroundColor,
+        border: borderColor + ' 1px solid',
+      }}
+    >
       <img
         className={'image'}
         style={{
-          backgroundColor: backgroundColor,
           pointerEvents: 'auto',
-          border: borderColor + ' 1px solid',
         }}
         title={tooltip}
         onError={(e) => handleError(e)}
