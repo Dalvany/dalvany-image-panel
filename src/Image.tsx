@@ -41,8 +41,10 @@ interface ImageProps {
   underline_binding_value: string | number | undefined;
   /** Clickable link **/
   link: string | undefined;
-  /** Highlight (change background alpha for shared crosshair **/
+  /** Highlight background color (change background alpha for shared crosshair) **/
   backgroundColor: string;
+  /** Highlight border color (shared crosshair) **/
+  borderColor: string;
 }
 
 function handleError(e) {
@@ -89,6 +91,7 @@ function findBindingColorFromString(value: string, binding: Bindings): string {
  * @param ow Width of the overlay
  * @param overlay_color Color of overlay
  * @param backgroundColor Color of the image background
+ * @param borderColor Border color of the image
  */
 function createImage(
   h: string,
@@ -101,7 +104,8 @@ function createImage(
   oh: string,
   ow: string,
   overlay_color: string | undefined,
-  backgroundColor: string
+  backgroundColor: string,
+  borderColor: string
 ) {
   return (
     <div style={{ height: h, width: w, position: 'relative' }}>
@@ -110,6 +114,7 @@ function createImage(
         style={{
           backgroundColor: backgroundColor,
           pointerEvents: 'auto',
+          border: borderColor + ' 1px solid',
         }}
         title={tooltip}
         onError={(e) => handleError(e)}
@@ -153,6 +158,7 @@ export function Image(props: ImageProps) {
     underline_binding_value,
     link,
     backgroundColor,
+    borderColor,
   } = props;
 
   let w = width + 'px';
@@ -211,10 +217,36 @@ export function Image(props: ImageProps) {
   return (
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
       {link === undefined ? (
-        createImage(h, w, tooltip, url, alt, overlay_value, cl + ' ' + va, oh, ow, overlay_color, backgroundColor)
+        createImage(
+          h,
+          w,
+          tooltip,
+          url,
+          alt,
+          overlay_value,
+          cl + ' ' + va,
+          oh,
+          ow,
+          overlay_color,
+          backgroundColor,
+          borderColor
+        )
       ) : (
         <a href={link} target={'_blank'} rel={'noreferrer noopener'} style={{ height: '100%' }}>
-          {createImage(h, w, tooltip, url, alt, overlay_value, cl + ' ' + va, oh, ow, overlay_color, backgroundColor)}
+          {createImage(
+            h,
+            w,
+            tooltip,
+            url,
+            alt,
+            overlay_value,
+            cl + ' ' + va,
+            oh,
+            ow,
+            overlay_color,
+            backgroundColor,
+            borderColor
+          )}
         </a>
       )}
       {underline_value !== undefined && (

@@ -44,7 +44,8 @@ Options that allow to choose how the image will be displayed :
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_shared_crosshair.png)
 
-- Background highlight : the color to use as background image for shared crosshair (default to white with transparency)
+- Background highlight color : the color to use as background image for shared crosshair (default to white with transparency)
+- Border highlight color : the border color to use for shared crosshair.
 
 ## Slideshow options
 

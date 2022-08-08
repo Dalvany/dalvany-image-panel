@@ -31,6 +31,7 @@ interface Value {
   icon: string;
   alt: string;
   backgroundColor: string;
+  borderColor: string;
   link?: string | undefined;
   tooltip?: string | undefined;
   overlay?: string | number | undefined;
@@ -216,6 +217,7 @@ export function DynamicImagePanel(props: Props) {
   let values: Value[] = [];
   for (let i = 0; i < max; i++) {
     let backgroundColor = '#00000000';
+    let borderColor = '#00000000';
     if (hooverTime !== undefined) {
       let currentTime = data.series[0].fields[time_index].values.get(i);
       let nextTime = undefined;
@@ -223,9 +225,11 @@ export function DynamicImagePanel(props: Props) {
         nextTime = data.series[0].fields[time_index].values.get(i + 1);
       }
       if (currentTime <= hooverTime && nextTime === undefined) {
-        backgroundColor = options.shared_cross_hair.backgroundHighlight;
+        backgroundColor = options.shared_cross_hair.backgroundColor;
+        borderColor = options.shared_cross_hair.borderColor;
       } else if (currentTime <= hooverTime && nextTime !== undefined && hooverTime < nextTime) {
-        backgroundColor = options.shared_cross_hair.backgroundHighlight;
+        backgroundColor = options.shared_cross_hair.backgroundColor;
+        borderColor = options.shared_cross_hair.borderColor;
       }
     }
 
@@ -264,6 +268,7 @@ export function DynamicImagePanel(props: Props) {
         icon: data.series[0].fields[icon_index].values.get(i),
         alt: data.series[0].fields[alt_index].values.get(i),
         backgroundColor: backgroundColor,
+        borderColor: borderColor,
         tooltip: t,
         link: link_value,
         overlay: overlay_value,
@@ -275,6 +280,7 @@ export function DynamicImagePanel(props: Props) {
         icon: data.series[0].fields[icon_index].values.get(i),
         alt: data.series[0].fields[alt_index].values.get(i),
         backgroundColor: backgroundColor,
+        borderColor: borderColor,
         link: link_value,
         overlay: overlay_value,
         underline: underline_value,
@@ -337,6 +343,7 @@ export function DynamicImagePanel(props: Props) {
             underline_binding_values_are_numbers={underline_binding_are_numbers}
             underline_binding_value={value.underline_binding}
             backgroundColor={value.backgroundColor}
+            borderColor={value.borderColor}
           />
         </div>
       );
@@ -384,6 +391,7 @@ export function DynamicImagePanel(props: Props) {
             underline_binding_values_are_numbers={underline_binding_are_numbers}
             underline_binding_value={value.underline_binding}
             backgroundColor={value.backgroundColor}
+            borderColor={value.borderColor}
           />
         );
       })}
