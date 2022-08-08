@@ -18,7 +18,7 @@ If queries select multiple fields, use the outer join transform.
 
 ## URL
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_url.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_url.png)
 
 Options for building image URL :
 
@@ -30,7 +30,7 @@ Options for building image URL :
 
 ## Image options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_image.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_image.png)
 
 Options that allow to choose how the image will be displayed :
 
@@ -42,14 +42,14 @@ Options that allow to choose how the image will be displayed :
 
 ## Shared crosshair options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_shared_crosshair.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_shared_crosshair.png)
 
 - Background highlight color : the color to use as background image for shared crosshair (default to white with transparency)
 - Border highlight color : the border color to use for shared crosshair.
 
 ## Slideshow options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_slideshow.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_slideshow.png)
 
 Options for slideshow :
 
@@ -61,7 +61,7 @@ Options for slideshow :
 
 ## Image tooltip options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_tooltip.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_tooltip.png)
 
 Options to add and customize a tooltip :
 
@@ -74,7 +74,7 @@ Options to add and customize a tooltip :
 
 ## Image link options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_link.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_link.png)
 
 It allows to open a link into a new tab. It works like the image URL : it concatenates 3 elements (a base URL, a metric
 value and a suffix).
@@ -88,7 +88,7 @@ value and a suffix).
 
 ## Overlay options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_overlay.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_overlay.png)
 
 Allow adding colored square as overlay on the corner of each image. Color is bound from values. By default, color is
 light transparent grey.  
@@ -115,7 +115,7 @@ bindings are not reordered.
 
 ## Underline options
 
-![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/configuration_underline.png)
+![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_underline.png)
 
 Add a field value as underline. If text is wider than image then it will be truncated.
 
@@ -133,27 +133,27 @@ bindings are not reordered.
 
 Multiple results
 
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot01.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot01.png)
 
 "Single fill"
 
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot02.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot02.png)
 
 One result with "single fill" disabled
 
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot03.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot03.png)
 
 Overlay
 
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot04.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot04.png)
 
 Underline
 
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot05.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot05.png)
 
 Shared crosshair support
 
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/master/src/img/screenshot06.png)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot06.png)
 
 # Install
 
