@@ -84,7 +84,8 @@ export interface Slideshow {
 }
 
 export interface SharedCrossSupport {
-  backgroundHighlight: string;
+  backgroundColor: string;
+  borderColor: string;
 }
 
 /**

@@ -31,6 +31,7 @@ interface Value {
   icon: string;
   alt: string;
   backgroundColor: string;
+  borderColor: string;
   link?: string | undefined;
   tooltip?: string | undefined;
   overlay?: string | number | undefined;
@@ -87,7 +88,7 @@ export function DynamicImagePanel(props: Props) {
   const [hooverTime, setHooverTime] = useState<number | undefined>();
   const { eventBus } = usePanelContext();
   useEffect(() => {
-    const setHighlightedSlice = (event: DataHoverEvent) => {
+    const setHighlightTime = (event: DataHoverEvent) => {
       const rowIndex = event.payload?.rowIndex as number;
       const timeField: Field | undefined = getTimeField(event.payload?.data?.fields);
       let time = undefined;
@@ -97,13 +98,13 @@ export function DynamicImagePanel(props: Props) {
       setHooverTime(time);
     };
 
-    const resetHighlightedSlice = (event: DataHoverClearEvent) => {
+    const resetHighlightTime = (event: DataHoverClearEvent) => {
       setHooverTime(undefined);
     };
 
     const subs = new Subscription();
-    subs.add(eventBus.getStream(DataHoverEvent).subscribe({ next: setHighlightedSlice }));
-    subs.add(eventBus.getStream(DataHoverClearEvent).subscribe({ next: resetHighlightedSlice }));
+    subs.add(eventBus.getStream(DataHoverEvent).subscribe({ next: setHighlightTime }));
+    subs.add(eventBus.getStream(DataHoverClearEvent).subscribe({ next: resetHighlightTime }));
 
     return () => {
       subs.unsubscribe();
@@ -166,9 +167,11 @@ export function DynamicImagePanel(props: Props) {
       ? getFieldIndex(options.open_url.metric_field, data.series[0].fields, data.series[0])
       : -1;
 
+  // To not mess up with tooltip
+  let hoover_time_index = getTimeFieldIndex(data.series[0].fields);
+
   // Find time field for tooltip (if no tooltip or if it doesn't include time, use icon field as we don't care about values)
-  let time_index =
-    options.tooltip && options.tooltip_include_date ? getTimeFieldIndex(data.series[0].fields) : icon_index;
+  let time_index = options.tooltip && options.tooltip_include_date ? hoover_time_index : icon_index;
   if (time_index === -1) {
     console.error('Missing time field from data for tooltip');
     throw new Error("Can't find time field for tooltip.");
@@ -216,16 +219,19 @@ export function DynamicImagePanel(props: Props) {
   let values: Value[] = [];
   for (let i = 0; i < max; i++) {
     let backgroundColor = '#00000000';
-    if (hooverTime !== undefined) {
-      let currentTime = data.series[0].fields[time_index].values.get(i);
+    let borderColor = '#00000000';
+    if (hooverTime !== undefined && hoover_time_index > -1) {
+      let currentTime = data.series[0].fields[hoover_time_index].values.get(i);
       let nextTime = undefined;
       if (i < max - 1) {
-        nextTime = data.series[0].fields[time_index].values.get(i + 1);
+        nextTime = data.series[0].fields[hoover_time_index].values.get(i + 1);
       }
       if (currentTime <= hooverTime && nextTime === undefined) {
-        backgroundColor = options.shared_cross_hair.backgroundHighlight;
+        backgroundColor = options.shared_cross_hair.backgroundColor;
+        borderColor = options.shared_cross_hair.borderColor;
       } else if (currentTime <= hooverTime && nextTime !== undefined && hooverTime < nextTime) {
-        backgroundColor = options.shared_cross_hair.backgroundHighlight;
+        backgroundColor = options.shared_cross_hair.backgroundColor;
+        borderColor = options.shared_cross_hair.borderColor;
       }
     }
 
@@ -264,6 +270,7 @@ export function DynamicImagePanel(props: Props) {
         icon: data.series[0].fields[icon_index].values.get(i),
         alt: data.series[0].fields[alt_index].values.get(i),
         backgroundColor: backgroundColor,
+        borderColor: borderColor,
         tooltip: t,
         link: link_value,
         overlay: overlay_value,
@@ -275,6 +282,7 @@ export function DynamicImagePanel(props: Props) {
         icon: data.series[0].fields[icon_index].values.get(i),
         alt: data.series[0].fields[alt_index].values.get(i),
         backgroundColor: backgroundColor,
+        borderColor: borderColor,
         link: link_value,
         overlay: overlay_value,
         underline: underline_value,
@@ -337,6 +345,7 @@ export function DynamicImagePanel(props: Props) {
             underline_binding_values_are_numbers={underline_binding_are_numbers}
             underline_binding_value={value.underline_binding}
             backgroundColor={value.backgroundColor}
+            borderColor={value.borderColor}
           />
         </div>
       );
@@ -384,6 +393,7 @@ export function DynamicImagePanel(props: Props) {
             underline_binding_values_are_numbers={underline_binding_are_numbers}
             underline_binding_value={value.underline_binding}
             backgroundColor={value.backgroundColor}
+            borderColor={value.borderColor}
           />
         );
       })}

@@ -96,12 +96,19 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Image options'],
     })
     .addColorPicker({
-      path: 'shared_cross_hair.backgroundHighlight',
-      name: 'Background highlight',
+      path: 'shared_cross_hair.backgroundColor',
+      name: 'Background highlight color',
       description:
         'Background color to use for shared crosshair. Note that the actual image should have' +
         'transparency as background for this feature to work.',
       defaultValue: '#FFFFFF10',
+      category: ['Shared crosshair support'],
+    })
+    .addColorPicker({
+      path: 'shared_cross_hair.borderColor',
+      name: 'Border highlight color',
+      description: 'Border color to use for shared crosshair.',
+      defaultValue: '#FFFFFF20',
       category: ['Shared crosshair support'],
     })
     .addBooleanSwitch({
