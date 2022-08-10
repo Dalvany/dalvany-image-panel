@@ -2,6 +2,88 @@ import { Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
 import { Property } from 'csstype';
 import React from 'react';
 
+function handleError(e) {
+  console.warn('Error loading ' + e.target.src);
+}
+
+function findBindingColorFromNumber(value: number, binding: Bindings): string {
+  let color = binding.unbounded;
+  for (let i = 0; i < binding.bindings.length; i++) {
+    if (value >= binding.bindings[i].value) {
+      color = binding.bindings[i].color;
+    } else {
+      // Stop now
+      break;
+    }
+  }
+
+  return color;
+}
+
+function findBindingColorFromString(value: string, binding: Bindings): string {
+  let color = binding.unbounded;
+  for (let i = 0; i < binding.bindings.length; i++) {
+    if (value === binding.bindings[i].value) {
+      color = binding.bindings[i].color;
+      // Stop now
+      break;
+    }
+  }
+
+  return color;
+}
+
+export interface CreateImageProps {
+  h: string;
+  w: string;
+  tooltip: string | undefined;
+  url: string;
+  alt: string;
+  overlay_value: string | number | undefined;
+  classname: string;
+  oh: string;
+  ow: string;
+  overlay_color: string | undefined;
+  highlight: HighlightProps;
+}
+
+export function CreateImage(props: CreateImageProps) {
+  const { h, w, tooltip, url, alt, overlay_value, classname, oh, ow, overlay_color, highlight } = props;
+  return (
+    <div
+      style={{
+        height: h,
+        width: w,
+        position: 'relative',
+        backgroundColor: highlight.backgroundColor,
+        border: highlight.borderColor + ' 1px solid',
+      }}
+    >
+      <img
+        className={'image'}
+        style={{
+          pointerEvents: 'auto',
+        }}
+        title={tooltip}
+        onError={(e) => handleError(e)}
+        src={url}
+        alt={alt}
+      />
+      {overlay_value !== undefined && (
+        <div
+          className={classname}
+          style={{
+            height: oh,
+            width: ow,
+            backgroundColor: overlay_color,
+            position: 'absolute',
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
 export interface OverlayProps {
   /** Position of the overlay **/
   overlay_position: Position;
@@ -44,7 +126,7 @@ export interface HighlightProps {
   borderColor: string;
 }
 
-interface ImageProps {
+export interface ImageDataProps {
   /** Image URL **/
   url: string;
   /** Tooltip text, if null no tooltip **/
@@ -57,6 +139,13 @@ interface ImageProps {
   height: number;
   /** Handle 'singleFill' use 100% instead of height and width **/
   use_max: boolean;
+  /** Time, if any, for the image **/
+  time: number | undefined;
+}
+
+interface ImageProps {
+  /** Image **/
+  image: ImageDataProps;
   /** Overlay **/
   overlay: OverlayProps;
   /** Underline **/
@@ -67,108 +156,15 @@ interface ImageProps {
   highlight: HighlightProps;
 }
 
-function handleError(e) {
-  console.warn('Error loading ' + e.target.src);
-}
-
-function findBindingColorFromNumber(value: number, binding: Bindings): string {
-  let color = binding.unbounded;
-  for (let i = 0; i < binding.bindings.length; i++) {
-    if (value >= binding.bindings[i].value) {
-      color = binding.bindings[i].color;
-    } else {
-      // Stop now
-      break;
-    }
-  }
-
-  return color;
-}
-
-function findBindingColorFromString(value: string, binding: Bindings): string {
-  let color = binding.unbounded;
-  for (let i = 0; i < binding.bindings.length; i++) {
-    if (value === binding.bindings[i].value) {
-      color = binding.bindings[i].color;
-      // Stop now
-      break;
-    }
-  }
-
-  return color;
-}
-
-/**
- * Create an image with the given parameters
- * @param h Height of the image
- * @param w Width of the image
- * @param tooltip Tooltip text (undefined if no tooltip)
- * @param url URL of the image
- * @param alt Alt text
- * @param overlay_value Value of the overlay
- * @param classname Position of the overlay
- * @param oh Height of the overlay
- * @param ow Width of the overlay
- * @param overlay_color Color of overlay
- * @param highlight Properties for shared crosshair
- */
-function createImage(
-  h: string,
-  w: string,
-  tooltip: string | undefined,
-  url: string,
-  alt: string,
-  overlay_value: string | number | undefined,
-  classname: string,
-  oh: string,
-  ow: string,
-  overlay_color: string | undefined,
-  highlight: HighlightProps
-) {
-  return (
-    <div
-      style={{
-        height: h,
-        width: w,
-        position: 'relative',
-        backgroundColor: highlight.backgroundColor,
-        border: highlight.borderColor + ' 1px solid',
-      }}
-    >
-      <img
-        className={'image'}
-        style={{
-          pointerEvents: 'auto',
-        }}
-        title={tooltip}
-        onError={(e) => handleError(e)}
-        src={url}
-        alt={alt}
-      />
-      {overlay_value !== undefined && (
-        <div
-          className={classname}
-          style={{
-            height: oh,
-            width: ow,
-            backgroundColor: overlay_color,
-            position: 'absolute',
-          }}
-        />
-      )}
-    </div>
-  );
-}
-
 export function Image(props: ImageProps) {
-  const { url, tooltip, alt, width, height, use_max, overlay, underline, link, highlight } = props;
+  const { image, overlay, underline, link, highlight } = props;
 
-  let w = width + 'px';
-  if (use_max) {
+  let w = image.width + 'px';
+  if (image.use_max) {
     w = '100%';
   }
-  let h = height + 'px';
-  if (use_max) {
+  let h = image.height + 'px';
+  if (image.use_max) {
     h = '100%';
   }
 
@@ -225,10 +221,34 @@ export function Image(props: ImageProps) {
   return (
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
       {link === undefined ? (
-        createImage(h, w, tooltip, url, alt, overlay.overlay_value, cl + ' ' + va, oh, ow, overlay_color, highlight)
+        <CreateImage
+          h={h}
+          w={w}
+          tooltip={image.tooltip}
+          url={image.url}
+          alt={image.alt}
+          overlay_value={overlay.overlay_value}
+          classname={cl + ' ' + va}
+          oh={oh}
+          ow={ow}
+          overlay_color={overlay_color}
+          highlight={highlight}
+        />
       ) : (
         <a href={link.link} target={'_blank'} rel={'noreferrer noopener'} style={{ height: '100%' }}>
-          {createImage(h, w, tooltip, url, alt, overlay.overlay_value, cl + ' ' + va, oh, ow, overlay_color, highlight)}
+          <CreateImage
+            h={h}
+            w={w}
+            tooltip={image.tooltip}
+            url={image.url}
+            alt={image.alt}
+            overlay_value={overlay.overlay_value}
+            classname={cl + ' ' + va}
+            oh={oh}
+            ow={ow}
+            overlay_color={overlay_color}
+            highlight={highlight}
+          />
         </a>
       )}
       {underline.underline_value !== undefined && (

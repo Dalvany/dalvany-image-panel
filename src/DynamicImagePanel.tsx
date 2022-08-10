@@ -14,8 +14,8 @@ import {
   PanelProps,
 } from '@grafana/data';
 import { usePanelContext } from '@grafana/ui';
-import { DynamicImageOptions, Transition } from 'types';
-import { HighlightProps, Image, LinkProps, OverlayProps, UnderlineProps } from 'Image';
+import { DynamicImageOptions, Transition, ConditionalWrapper } from 'types';
+import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'Image';
 import './css/image.css';
 
 // @ts-ignore
@@ -37,6 +37,7 @@ interface Value {
   overlay?: string | number | undefined;
   underline?: string | undefined;
   underline_binding?: string | number | undefined;
+  time: number | undefined;
 }
 
 function getFieldIndex(field: string, fields: Field[], dataframe: DataFrame): number {
@@ -81,8 +82,6 @@ function intoString(data: number | string): string {
 
   return data;
 }
-
-const ConditionalWrapper = ({ condition, wrapper, children }) => (condition ? wrapper(children) : children);
 
 export function DynamicImagePanel(props: Props) {
   const { options, data } = props;
@@ -220,6 +219,7 @@ export function DynamicImagePanel(props: Props) {
 
   let values: Value[] = [];
   for (let i = 0; i < max; i++) {
+    let time: number | undefined;
     let backgroundColor = '#00000000';
     let borderColor = '#00000000';
     if (hooverTime !== undefined && hoover_time_index > -1) {
@@ -229,9 +229,11 @@ export function DynamicImagePanel(props: Props) {
         nextTime = data.series[0].fields[hoover_time_index].values.get(i + 1);
       }
       if (currentTime <= hooverTime && nextTime === undefined) {
+        time = currentTime;
         backgroundColor = options.shared_cross_hair.backgroundColor;
         borderColor = options.shared_cross_hair.borderColor;
       } else if (currentTime <= hooverTime && nextTime !== undefined && hooverTime < nextTime) {
+        time = currentTime;
         backgroundColor = options.shared_cross_hair.backgroundColor;
         borderColor = options.shared_cross_hair.borderColor;
       }
@@ -278,6 +280,7 @@ export function DynamicImagePanel(props: Props) {
         overlay: overlay_value,
         underline: underline_value,
         underline_binding: underline_binding_value,
+        time: time,
       });
     } else {
       values.push({
@@ -289,6 +292,7 @@ export function DynamicImagePanel(props: Props) {
         overlay: overlay_value,
         underline: underline_value,
         underline_binding: underline_binding_value,
+        time: time,
       });
     }
   }
@@ -349,20 +353,19 @@ export function DynamicImagePanel(props: Props) {
     const link: LinkProps = {
       link: clickable,
     };
+
+    const imageData: ImageDataProps = {
+      time: value.time,
+      url: start + value.icon + end,
+      alt: value.alt,
+      width: w,
+      height: h,
+      use_max: use_max,
+      tooltip: value.tooltip,
+    };
+
     let child = (
-      <Image
-        key={''}
-        url={start + value.icon + end}
-        alt={value.alt}
-        width={w}
-        height={h}
-        use_max={use_max}
-        tooltip={value.tooltip}
-        link={link}
-        overlay={overlay}
-        underline={underline}
-        highlight={highlight}
-      />
+      <Image key={''} image={imageData} link={link} overlay={overlay} underline={underline} highlight={highlight} />
     );
 
     return (
