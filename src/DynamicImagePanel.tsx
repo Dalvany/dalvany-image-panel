@@ -15,7 +15,7 @@ import {
 } from '@grafana/data';
 import { usePanelContext } from '@grafana/ui';
 import { DynamicImageOptions, Transition } from 'types';
-import { Image } from 'Image';
+import { HighlightProps, Image, LinkProps, OverlayProps, UnderlineProps } from 'Image';
 import './css/image.css';
 
 // @ts-ignore
@@ -81,6 +81,8 @@ function intoString(data: number | string): string {
 
   return data;
 }
+
+const ConditionalWrapper = ({ condition, wrapper, children }) => (condition ? wrapper(children) : children);
 
 export function DynamicImagePanel(props: Props) {
   const { options, data } = props;
@@ -315,41 +317,70 @@ export function DynamicImagePanel(props: Props) {
   // intoString to maintain compatibility (see comment on intoString)
   let w = Number(props.replaceVariables(intoString(options.width)));
   let h = Number(props.replaceVariables(intoString(options.height)));
+
+  const children = values.map((value) => {
+    const overlay: OverlayProps = {
+      overlay_position: options.overlay.position,
+      overlay_width: options.overlay.width,
+      overlay_height: options.overlay.height,
+      overlay_bindings: options.overlay.bindings,
+      overlay_values_are_numbers: data_are_numbers,
+      overlay_value: value.overlay,
+    };
+
+    const underline: UnderlineProps = {
+      underline_value: value.underline,
+      underline_size: underline_size,
+      underline_alignment: underline_alignment,
+      underline_bindings: options.underline.bindings,
+      underline_binding_values_are_numbers: underline_binding_are_numbers,
+      underline_binding_value: value.underline_binding,
+    };
+
+    const highlight: HighlightProps = {
+      backgroundColor: value.backgroundColor,
+      borderColor: value.borderColor,
+    };
+
+    let clickable;
+    if (options.open_url.enable) {
+      clickable = start_link + value.link + end_link;
+    }
+    const link: LinkProps = {
+      link: clickable,
+    };
+    let child = (
+      <Image
+        key={''}
+        url={start + value.icon + end}
+        alt={value.alt}
+        width={w}
+        height={h}
+        use_max={use_max}
+        tooltip={value.tooltip}
+        link={link}
+        overlay={overlay}
+        underline={underline}
+        highlight={highlight}
+      />
+    );
+
+    return (
+      <ConditionalWrapper
+        key={'1'}
+        condition={options.slideshow.enable}
+        wrapper={(children) => (
+          <div key={''} className={'full-height'} style={{ display: 'flex' }}>
+            {children}
+          </div>
+        )}
+      >
+        {child}
+      </ConditionalWrapper>
+    );
+  });
+
   if (options.slideshow.enable) {
-    const children = values.map((value) => {
-      let clickable;
-      if (options.open_url.enable) {
-        clickable = start_link + value.link + end_link;
-      }
-      return (
-        <div key={''} className={'full-height'} style={{ display: 'flex' }}>
-          <Image
-            key={''}
-            url={start + value.icon + end}
-            alt={value.alt}
-            width={w}
-            height={h}
-            use_max={use_max}
-            tooltip={value.tooltip}
-            link={clickable}
-            overlay_position={options.overlay.position}
-            overlay_width={options.overlay.width}
-            overlay_height={options.overlay.height}
-            overlay_bindings={options.overlay.bindings}
-            overlay_values_are_numbers={data_are_numbers}
-            overlay_value={value.overlay}
-            underline_value={value.underline}
-            underline_size={underline_size}
-            underline_alignment={underline_alignment}
-            underline_bindings={options.underline.bindings}
-            underline_binding_values_are_numbers={underline_binding_are_numbers}
-            underline_binding_value={value.underline_binding}
-            backgroundColor={value.backgroundColor}
-            borderColor={value.borderColor}
-          />
-        </div>
-      );
-    });
     const transition = options.slideshow.transition;
     const p = {
       duration: options.slideshow.duration,
@@ -357,46 +388,19 @@ export function DynamicImagePanel(props: Props) {
       pauseOnHover: options.slideshow.pauseOnHover,
     };
     return (
-      <div id={'slideshow-wrapper'} className={'main-container'}>
+      <ConditionalWrapper
+        condition={options.slideshow.enable}
+        wrapper={(children) => (
+          <div id={'slideshow-wrapper'} className={'main-container'}>
+            {children}
+          </div>
+        )}
+      >
         {transition === Transition.SLIDE && <Slide {...p}>{children}</Slide>}
         {transition === Transition.FADE && <Fade {...p}>{children}</Fade>}
-      </div>
+      </ConditionalWrapper>
     );
   }
-  return (
-    <div className="main-container no-slideshow">
-      {values.map((value) => {
-        let clickable;
-        if (options.open_url.enable) {
-          clickable = start_link + value.link + end_link;
-        }
-        return (
-          <Image
-            key={''}
-            url={start + value.icon + end}
-            alt={value.alt}
-            width={w}
-            height={h}
-            use_max={use_max}
-            tooltip={value.tooltip}
-            link={clickable}
-            overlay_position={options.overlay.position}
-            overlay_width={options.overlay.width}
-            overlay_height={options.overlay.height}
-            overlay_bindings={options.overlay.bindings}
-            overlay_values_are_numbers={data_are_numbers}
-            overlay_value={value.overlay}
-            underline_value={value.underline}
-            underline_size={underline_size}
-            underline_alignment={underline_alignment}
-            underline_bindings={options.underline.bindings}
-            underline_binding_values_are_numbers={underline_binding_are_numbers}
-            underline_binding_value={value.underline_binding}
-            backgroundColor={value.backgroundColor}
-            borderColor={value.borderColor}
-          />
-        );
-      })}
-    </div>
-  );
+
+  return <div className="main-container no-slideshow">{children}</div>;
 }
