@@ -2,8 +2,9 @@
 
 ## 2.6.0
 
-- Partial support (it can only receive events) for "shared crosshair". Image background and border will according to
-the configured colores (default to #FFFFFF10 for background and #FFFFFF20 for border). ([#16](https://github.com/Dalvany/dalvany-image-panel/issues/16)).
+- Support for "shared crosshair". Image background and border will according to
+the configured colores (default to #FFFFFF10 for background and #FFFFFF20 for border)
+([#16](https://github.com/Dalvany/dalvany-image-panel/issues/16) [#51](https://github.com/Dalvany/dalvany-image-panel/issues/51)).
 
 ## 2.5.0
 

@@ -38,6 +38,7 @@ interface Value {
   underline?: string | undefined;
   underline_binding?: string | number | undefined;
   time: number | undefined;
+  rowIndex: number;
 }
 
 function getFieldIndex(field: string, fields: Field[], dataframe: DataFrame): number {
@@ -91,7 +92,7 @@ export function DynamicImagePanel(props: Props) {
   useEffect(() => {
     const setHighlightTime = (event: DataHoverEvent) => {
       const rowIndex = event.payload?.rowIndex as number;
-      const timeField: Field | undefined = getTimeField(event.payload?.data?.fields);
+      const timeField: Field | undefined = data?.series.length === 0 ? undefined : getTimeField(data.series[0].fields);
       let time = undefined;
       if (rowIndex !== undefined && timeField !== undefined) {
         time = timeField.values.get(rowIndex);
@@ -110,7 +111,7 @@ export function DynamicImagePanel(props: Props) {
     return () => {
       subs.unsubscribe();
     };
-  }, [setHooverTime, eventBus]);
+  }, [setHooverTime, eventBus, data]);
 
   if (!data || data.series.length === 0) {
     console.error('data is empty or null');
@@ -219,21 +220,21 @@ export function DynamicImagePanel(props: Props) {
 
   let values: Value[] = [];
   for (let i = 0; i < max; i++) {
-    let time: number | undefined;
+    let time: number | undefined =
+      hoover_time_index > -1 ? data.series[0].fields[hoover_time_index].values.get(i) : undefined;
     let backgroundColor = '#00000000';
     let borderColor = '#00000000';
     if (hooverTime !== undefined && hoover_time_index > -1) {
       let currentTime = data.series[0].fields[hoover_time_index].values.get(i);
+      time = currentTime;
       let nextTime = undefined;
       if (i < max - 1) {
         nextTime = data.series[0].fields[hoover_time_index].values.get(i + 1);
       }
       if (currentTime <= hooverTime && nextTime === undefined) {
-        time = currentTime;
         backgroundColor = options.shared_cross_hair.backgroundColor;
         borderColor = options.shared_cross_hair.borderColor;
       } else if (currentTime <= hooverTime && nextTime !== undefined && hooverTime < nextTime) {
-        time = currentTime;
         backgroundColor = options.shared_cross_hair.backgroundColor;
         borderColor = options.shared_cross_hair.borderColor;
       }
@@ -281,6 +282,7 @@ export function DynamicImagePanel(props: Props) {
         underline: underline_value,
         underline_binding: underline_binding_value,
         time: time,
+        rowIndex: i,
       });
     } else {
       values.push({
@@ -293,6 +295,7 @@ export function DynamicImagePanel(props: Props) {
         underline: underline_value,
         underline_binding: underline_binding_value,
         time: time,
+        rowIndex: i,
       });
     }
   }
@@ -362,6 +365,7 @@ export function DynamicImagePanel(props: Props) {
       height: h,
       use_max: use_max,
       tooltip: value.tooltip,
+      rowIndex: value.rowIndex,
     };
 
     let child = (

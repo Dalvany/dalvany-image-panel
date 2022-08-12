@@ -1,6 +1,8 @@
-import { Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
+import { ConditionalWrapper, Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
 import { Property } from 'csstype';
-import React from 'react';
+import React, { useCallback } from 'react';
+import { usePanelContext } from '@grafana/ui';
+import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 
 function handleError(e) {
   console.warn('Error loading ' + e.target.src);
@@ -45,10 +47,46 @@ export interface CreateImageProps {
   ow: string;
   overlay_color: string | undefined;
   highlight: HighlightProps;
+  time: number | undefined;
+  rowIndex: number;
 }
 
 export function CreateImage(props: CreateImageProps) {
-  const { h, w, tooltip, url, alt, overlay_value, classname, oh, ow, overlay_color, highlight } = props;
+  const { h, w, tooltip, url, alt, overlay_value, classname, oh, ow, overlay_color, highlight, time, rowIndex } = props;
+  const { eventBus } = usePanelContext();
+  const publishEventEnter = useCallback(
+    (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      eventBus?.publish({
+        type: DataHoverEvent.type,
+        payload: {
+          raw: event,
+          point: {
+            time: time,
+            x: null,
+          },
+          rowIndex: rowIndex,
+        },
+      });
+    },
+    [eventBus, time, rowIndex]
+  );
+  const publishEventLeave = useCallback(
+    (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      eventBus?.publish({
+        type: DataHoverClearEvent.type,
+        payload: {
+          raw: event,
+          point: {
+            time: time,
+            x: null,
+          },
+          rowIndex: rowIndex,
+        },
+      });
+    },
+    [eventBus, time, rowIndex]
+  );
+
   return (
     <div
       style={{
@@ -58,6 +96,8 @@ export function CreateImage(props: CreateImageProps) {
         backgroundColor: highlight.backgroundColor,
         border: highlight.borderColor + ' 1px solid',
       }}
+      onMouseEnter={(event) => publishEventEnter(event)}
+      onMouseLeave={(event) => publishEventLeave(event)}
     >
       <img
         className={'image'}
@@ -141,6 +181,8 @@ export interface ImageDataProps {
   use_max: boolean;
   /** Time, if any, for the image **/
   time: number | undefined;
+  /** Index of the row **/
+  rowIndex: number;
 }
 
 interface ImageProps {
@@ -220,7 +262,14 @@ export function Image(props: ImageProps) {
 
   return (
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
-      {link === undefined ? (
+      <ConditionalWrapper
+        condition={link !== undefined}
+        wrapper={(children) => (
+          <a href={link.link} target={'_blank'} rel={'noreferrer noopener'} style={{ height: '100%' }}>
+            {children}
+          </a>
+        )}
+      >
         <CreateImage
           h={h}
           w={w}
@@ -233,24 +282,10 @@ export function Image(props: ImageProps) {
           ow={ow}
           overlay_color={overlay_color}
           highlight={highlight}
+          time={image.time}
+          rowIndex={image.rowIndex}
         />
-      ) : (
-        <a href={link.link} target={'_blank'} rel={'noreferrer noopener'} style={{ height: '100%' }}>
-          <CreateImage
-            h={h}
-            w={w}
-            tooltip={image.tooltip}
-            url={image.url}
-            alt={image.alt}
-            overlay_value={overlay.overlay_value}
-            classname={cl + ' ' + va}
-            oh={oh}
-            ow={ow}
-            overlay_color={overlay_color}
-            highlight={highlight}
-          />
-        </a>
-      )}
+      </ConditionalWrapper>
       {underline.underline_value !== undefined && (
         <div
           style={{
