@@ -46,7 +46,7 @@ Options that allow to choose how the image will be displayed :
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_shared_crosshair.png)
 
-These options allow to set a background and border when mouse is over in image. It is also use to highlight image if
+These options allow to set a background and border when mouse is over in image. It is also used to highlight image if
 `shared crosshair` or `shared tooltip` is enabled in the dashboard.
 
 - Background highlight color : the color to use as background image for shared crosshair (default to white with transparency)
@@ -185,7 +185,7 @@ Follow instructions from
 Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.  
 [Slideshow](https://github.com/femioladeji/react-slideshow) is under Apache 2.0 license.  
 
-Github workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
+GitHub's workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
 
 # Plugin development : resources
 
