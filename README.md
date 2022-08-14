@@ -8,9 +8,11 @@
 Display an image by concatenation of a URL, a metric and a suffix.  
 The result will be : baseURL + icon field + suffix.
 
-Note : if new options doesn't show up or plugin seems in an older version, please uninstall, reinstall and then restart
+Note :
+* if new options doesn't show up or plugin seems in an older version, please uninstall, reinstall and then restart
 grafana (or if using docker, run a new container using the latest version of the plugin in GF_INSTALL_PLUGINS env
 variable)
+* version 2.6.0 will require at least Grafana 8.4.0
 
 # Configuration
 
@@ -44,8 +46,18 @@ Options that allow to choose how the image will be displayed :
 
 ![configuration panel](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/configuration_shared_crosshair.png)
 
+These options allow to set a background and border when mouse is over in image. It is also use to highlight image if
+`shared crosshair` or `shared tooltip` is enabled in the dashboard.
+
 - Background highlight color : the color to use as background image for shared crosshair (default to white with transparency)
 - Border highlight color : the border color to use for shared crosshair.
+
+Notes :
+
+- You must enable tooltip in the plugin configuration for `shared tooltip` to actually show a tooltip
+- `shared tooltip` doesn't work in slideshow mode (though `shared crosshair` did work), that means tooltip won't show
+up when hoovering over another panel
+- It correlates on time, and work with `timeseries` and `candlestick` panels.
 
 ## Slideshow options
 
@@ -154,6 +166,10 @@ Underline
 Shared crosshair support
 
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot06.png)
+
+Shared tooltip support
+
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot07.png)
 
 # Install
 

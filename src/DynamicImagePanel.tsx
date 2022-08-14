@@ -12,6 +12,7 @@ import {
   getFieldDisplayName,
   guessFieldTypeForField,
   PanelProps,
+  DashboardCursorSync,
 } from '@grafana/data';
 import { usePanelContext } from '@grafana/ui';
 import { DynamicImageOptions, Transition, ConditionalWrapper } from 'types';
@@ -39,6 +40,7 @@ interface Value {
   underline_binding?: string | number | undefined;
   time: number | undefined;
   rowIndex: number;
+  forceShowTooltip: boolean | undefined;
 }
 
 function getFieldIndex(field: string, fields: Field[], dataframe: DataFrame): number {
@@ -88,7 +90,7 @@ export function DynamicImagePanel(props: Props) {
   const { options, data } = props;
 
   const [hooverTime, setHooverTime] = useState<number | undefined>();
-  const { eventBus } = usePanelContext();
+  const { eventBus, sync } = usePanelContext();
   useEffect(() => {
     const setHighlightTime = (event: DataHoverEvent) => {
       const rowIndex = event.payload?.rowIndex as number;
@@ -220,6 +222,7 @@ export function DynamicImagePanel(props: Props) {
 
   let values: Value[] = [];
   for (let i = 0; i < max; i++) {
+    let forceShowTooltip: boolean | undefined = undefined;
     let time: number | undefined =
       hoover_time_index > -1 ? data.series[0].fields[hoover_time_index].values.get(i) : undefined;
     let backgroundColor = '#00000000';
@@ -234,9 +237,15 @@ export function DynamicImagePanel(props: Props) {
       if (currentTime <= hooverTime && nextTime === undefined) {
         backgroundColor = options.shared_cross_hair.backgroundColor;
         borderColor = options.shared_cross_hair.borderColor;
+        if (sync && sync() === DashboardCursorSync.Tooltip) {
+          forceShowTooltip = true;
+        }
       } else if (currentTime <= hooverTime && nextTime !== undefined && hooverTime < nextTime) {
         backgroundColor = options.shared_cross_hair.backgroundColor;
         borderColor = options.shared_cross_hair.borderColor;
+        if (sync && sync() === DashboardCursorSync.Tooltip) {
+          forceShowTooltip = true;
+        }
       }
     }
 
@@ -283,6 +292,7 @@ export function DynamicImagePanel(props: Props) {
         underline_binding: underline_binding_value,
         time: time,
         rowIndex: i,
+        forceShowTooltip: forceShowTooltip,
       });
     } else {
       values.push({
@@ -296,6 +306,7 @@ export function DynamicImagePanel(props: Props) {
         underline_binding: underline_binding_value,
         time: time,
         rowIndex: i,
+        forceShowTooltip: forceShowTooltip,
       });
     }
   }
@@ -347,6 +358,7 @@ export function DynamicImagePanel(props: Props) {
     const highlight: HighlightProps = {
       backgroundColor: value.backgroundColor,
       borderColor: value.borderColor,
+      forceShowTooltip: value.forceShowTooltip,
     };
 
     let clickable;
@@ -369,7 +381,15 @@ export function DynamicImagePanel(props: Props) {
     };
 
     let child = (
-      <Image key={''} image={imageData} link={link} overlay={overlay} underline={underline} highlight={highlight} />
+      <Image
+        key={''}
+        image={imageData}
+        link={link}
+        overlay={overlay}
+        underline={underline}
+        highlight={highlight}
+        slideshow={options.slideshow.enable}
+      />
     );
 
     return (
