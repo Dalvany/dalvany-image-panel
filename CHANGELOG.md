@@ -5,6 +5,10 @@
 - Support for "shared crosshair". Image background and border will according to
 the configured colores (default to #FFFFFF10 for background and #FFFFFF20 for border)
 ([#16](https://github.com/Dalvany/dalvany-image-panel/issues/16) [#51](https://github.com/Dalvany/dalvany-image-panel/issues/51)).
+- Support for shared tooltip ([#52](https://github.com/Dalvany/dalvany-image-panel/issues/52)).
+- Use grafana tooltip instead of title attribute when slideshow is disabled (to make shared tooltip working).
+- Hoovering over an image will now use "Shared crosshair" options.
+- Require at least Grafana 8.4.0.
 
 ## 2.5.0
 

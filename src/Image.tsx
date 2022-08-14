@@ -1,7 +1,7 @@
-import { ConditionalWrapper, Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
+import { Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR, ConditionalWrapper } from 'types';
 import { Property } from 'csstype';
+import { Tooltip, usePanelContext } from '@grafana/ui';
 import React, { useCallback } from 'react';
-import { usePanelContext } from '@grafana/ui';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 
 function handleError(e) {
@@ -49,10 +49,28 @@ export interface CreateImageProps {
   highlight: HighlightProps;
   time: number | undefined;
   rowIndex: number;
+  slideshow: boolean;
+  forceShowTooltip: boolean | undefined;
 }
 
 export function CreateImage(props: CreateImageProps) {
-  const { h, w, tooltip, url, alt, overlay_value, classname, oh, ow, overlay_color, highlight, time, rowIndex } = props;
+  const {
+    h,
+    w,
+    tooltip,
+    url,
+    alt,
+    overlay_value,
+    classname,
+    oh,
+    ow,
+    overlay_color,
+    highlight,
+    time,
+    rowIndex,
+    slideshow,
+    forceShowTooltip,
+  } = props;
   const { eventBus } = usePanelContext();
   const publishEventEnter = useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -87,6 +105,9 @@ export function CreateImage(props: CreateImageProps) {
     [eventBus, time, rowIndex]
   );
 
+  let content = tooltip ? tooltip : '';
+  let tl = slideshow ? tooltip : undefined;
+
   return (
     <div
       style={{
@@ -99,16 +120,25 @@ export function CreateImage(props: CreateImageProps) {
       onMouseEnter={(event) => publishEventEnter(event)}
       onMouseLeave={(event) => publishEventLeave(event)}
     >
-      <img
-        className={'image'}
-        style={{
-          pointerEvents: 'auto',
-        }}
-        title={tooltip}
-        onError={(e) => handleError(e)}
-        src={url}
-        alt={alt}
-      />
+      <ConditionalWrapper
+        condition={!slideshow && content !== ''}
+        wrapper={(children) => (
+          <Tooltip placement={'auto'} show={forceShowTooltip} content={content}>
+            {children}
+          </Tooltip>
+        )}
+      >
+        <img
+          className={'image'}
+          style={{
+            pointerEvents: 'auto',
+          }}
+          title={tl}
+          onError={(e) => handleError(e)}
+          src={url}
+          alt={alt}
+        />
+      </ConditionalWrapper>
       {overlay_value !== undefined && (
         <div
           className={classname}
@@ -164,6 +194,8 @@ export interface HighlightProps {
   backgroundColor: string;
   /** Highlight border color (shared crosshair) **/
   borderColor: string;
+  /** From shared ? true or undefined **/
+  forceShowTooltip: boolean | undefined;
 }
 
 export interface ImageDataProps {
@@ -196,10 +228,13 @@ interface ImageProps {
   link: LinkProps;
   /** Highlight (shared crosshair) **/
   highlight: HighlightProps;
+  /** Slideshow (with slideshow enabled, grafana's tooltip is shown outside so
+   *  we fall back to title) **/
+  slideshow: boolean;
 }
 
 export function Image(props: ImageProps) {
-  const { image, overlay, underline, link, highlight } = props;
+  const { image, overlay, underline, link, highlight, slideshow } = props;
 
   let w = image.width + 'px';
   if (image.use_max) {
@@ -284,6 +319,8 @@ export function Image(props: ImageProps) {
           highlight={highlight}
           time={image.time}
           rowIndex={image.rowIndex}
+          slideshow={slideshow}
+          forceShowTooltip={highlight.forceShowTooltip}
         />
       </ConditionalWrapper>
       {underline.underline_value !== undefined && (
