@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { StandardEditorProps, SelectableValue } from '@grafana/data';
 import { Button, ColorPicker, HorizontalGroup, Icon, Input, RadioButtonGroup, VerticalGroup } from '@grafana/ui';
 import { Binding, Bindings, Size, UNBOUNDED_OVERLAY_DEFAULT_COLOR } from 'types';
@@ -52,14 +52,14 @@ interface EditorProps {
   onChange: (value?: Bindings) => void;
 }
 
-class BindingComponentEditor extends PureComponent<EditorProps> {
+function BindingComponentEditor(props: EditorProps) {
+  const { bindings, onChange } = props;
+
   /**
    * Called when default color for unbounded values has changed.
    * @param color New color
    */
-  onChangedUnbounded = (color: string) => {
-    const { bindings, onChange } = this.props;
-
+  const onChangedUnbounded = (color: string) => {
     // Notify grafana that something has changed.
     onChange({
       bindings: bindings.bindings,
@@ -73,8 +73,7 @@ class BindingComponentEditor extends PureComponent<EditorProps> {
    * @param index Index of binding
    * @param color New color
    */
-  onChangeColor = (index: number, color: string) => {
-    const { bindings, onChange } = this.props;
+  const onChangeColor = (index: number, color: string) => {
     // Backup variable
     let current = bindings.bindings[index];
 
@@ -92,19 +91,27 @@ class BindingComponentEditor extends PureComponent<EditorProps> {
     });
   };
 
-  /**
-   * When text has changed in an input
-   * @param index Index in bindings.bindings
-   * @param text New text
-   */
-  onChangeText = (index: number, text: string) => {
-    const { bindings, onChange } = this.props;
+  const onTextChange = (index: number, text: string) => {
+    let current = bindings.bindings[index];
+    bindings.bindings[index] = {
+      color: current.color,
+      value: text,
+    };
 
+    // Notify grafana
+    onChange({
+      bindings: bindings.bindings,
+      unbounded: bindings.unbounded,
+      has_text: bindings.has_text,
+    });
+  };
+
+  const onLeaveInput = (index: number, text: string) => {
     // Try to see if it's a number to type properly.
-    let n = parseFloat(text);
+    let n = Number(text);
     if (isNaN(n)) {
       // Not a number, try if something like "1,2".
-      n = parseFloat(text.replace(/,/g, '.'));
+      n = Number(text.replace(/,/g, '.'));
     }
 
     // Backup var
@@ -124,18 +131,13 @@ class BindingComponentEditor extends PureComponent<EditorProps> {
     }
 
     // Notify grafana something has changed.
-    onChange({
-      bindings: bindings.bindings,
-      unbounded: bindings.unbounded,
-      has_text: bindings.has_text,
-    });
+    sortBindings();
   };
 
   /**
    * Sort bindings.
    */
-  sortBindings = () => {
-    const { bindings, onChange } = this.props;
+  const sortBindings = () => {
     // Remove empty values
     let tmp: Binding[] = bindings.bindings.filter((v) => {
       return v.value.toString() !== '';
@@ -169,9 +171,7 @@ class BindingComponentEditor extends PureComponent<EditorProps> {
   /**
    * Add new binding.
    */
-  addBinding = () => {
-    const { bindings, onChange } = this.props;
-
+  const addBinding = () => {
     // Push new binding
     bindings.bindings.push({
       color: '#AAAAAA',
@@ -191,81 +191,62 @@ class BindingComponentEditor extends PureComponent<EditorProps> {
    *
    * @param index Index to remove.
    */
-  removeBinding = (index: number) => {
-    const { bindings, onChange } = this.props;
-
+  const removeBinding = (index: number) => {
     // Remove 1 element at index
     bindings.bindings.splice(index, 1);
 
-    // Notify grafana
-    onChange({
-      bindings: bindings.bindings,
-      unbounded: bindings.unbounded,
-      has_text: bindings.has_text,
-    });
-
     // Sort
-    this.sortBindings();
+    sortBindings();
   };
 
-  render() {
-    const { bindings } = this.props;
+  let d: JSX.Element[] = [];
 
-    let d: JSX.Element[] = [];
+  // Add the "base"/"unbounded values" bindings.
+  let first = (
+    <Input
+      type={'text'}
+      value={'Unbounded values / Base'}
+      disabled={true}
+      prefix={<ColorPicker color={bindings.unbounded} onChange={(color) => onChangedUnbounded(color)} />}
+    />
+  );
+  d.push(first);
 
-    // Add the "base"/"unbounded values" bindings.
-    let first = (
-      <Input
-        type={'text'}
-        value={'Unbounded values / Base'}
-        disabled={true}
-        prefix={<ColorPicker color={bindings.unbounded} onChange={(color) => this.onChangedUnbounded(color)} />}
-      />
-    );
-    d.push(first);
-
-    // Can't access 'this' in map React thing in map function, so use variable that contains lambda.
-    let remove_function: (index: number) => void = this.removeBinding;
-    let change_function: (index: number, color: string) => void = this.onChangeColor;
-    let change_text_function: (index: number, text: string) => void = this.onChangeText;
-    let reorder_function: () => void = this.sortBindings;
-
-    // If we have element in binding, create components.
-    if (bindings.bindings !== undefined) {
-      bindings.bindings
-        .map(function (b, idx) {
-          let prefix = <ColorPicker color={b.color} onChange={(color) => change_function(idx, color)} />;
-          let suffix = <Icon className={'trash-alt'} name="trash-alt" onClick={() => remove_function(idx)} />;
-          return (
-            <Input
-              key={idx}
-              type={'text'}
-              prefix={prefix}
-              suffix={suffix}
-              onChange={(event) => change_text_function(idx, (event.target as HTMLInputElement).value)}
-              value={b.value === undefined ? '' : b.value}
-              onBlur={() => reorder_function()}
-            />
-          );
-        })
-        .map(function (elem) {
-          d.push(elem);
-        });
-    }
-
-    // Display binding in reverse order
-    d = d.reverse();
-
-    // Return the whole binding option component
-    return (
-      <VerticalGroup>
-        <Button variant={'secondary'} size={'sm'} fullWidth={true} icon={'plus'} onClick={this.addBinding}>
-          Add binding
-        </Button>
-        <VerticalGroup>{d}</VerticalGroup>
-      </VerticalGroup>
-    );
+  // If we have element in binding, create components.
+  if (bindings.bindings !== undefined) {
+    bindings.bindings
+      .map(function (b, idx) {
+        let prefix = <ColorPicker color={b.color} onChange={(color) => onChangeColor(idx, color)} />;
+        let suffix = <Icon className={'trash-alt'} name="trash-alt" onClick={() => removeBinding(idx)} />;
+        return (
+          <Input
+            key={idx}
+            type={'text'}
+            prefix={prefix}
+            suffix={suffix}
+            onChange={(event) => onTextChange(idx, (event.target as HTMLInputElement).value)}
+            onBlur={(event) => onLeaveInput(idx, (event.target as HTMLInputElement).value)}
+            value={b.value === undefined ? '' : b.value}
+          />
+        );
+      })
+      .map(function (elem) {
+        d.push(elem);
+      });
   }
+
+  // Display binding in reverse order
+  d = d.reverse();
+
+  // Return the whole binding option component
+  return (
+    <VerticalGroup>
+      <Button variant={'secondary'} size={'sm'} fullWidth={true} icon={'plus'} onClick={addBinding}>
+        Add binding
+      </Button>
+      <VerticalGroup>{d}</VerticalGroup>
+    </VerticalGroup>
+  );
 }
 
 export const BindingEditor: React.FC<StandardEditorProps<Bindings>> = ({ value, onChange }) => {
