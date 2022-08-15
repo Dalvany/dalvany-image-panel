@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StandardEditorProps, SelectableValue } from '@grafana/data';
 import { Button, ColorPicker, HorizontalGroup, Icon, Input, RadioButtonGroup, VerticalGroup } from '@grafana/ui';
 import { Binding, Bindings, Size, UNBOUNDED_OVERLAY_DEFAULT_COLOR } from 'types';
@@ -54,6 +54,15 @@ interface EditorProps {
 
 function BindingComponentEditor(props: EditorProps) {
   const { bindings, onChange } = props;
+  const focus = useRef<HTMLInputElement | null>(null);
+
+  const [addedBinding, setAddedBinding] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (addedBinding) {
+      focus.current?.focus();
+    }
+  }, [focus, addedBinding]);
 
   /**
    * Called when default color for unbounded values has changed.
@@ -103,10 +112,14 @@ function BindingComponentEditor(props: EditorProps) {
 
   const onLeaveInput = (index: number, text: string) => {
     // Try to see if it's a number to type properly.
-    let n = Number(text);
-    if (isNaN(n)) {
-      // Not a number, try if something like "1,2".
-      n = Number(text.replace(/,/g, '.'));
+    let n = NaN;
+    // If because it converts '' into 0
+    if (text !== '') {
+      n = Number(text);
+      if (isNaN(n)) {
+        // Not a number, try if something like "1,2".
+        n = Number(text.replace(/,/g, '.'));
+      }
     }
 
     // Backup var
@@ -124,6 +137,8 @@ function BindingComponentEditor(props: EditorProps) {
         value: n,
       };
     }
+
+    setAddedBinding(false);
 
     // Notify grafana something has changed.
     sortBindings();
@@ -145,7 +160,7 @@ function BindingComponentEditor(props: EditorProps) {
       }) !== undefined;
 
     // Sort, if contains at least one string, sort with string compare
-    // mess up a little if contains also numbers but I don't know how to do it better
+    // mess up a little if contains also numbers, but I don't know how to do it better
     // If all numbers, then sorting is easy.
     tmp.sort((a, b) => {
       if (has_text) {
@@ -172,6 +187,7 @@ function BindingComponentEditor(props: EditorProps) {
       color: '#AAAAAA',
       value: '',
     });
+    setAddedBinding(true);
 
     // Notify grafana
     onChange({
@@ -209,6 +225,8 @@ function BindingComponentEditor(props: EditorProps) {
 
   // If we have element in binding, create components.
   if (bindings.bindings !== undefined) {
+    let max = bindings.bindings.length - 1;
+
     bindings.bindings
       .map(function (b, idx) {
         let prefix = <ColorPicker color={b.color} onChange={(color) => onChangeColor(idx, color)} />;
@@ -216,6 +234,7 @@ function BindingComponentEditor(props: EditorProps) {
         return (
           <Input
             key={idx}
+            ref={idx === max ? focus : null}
             type={'text'}
             prefix={prefix}
             suffix={suffix}
