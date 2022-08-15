@@ -98,12 +98,7 @@ function BindingComponentEditor(props: EditorProps) {
       value: text,
     };
 
-    // Notify grafana
-    onChange({
-      bindings: bindings.bindings,
-      unbounded: bindings.unbounded,
-      has_text: bindings.has_text,
-    });
+    sortBindings();
   };
 
   const onLeaveInput = (index: number, text: string) => {
