@@ -9,6 +9,8 @@ the configured colores (default to #FFFFFF10 for background and #FFFFFF20 for bo
 - Use grafana tooltip instead of title attribute when slideshow is disabled (to make shared tooltip working).
 - Hoovering over an image will now use "Shared crosshair" options.
 - Require at least Grafana 8.5.0.
+- Errors are shown in the panel instead of throwing an error, this avoids to refresh while configuring panels
+([#57](https://github.com/Dalvany/dalvany-image-panel/issues/57)).
 
 ## 2.5.0
 
