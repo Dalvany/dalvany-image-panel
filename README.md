@@ -12,7 +12,7 @@ Note :
 * if new options doesn't show up or plugin seems in an older version, please uninstall, reinstall and then restart
 grafana (or if using docker, run a new container using the latest version of the plugin in GF_INSTALL_PLUGINS env
 variable)
-* version 2.6.0 will require at least Grafana 8.4.0
+* version 2.6.0 will require at least Grafana 8.5.0
 
 # Configuration
 
