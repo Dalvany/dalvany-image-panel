@@ -1,5 +1,5 @@
 grafana:
-  image: grafana/grafana:latest
+  image: grafana/grafana:8.5.0
   ports:
     - "3000:3000"
   volumes:

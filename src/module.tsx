@@ -330,7 +330,9 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       id: 'overlay.bindings',
       path: 'overlay.bindings',
       name: 'Binding',
-      description: 'Set color mapping for overlay (act as threshold if data are numbers)',
+      description:
+        'Set color mapping for overlay (act as threshold if data are numbers). ' +
+        'Note that fields are re-ordered when leaving the input.',
       defaultValue: {
         bindings: [],
         unbounded: UNBOUNDED_OVERLAY_DEFAULT_COLOR,
@@ -397,7 +399,9 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       id: 'underline.bindings',
       path: 'underline.bindings',
       name: 'Binding',
-      description: 'Set color mapping for underline text (act as threshold if data are numbers)',
+      description:
+          'Set color mapping for overlay (act as threshold if data are numbers). ' +
+          'Note that fields are re-ordered when leaving the input.',
       defaultValue: {
         bindings: [],
         unbounded: TEXT_UNBOUNDED_DEFAULT_COLOR,
