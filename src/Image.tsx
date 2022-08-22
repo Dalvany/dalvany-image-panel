@@ -298,7 +298,7 @@ export function Image(props: ImageProps) {
   return (
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
       <ConditionalWrapper
-        condition={link !== undefined}
+        condition={link.link !== undefined}
         wrapper={(children) => (
           <a href={link.link} target={'_blank'} rel={'noreferrer noopener'} style={{ height: '100%' }}>
             {children}
