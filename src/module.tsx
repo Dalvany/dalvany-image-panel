@@ -234,8 +234,15 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
     .addBooleanSwitch({
       path: 'open_url.enable',
       name: 'Click to open',
-      description: 'The image is clickable and can open an URL in a new tab',
+      description: 'The image is clickable and can open an URL',
       defaultValue: false,
+      category: ['Link'],
+    })
+    .addBooleanSwitch({
+      path: 'open_url.open_in_tab',
+      name: 'Open in new tab',
+      description: 'The link will be opened in a new tab',
+      defaultValue: true,
       category: ['Link'],
     })
     .addTextInput({

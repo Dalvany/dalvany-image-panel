@@ -187,6 +187,8 @@ export interface UnderlineProps {
 export interface LinkProps {
   /** Clickable link **/
   link: string | undefined;
+  /** Open link in new tab **/
+  open_in_tab: boolean;
 }
 
 export interface HighlightProps {
@@ -295,12 +297,14 @@ export function Image(props: ImageProps) {
     }
   }
 
+  let target = link.open_in_tab ? '_blank' : '_self';
+
   return (
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
       <ConditionalWrapper
         condition={link.link !== undefined}
         wrapper={(children) => (
-          <a href={link.link} target={'_blank'} rel={'noreferrer noopener'} style={{ height: '100%' }}>
+          <a href={link.link} target={target} rel={'noreferrer noopener'} style={{ height: '100%' }}>
             {children}
           </a>
         )}
