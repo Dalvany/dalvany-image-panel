@@ -92,6 +92,7 @@ It allows to open a link into a new tab. It works like the image URL : it concat
 value and a suffix).
 
 - Click to open : enable link support.
+- Open in new tab : allow to open link in a new tab. Default is enable.
 - Base URL (optional) : the start of the URL where to fetch image. Can be left empty if `icon field` already contains
   the base URL. This option support variable.
 - Link field : field that contains the value. The special value `Don't use a field` allow not to use any field, the

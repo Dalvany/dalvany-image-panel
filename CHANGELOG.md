@@ -12,6 +12,7 @@ the configured colores (default to #FFFFFF10 for background and #FFFFFF20 for bo
 - Errors are shown in the panel instead of throwing an error, this avoids to refresh while configuring panels
 ([#57](https://github.com/Dalvany/dalvany-image-panel/issues/57)).
 - When adding a new binding, it will get focus ([#60](https://github.com/Dalvany/dalvany-image-panel/issues/60)).
+- Can now choose to open link in new tab or not. ([#62](https://github.com/Dalvany/dalvany-image-panel/issues/62))
 
 ## 2.5.0
 
