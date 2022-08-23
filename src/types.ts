@@ -70,6 +70,7 @@ export interface Underline {
  */
 export interface OpenUrl {
   enable: boolean;
+  open_in_tab: boolean;
   base_url: string;
   metric_field: string;
   suffix: string;

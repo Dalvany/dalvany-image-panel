@@ -372,6 +372,7 @@ export function DynamicImagePanel(props: Props) {
     }
     const link: LinkProps = {
       link: clickable,
+      open_in_tab: options.open_url.open_in_tab,
     };
 
     const imageData: ImageDataProps = {
