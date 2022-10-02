@@ -165,6 +165,14 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['Slideshow'],
     })
     .addBooleanSwitch({
+      path: 'slideshow.infinite',
+      name: 'Infinite',
+      description: 'Contnue from start when slideshow finishes',
+      defaultValue: true,
+      showIf: (currentConfig) => currentConfig.slideshow.enable,
+      category: ['Slideshow'],
+    })
+    .addBooleanSwitch({
       path: 'singleFill',
       name: 'Single fill',
       description: 'If there is a single image or slideshow is enabled, it will try to fill panel',

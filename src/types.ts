@@ -82,6 +82,7 @@ export interface Slideshow {
   transition_duration: number;
   pauseOnHover: boolean;
   transition: Transition;
+  infinite: boolean;
 }
 
 export interface SharedCrossSupport {
