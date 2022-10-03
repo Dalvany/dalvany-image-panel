@@ -70,6 +70,7 @@ Options for slideshow :
 - Transition : which transition animation to use
 - Transition duration : how long the transition will take (in milliseconds). Can't be `0`.
 - Pause on hover : when enabled, if the mouse is over an image, the slideshow will pause.
+- Infinite : when enabled, slideshow continues from start when finished
 
 ## Image tooltip options
 

@@ -419,6 +419,7 @@ export function DynamicImagePanel(props: Props) {
       duration: options.slideshow.duration,
       transitionDuration: options.slideshow.transition_duration,
       pauseOnHover: options.slideshow.pauseOnHover,
+      infinite: options.slideshow.infinite,
     };
     return (
       <ConditionalWrapper
