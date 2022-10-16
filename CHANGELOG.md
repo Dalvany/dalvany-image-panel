@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.0
+
+* Add a toogle to enable/disable infinite slideshow (#65  thanks to @dpooley)
+
 ## 2.6.0
 
 - Support for "shared crosshair". Image background and border will according to
