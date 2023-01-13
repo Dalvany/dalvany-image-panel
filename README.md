@@ -193,3 +193,4 @@ GitHub's workflows are from [grafana](https://github.com/grafana/plugin-workflow
 
 * [Documentation](https://grafana.com/docs/grafana/latest/developers/plugins/?pg=docs)
 * ["Storybook"](https://developers.grafana.com/ui/latest/index.html)
+* [Release workflow](https://github.com/grafana/plugin-tools/tree/main/packages/create-plugin/templates/github/ci/.github/workflows)
