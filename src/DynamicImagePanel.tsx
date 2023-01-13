@@ -15,6 +15,7 @@ import {
   DashboardCursorSync,
 } from '@grafana/data';
 import { Alert, usePanelContext } from '@grafana/ui';
+import { PanelDataErrorView } from '@grafana/runtime';
 import { DynamicImageOptions, Transition, ConditionalWrapper } from 'types';
 import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'Image';
 import './css/image.css';
@@ -87,7 +88,7 @@ function intoString(data: number | string): string {
 }
 
 export function DynamicImagePanel(props: Props) {
-  const { options, data } = props;
+  const { options, data, id } = props;
 
   const [hooverTime, setHooverTime] = useState<number | undefined>();
   const { eventBus, sync } = usePanelContext();
@@ -117,11 +118,11 @@ export function DynamicImagePanel(props: Props) {
 
   if (!data || data.series.length === 0) {
     console.error('data is empty or null');
-    return <Alert title={'No data found. Please check your query or datasource'} severity={'error'} />;
+    return <PanelDataErrorView panelId={id} data={data} />;
   }
   if (data.error) {
     console.error('Message : ' + data.error.message);
-    return <Alert title={'Unknown error, see javascript console for more precision'} severity={'error'} />;
+    return <PanelDataErrorView panelId={id} data={data} />;
   }
 
   const number_series = data.series.length;

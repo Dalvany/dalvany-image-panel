@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@grafana/data": "^8.0.0",
+    "@grafana/runtime": "^8.0.0",
     "@grafana/toolkit": "8.0.0",
     "@grafana/ui": "^8.0.0",
     "@types/grafana": "github:CorpGlory/types-grafana.git",
