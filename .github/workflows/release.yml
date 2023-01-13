@@ -119,6 +119,7 @@ jobs:
       - name: Lint plugin
         run: |
           git clone https://github.com/grafana/plugin-validator
+          go mod download github.com/maxatome/go-testdeep
           pushd ./plugin-validator/pkg/cmd/plugincheck2
           go install
           popd
