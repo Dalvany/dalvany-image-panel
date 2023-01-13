@@ -1,8 +1,12 @@
 # Changelog
 
+## 2.8.0
+
+- Display `No data` like other panels instead of an alert ([#68](https://github.com/Dalvany/dalvany-image-panel/issues/68) thanks to @dazzatronic).
+
 ## 2.7.0
 
-* Add a toogle to enable/disable infinite slideshow (#65  thanks to @dpooley)
+- Add a toogle to enable/disable infinite slideshow ([#65](https://github.com/Dalvany/dalvany-image-panel/issues/65) thanks to @dpooley).
 
 ## 2.6.0
 

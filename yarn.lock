@@ -1240,6 +1240,23 @@
     prettier "2.2.1"
     typescript "4.2.4"
 
+"@grafana/runtime@^8.0.0":
+  version "8.5.15"
+  resolved "https://registry.yarnpkg.com/@grafana/runtime/-/runtime-8.5.15.tgz#d82434b2aa5672336a885e5f7175956e8abe664e"
+  integrity sha512-0D9qc7VzduePArmEQ+XyQmV39l0aClauwhV0/VLs2KOu8Xhauw1dMs1KtS1RrzvA0MZVrmcG//WLF8Pc2pn7lQ==
+  dependencies:
+    "@grafana/data" "8.5.15"
+    "@grafana/e2e-selectors" "8.5.15"
+    "@grafana/ui" "8.5.15"
+    "@sentry/browser" "6.19.1"
+    history "4.10.1"
+    lodash "4.17.21"
+    react "17.0.2"
+    react-dom "17.0.2"
+    rxjs "7.5.5"
+    systemjs "0.20.19"
+    tslib "2.3.1"
+
 "@grafana/schema@8.5.15":
   version "8.5.15"
   resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-8.5.15.tgz#a66a6c6cc2700275f840bcda3c10e142e3021b09"
@@ -1417,7 +1434,7 @@
     tinycolor2 "1.4.1"
     uplot "1.6.12"
 
-"@grafana/ui@^8.0.0":
+"@grafana/ui@8.5.15", "@grafana/ui@^8.0.0":
   version "8.5.15"
   resolved "https://registry.yarnpkg.com/@grafana/ui/-/ui-8.5.15.tgz#f239cd65cd83f30a76015e103660adc7511ff1e7"
   integrity sha512-8EzCsOt1TRSYIM//5o6Rv+FqoJTjpQSvPHrL/pz1ySgmB4QDe/QdCcSBRRrvSCbJuwzhApPzv9XtJe2ZxkTXLw==
@@ -7174,7 +7191,7 @@ highlight-words-core@^1.2.0:
   resolved "https://registry.yarnpkg.com/highlight-words-core/-/highlight-words-core-1.2.2.tgz#1eff6d7d9f0a22f155042a00791237791b1eeaaa"
   integrity sha512-BXUKIkUuh6cmmxzi5OIbUJxrG8OAk2MqoL1DtO3Wo9D2faJg2ph5ntyuQeLqaHJmzER6H5tllCDA9ZnNe9BVGg==
 
-history@^4.9.0:
+history@4.10.1, history@^4.9.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/history/-/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3"
   integrity sha512-36nwAD620w12kuzPAsyINPWJqlNbij+hpK1k9XRloDtym8mxzGYl2c17LnV6IAGB2Dmg4tEa7G7DlawS0+qjew==
@@ -8729,9 +8746,9 @@ jquery@3.6.0:
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
 
 jquery@^3.5.0:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.1.tgz#fab0408f8b45fc19f956205773b62b292c147a16"
-  integrity sha512-opJeO4nCucVnsjiXOE+/PcCgYw9Gwpvs/a6B1LL/lQhwWwpbVEVYDZ1FokFr8PRc7ghYlrFPuyHuiiDNTQxmcw==
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.3.tgz#23ed2ffed8a19e048814f13391a19afcdba160e6"
+  integrity sha512-bZ5Sy3YzKo9Fyc8wH2iIQK4JImJ6R0GWI9kL1/k7Z91ZBNgkRXE6U0JfHIizZbort8ZunhSI3jw9I6253ahKfg==
 
 js-cookie@^2.2.1:
   version "2.2.1"
@@ -11119,9 +11136,9 @@ prettier@2.2.1:
   integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
 
 prettier@^2.0.4:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.1.tgz#e235806850d057f97bb08368a4f7d899f7760c64"
-  integrity sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.2.tgz#c4ea1b5b454d7c4b59966db2e06ed7eec5dfd160"
+  integrity sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==
 
 prettier@^2.2.1:
   version "2.6.2"
@@ -13545,6 +13562,11 @@ symbol-tree@^3.2.2, symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
+
+systemjs@0.20.19:
+  version "0.20.19"
+  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-0.20.19.tgz#c2b9e79c19f4bea53a19b1ed3f974ffb463be949"
+  integrity sha512-H/rKwNEEyej/+IhkmFNmKFyJul8tbH/muiPq5TyNoVTwsGhUjRsN3NlFnFQUvFXA3+GQmsXkCNXU6QKPl779aw==
 
 table@^6.0.4:
   version "6.8.0"
