@@ -14,7 +14,7 @@ import {
   PanelProps,
   DashboardCursorSync,
 } from '@grafana/data';
-import { Alert, usePanelContext } from '@grafana/ui';
+import { usePanelContext } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
 import { DynamicImageOptions, Transition, ConditionalWrapper } from 'types';
 import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'Image';
@@ -131,7 +131,13 @@ export function DynamicImagePanel(props: Props) {
     for (let i = 0; i < data.series.length; i++) {
       console.error('Serie ' + i + ' : ' + data.series[i].name);
     }
-    return <Alert title={"There's multiple time series. Use the outer join transform."} severity={'error'} />;
+    return (
+      <PanelDataErrorView
+        message={"There's multiple time series. Use the outer join transform."}
+        panelId={id}
+        data={data}
+      />
+    );
   }
 
   // Here we should have 1 timeserie...
@@ -142,10 +148,23 @@ export function DynamicImagePanel(props: Props) {
   if (icon_index === -1) {
     if (options.icon_field === '') {
       console.error('Missing non time field from data');
-      return <Alert title={"Can't find a non time field for image. Please use another field"} severity={'error'} />;
+      return (
+        <PanelDataErrorView
+          message={"Can't find a non time field for image. Please use another field"}
+          panelId={id}
+          data={data}
+          needsTimeField={true}
+        />
+      );
     } else {
       console.error("Missing field '" + options.icon_field + "' from data");
-      return <Alert title={"Can't find " + options.icon_field + ' field for image.'} severity={'error'} />;
+      return (
+        <PanelDataErrorView
+          message={"Can't find " + options.icon_field + ' field for image.'}
+          panelId={id}
+          data={data}
+        />
+      );
     }
   }
 
@@ -154,7 +173,9 @@ export function DynamicImagePanel(props: Props) {
     options.alt_field === '' ? icon_index : getFieldIndex(options.alt_field, data.series[0].fields, data.series[0]);
   if (alt_index === -1) {
     console.error("Missing field '" + options.alt_field + "' from data for alt");
-    return <Alert title={"Can't find " + options.alt_field + ' field for alt.'} severity={'error'} />;
+    return (
+      <PanelDataErrorView message={"Can't find " + options.alt_field + ' field for alt.'} panelId={id} data={data} />
+    );
   }
 
   // Find tooltip field (if no tooltip use icon field as we don't care about values)
@@ -164,7 +185,13 @@ export function DynamicImagePanel(props: Props) {
       : icon_index;
   if (tooltip_index === -1) {
     console.error("Missing field '" + options.tooltip_field + "' from data for tooltip");
-    return <Alert title={"Can't find " + options.tooltip_field + ' field for tooltip.'} severity={'error'} />;
+    return (
+      <PanelDataErrorView
+        message={"Can't find " + options.tooltip_field + ' field for tooltip.'}
+        panelId={id}
+        data={data}
+      />
+    );
   }
 
   let link_index =
@@ -179,7 +206,7 @@ export function DynamicImagePanel(props: Props) {
   let time_index = options.tooltip && options.tooltip_include_date ? hoover_time_index : icon_index;
   if (time_index === -1) {
     console.error('Missing time field from data for tooltip');
-    return <Alert title={"Can't find time field for tooltip."} severity={'error'} />;
+    return <PanelDataErrorView message={"Can't find time field for tooltip."} panelId={id} data={data} />;
   }
 
   // Find overlay field (if overlay is enable)
@@ -189,7 +216,13 @@ export function DynamicImagePanel(props: Props) {
     overlay_field_index = getFieldIndex(options.overlay.field, data.series[0].fields, data.series[0]);
     if (overlay_field_index === -1) {
       console.error("Missing field '" + options.overlay.field + "' for overlay");
-      return <Alert title={"Missing field '" + options.overlay.field + "' for overlay"} severity={'error'} />;
+      return (
+        <PanelDataErrorView
+          message={"Missing field '" + options.overlay.field + "' for overlay"}
+          panelId={id}
+          data={data}
+        />
+      );
     }
     let r = guessFieldTypeForField(data.series[0].fields[overlay_field_index]);
     data_are_numbers = r === FieldType.number;
@@ -205,7 +238,13 @@ export function DynamicImagePanel(props: Props) {
     underline_index = getFieldIndex(options.underline.field, data.series[0].fields, data.series[0]);
     if (underline_index === -1) {
       console.error("Missing field '" + options.underline.field + "' for underline");
-      return <Alert title={"Missing field '" + options.underline.field + "' for underline"} severity={'error'} />;
+      return (
+        <PanelDataErrorView
+          message={"Missing field '" + options.underline.field + "' for underline"}
+          panelId={id}
+          data={data}
+        />
+      );
     }
     if (options.underline.text_align !== undefined) {
       underline_alignment = options.underline.text_align;
@@ -215,9 +254,10 @@ export function DynamicImagePanel(props: Props) {
       if (underline_binding_index === -1) {
         console.error("Missing field '" + options.underline.bindings_field + "' for underline binding");
         return (
-          <Alert
-            title={"Missing field '" + options.underline.bindings_field + "' for underline binding"}
-            severity={'error'}
+          <PanelDataErrorView
+            message={"Missing field '" + options.underline.bindings_field + "' for underline binding"}
+            panelId={id}
+            data={data}
           />
         );
       }
@@ -332,8 +372,8 @@ export function DynamicImagePanel(props: Props) {
   }
 
   if (!values || values.length === 0) {
-    console.error('Serie contains no values');
-    return <Alert title={'No data found in response. Please check your query'} severity={'error'} />;
+    console.error('Series contains no values');
+    return <PanelDataErrorView message={'No data'} panelId={id} data={data} />;
   }
 
   let use_max = options.singleFill && (values.length === 1 || options.slideshow.enable);
