@@ -13,7 +13,8 @@ Note :
 grafana (or if using docker, run a new container using the latest version of the plugin in GF_INSTALL_PLUGINS env
 variable)
 * version 2.6.0 will require at least Grafana 8.5.0
-* Shared tooltip doesn't seems to work with latest grafana version
+* Shared tooltip doesn't seem to work with latest grafana version
+* Version after 2.8.0 require at least grafana 9.0.0
 
 # Configuration
 
