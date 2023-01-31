@@ -1,5 +1,10 @@
 # Changelog
 
+## Next version
+
+- Fix license link to point to main branch instead of old master
+- Upgrade minimum grafana version to 9.0.0
+
 ## 2.8.0
 
 - Display `No data` like other panels instead of an alert ([#68](https://github.com/Dalvany/dalvany-image-panel/issues/68) thanks to @dazzatronic).
