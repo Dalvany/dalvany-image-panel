@@ -15,6 +15,8 @@ variable)
 * version 2.6.0 will require at least Grafana 8.5.0
 * Shared tooltip doesn't seem to work with latest grafana version
 * Version after 2.8.0 require at least grafana 9.0.0
+* If there is a discrepancy in the tooltip between `elapsed` mode and the real date, if you're using a MySQL database,
+please read [this issue](https://github.com/Dalvany/dalvany-image-panel/issues/74) as it might solve the problem.
 
 # Configuration
 
