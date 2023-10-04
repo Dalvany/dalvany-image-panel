@@ -24,7 +24,7 @@ import './css/image.css';
 import { Slide, Fade, Zoom } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 
-interface Props extends PanelProps<DynamicImageOptions> {}
+interface Props extends PanelProps<DynamicImageOptions> { }
 
 /**
  * Interface that contains all values that depend on a metric field
@@ -116,7 +116,7 @@ export function DynamicImagePanel(props: Props) {
     };
   }, [setHooverTime, eventBus, data]);
 
-  if (!data || data.series.length === 0) {
+  if (!data || data.series === undefined || data.series.length === 0) {
     console.error('data is empty or null');
     return <PanelDataErrorView panelId={id} data={data} />;
   }
