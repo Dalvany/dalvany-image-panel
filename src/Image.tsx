@@ -11,7 +11,7 @@ function handleError(e) {
 function findBindingColorFromNumber(value: number, binding: Bindings): string {
   let color = binding.unbounded;
   for (let i = 0; i < binding.bindings.length; i++) {
-    if (value >= binding.bindings[i].value) {
+    if (value >= (binding.bindings[i].value as number)) {
       color = binding.bindings[i].color;
     } else {
       // Stop now
