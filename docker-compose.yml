@@ -1,11 +1,20 @@
-services:
-  grafana:
-    image: grafana/grafana:9.1.8
-    ports:
-      - "3000:3000"
+grafana:
+  image: grafana/grafana:10.1.2
+  ports:
+    - "3000:3000"
+  volumes:
+    - ./dist:/var/lib/grafana/plugins/dalvany-image-panel
+  environment:
+    - TERM=linux
+    - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=dalvany-image-panel
+    - GF_INSTALL_PLUGINS=marcusolsson-static-datasource
+
+  mariadb:
+    image: mariadb:latest
     volumes:
-      - ./dist:/var/lib/grafana/plugins/dalvany-image-panel
+      - ./tests-assets/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:
-      - TERM=linux
-      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=dalvany-image-panel
-      - GF_INSTALL_PLUGINS=marcusolsson-static-datasource
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=test
+      - MARIADB_USER=test
+      - MARIADB_PASSWORD=test
