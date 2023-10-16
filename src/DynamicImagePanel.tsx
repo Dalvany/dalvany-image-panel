@@ -367,8 +367,8 @@ export function DynamicImagePanel(props: Props) {
   let end = options.suffix === undefined ? '' : options.suffix;
   end = props.replaceVariables(end);
 
-  let start_link;
-  let end_link;
+  let start_link: string;
+  let end_link: string;
   if (options.open_url.enable) {
     start_link = options.open_url.base_url === undefined ? '' : options.open_url.base_url;
     start_link = props.replaceVariables(start_link);
@@ -448,7 +448,7 @@ export function DynamicImagePanel(props: Props) {
       <ConditionalWrapper
         key={'1'}
         condition={options.slideshow.enable}
-        wrapper={(children) => (
+        wrapper={(children: JSX.Element) => (
           <div key={''} className={'full-height'} style={{ display: 'flex' }}>
             {children}
           </div>
@@ -470,7 +470,7 @@ export function DynamicImagePanel(props: Props) {
     return (
       <ConditionalWrapper
         condition={options.slideshow.enable}
-        wrapper={(children) => (
+        wrapper={(children: JSX.Element) => (
           <div id={'slideshow-wrapper'} className={'main-container'}>
             {children}
           </div>

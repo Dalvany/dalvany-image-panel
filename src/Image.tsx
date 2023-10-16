@@ -4,8 +4,8 @@ import { Tooltip, usePanelContext } from '@grafana/ui';
 import React, { useCallback } from 'react';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 
-function handleError(e) {
-  console.warn('Error loading ' + e.target.src);
+function handleError(e: React.SyntheticEvent<HTMLImageElement, Event>) {
+  console.warn('Error loading image' + e.target);
 }
 
 function findBindingColorFromNumber(value: number, binding: Bindings): string {
@@ -122,7 +122,7 @@ export function CreateImage(props: CreateImageProps) {
     >
       <ConditionalWrapper
         condition={!slideshow && content !== ''}
-        wrapper={(children) => (
+        wrapper={(children: JSX.Element) => (
           <Tooltip placement={'auto'} show={forceShowTooltip} content={content}>
             {children}
           </Tooltip>
@@ -303,7 +303,7 @@ export function Image(props: ImageProps) {
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
       <ConditionalWrapper
         condition={link.link !== undefined}
-        wrapper={(children) => (
+        wrapper={(children: JSX.Element) => (
           <a href={link.link} target={target} rel={'noreferrer noopener'} style={{ height: '100%' }}>
             {children}
           </a>
