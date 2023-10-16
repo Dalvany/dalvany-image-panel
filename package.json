@@ -10,7 +10,7 @@
     "sign": "grafana-toolkit plugin:sign"
   },
   "author": "Dalvany",
-  "license": "MIT",
+  "license": "LICENSE",
   "dependencies": {
     "react-slideshow-image": "^4.2.1"
   },
