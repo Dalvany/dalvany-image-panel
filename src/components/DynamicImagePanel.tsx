@@ -17,8 +17,8 @@ import {
 import { usePanelContext } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
 import { DynamicImageOptions, Transition } from 'types';
-import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'Image';
-import './css/image.css';
+import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'components/Image';
+import '../css/image.css';
 
 // @ts-ignore
 import { Slide, Fade, Zoom } from 'react-slideshow-image';
