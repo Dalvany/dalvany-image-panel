@@ -1,14 +1,19 @@
+version: '3.0'
+
 services:
   grafana:
-    image: grafana/grafana:10.1.2
+    container_name: 'dalvany-image-panel'
+    platform: "linux/amd64"
+    build:
+      context: ./.config
+      args:
+        grafana_image: ${GRAFANA_IMAGE:-grafana-oss}
+        grafana_version: ${GRAFANA_VERSION:-10.0.3}
     ports:
-      - "3000:3000"
+      - 3000:3000/tcp
     volumes:
       - ./dist:/var/lib/grafana/plugins/dalvany-image-panel
-    environment:
-      - TERM=linux
-      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=dalvany-image-panel
-      - GF_INSTALL_PLUGINS=marcusolsson-static-datasource
+      - ./provisioning:/etc/grafana/provisioning
 
   mariadb:
     image: mariadb:latest
