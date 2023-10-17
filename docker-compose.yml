@@ -1,13 +1,14 @@
-grafana:
-  image: grafana/grafana:10.1.2
-  ports:
-    - "3000:3000"
-  volumes:
-    - ./dist:/var/lib/grafana/plugins/dalvany-image-panel
-  environment:
-    - TERM=linux
-    - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=dalvany-image-panel
-    - GF_INSTALL_PLUGINS=marcusolsson-static-datasource
+services:
+  grafana:
+    image: grafana/grafana:10.1.2
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./dist:/var/lib/grafana/plugins/dalvany-image-panel
+    environment:
+      - TERM=linux
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=dalvany-image-panel
+      - GF_INSTALL_PLUGINS=marcusolsson-static-datasource
 
   mariadb:
     image: mariadb:latest

@@ -1,8 +1,9 @@
-import { Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR, ConditionalWrapper } from 'types';
+import { Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
 import { Property } from 'csstype';
 import { Tooltip, usePanelContext } from '@grafana/ui';
 import React, { useCallback } from 'react';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
+import ConditionalWrap from 'conditional-wrap';
 
 function handleError(e: React.SyntheticEvent<HTMLImageElement, Event>) {
   console.warn('Error loading image' + e.target);
@@ -120,9 +121,9 @@ export function CreateImage(props: CreateImageProps) {
       onMouseEnter={(event) => publishEventEnter(event)}
       onMouseLeave={(event) => publishEventLeave(event)}
     >
-      <ConditionalWrapper
+      <ConditionalWrap
         condition={!slideshow && content !== ''}
-        wrapper={(children: JSX.Element) => (
+        wrap={(children: JSX.Element) => (
           <Tooltip placement={'auto'} show={forceShowTooltip} content={content}>
             {children}
           </Tooltip>
@@ -138,7 +139,7 @@ export function CreateImage(props: CreateImageProps) {
           src={url}
           alt={alt}
         />
-      </ConditionalWrapper>
+      </ConditionalWrap>
       {overlay_value !== undefined && (
         <div
           className={classname}
@@ -301,9 +302,9 @@ export function Image(props: ImageProps) {
 
   return (
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
-      <ConditionalWrapper
+      <ConditionalWrap
         condition={link.link !== undefined}
-        wrapper={(children: JSX.Element) => (
+        wrap={(children: JSX.Element) => (
           <a href={link.link} target={target} rel={'noreferrer noopener'} style={{ height: '100%' }}>
             {children}
           </a>
@@ -326,7 +327,7 @@ export function Image(props: ImageProps) {
           slideshow={slideshow}
           forceShowTooltip={highlight.forceShowTooltip}
         />
-      </ConditionalWrapper>
+      </ConditionalWrap>
       {underline.underline_value !== undefined && (
         <div
           style={{

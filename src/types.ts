@@ -112,5 +112,3 @@ export interface DynamicImageOptions {
   slideshow: Slideshow;
   shared_cross_hair: SharedCrossSupport;
 }
-
-export const ConditionalWrapper = ({ condition, wrapper, children }) => (condition ? wrapper(children) : children);
