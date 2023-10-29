@@ -9,13 +9,13 @@ Display an image by concatenation of a URL, a metric and a suffix.
 The result will be : baseURL + icon field + suffix.
 
 Note :
+* version 3.0.0 requires at least Grafana 10.0.3
+* Version 2.8.0 requires at least Grafana 9.0.0
+* version 2.6.0 requires at least Grafana 8.5.0
 * if new options doesn't show up or plugin seems in an older version, please uninstall, reinstall and then restart
 grafana (or if using docker, run a new container using the latest version of the plugin in GF_INSTALL_PLUGINS env
 variable)
-* version 3.0.0 requires at least Grafana 10.0.3
-* version 2.6.0 will require at least Grafana 8.5.0
 * Shared tooltip doesn't seem to work with latest grafana version
-* Version after 2.8.0 require at least grafana 9.0.0
 * If there is a discrepancy in the tooltip between `elapsed` mode and the real date, if you're using a MySQL database,
 please read [this issue](https://github.com/Dalvany/dalvany-image-panel/issues/74) as it might solve the problem.
 
