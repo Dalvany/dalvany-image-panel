@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "panel",
   "name": "Dynamic image panel",
   "id": "dalvany-image-panel",
@@ -24,7 +25,7 @@
       },
       {
         "name": "MIT",
-        "url": "https://github.com/Dalvany/dalvany-image-panel/blob/main/LICENSE.md"
+        "url": "https://github.com/Dalvany/dalvany-image-panel/blob/main/LICENSE"
       }
     ],
     "screenshots": [
@@ -53,7 +54,7 @@
     "updated": "%TODAY%"
   },
   "dependencies": {
-    "grafanaDependency": ">=9.0.0",
+    "grafanaDependency": ">=10.0.3",
     "plugins": []
   }
 }

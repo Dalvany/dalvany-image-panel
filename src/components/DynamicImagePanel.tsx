@@ -16,13 +16,14 @@ import {
 } from '@grafana/data';
 import { usePanelContext } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
-import { DynamicImageOptions, Transition, ConditionalWrapper } from 'types';
-import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'Image';
-import './css/image.css';
+import { DynamicImageOptions, Transition } from 'types';
+import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'components/Image';
+import '../css/image.css';
 
 // @ts-ignore
 import { Slide, Fade, Zoom } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
+import ConditionalWrap from 'conditional-wrap';
 
 interface Props extends PanelProps<DynamicImageOptions> { }
 
@@ -367,8 +368,8 @@ export function DynamicImagePanel(props: Props) {
   let end = options.suffix === undefined ? '' : options.suffix;
   end = props.replaceVariables(end);
 
-  let start_link;
-  let end_link;
+  let start_link: string;
+  let end_link: string;
   if (options.open_url.enable) {
     start_link = options.open_url.base_url === undefined ? '' : options.open_url.base_url;
     start_link = props.replaceVariables(start_link);
@@ -445,17 +446,17 @@ export function DynamicImagePanel(props: Props) {
     );
 
     return (
-      <ConditionalWrapper
+      <ConditionalWrap
         key={'1'}
         condition={options.slideshow.enable}
-        wrapper={(children) => (
+        wrap={(children: JSX.Element) => (
           <div key={''} className={'full-height'} style={{ display: 'flex' }}>
             {children}
           </div>
         )}
       >
         {child}
-      </ConditionalWrapper>
+      </ConditionalWrap>
     );
   });
 
@@ -468,17 +469,12 @@ export function DynamicImagePanel(props: Props) {
       infinite: options.slideshow.infinite,
     };
     return (
-      <ConditionalWrapper
-        condition={options.slideshow.enable}
-        wrapper={(children) => (
-          <div id={'slideshow-wrapper'} className={'main-container'}>
-            {children}
-          </div>
-        )}
-      >
-        {transition === Transition.SLIDE && <Slide {...p}>{children}</Slide>}
-        {transition === Transition.FADE && <Fade {...p}>{children}</Fade>}
-      </ConditionalWrapper>
+      <div id={'slideshow-wrapper'} className={'main-container'}>
+        {(transition === Transition.SLIDE)
+          ? <Slide {...p}>{children}</Slide>
+          : <Fade {...p}>{children}</Fade>
+        }
+      </div>
     );
   }
 

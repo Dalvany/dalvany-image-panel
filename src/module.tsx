@@ -6,8 +6,8 @@ import {
   Transition,
   UNBOUNDED_OVERLAY_DEFAULT_COLOR,
 } from 'types';
-import { DynamicImagePanel } from 'DynamicImagePanel';
-import { BindingEditor, SizeEditor } from 'OverlayConfigEditor';
+import { DynamicImagePanel } from 'components/DynamicImagePanel';
+import { BindingEditor, SizeEditor } from 'components/OverlayConfigEditor';
 
 function listFields(context: FieldOverrideContext, first?: any) {
   const options = [first] as any;
