@@ -363,6 +363,11 @@ export function DynamicImagePanel(props: Props) {
     }
   }
 
+  let fallback = options.fallback;
+  if (fallback?.trim() === "") {
+    fallback = undefined;
+  }
+
   let start = options.baseUrl === undefined ? '' : options.baseUrl;
   start = props.replaceVariables(start);
   let end = options.suffix === undefined ? '' : options.suffix;
@@ -425,6 +430,7 @@ export function DynamicImagePanel(props: Props) {
     const imageData: ImageDataProps = {
       time: value.time,
       url: start + value.icon + end,
+      fallback: fallback,
       alt: value.alt,
       width: w,
       height: h,

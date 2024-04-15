@@ -82,6 +82,12 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       category: ['URL'],
     })
     .addTextInput({
+      path: 'fallback',
+      name: 'Fallback URL',
+      description: "Fallback image to display if URL doesn't work. Leave empty to disable fallback.",
+      category: ['URL'],
+    })
+    .addTextInput({
       path: 'width',
       name: 'Image width',
       description: "Image width in pixel (potentially ignored if 'single fill')",
