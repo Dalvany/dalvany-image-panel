@@ -96,6 +96,7 @@ export interface SharedCrossSupport {
 export interface DynamicImageOptions {
   baseUrl?: string;
   suffix?: string;
+  fallback?: string;
   singleFill: boolean;
   width: string;
   height: string;

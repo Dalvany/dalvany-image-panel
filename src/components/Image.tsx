@@ -1,12 +1,12 @@
 import { Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
 import { Property } from 'csstype';
 import { Tooltip, usePanelContext } from '@grafana/ui';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 import ConditionalWrap from 'conditional-wrap';
 
 function handleError(e: React.SyntheticEvent<HTMLImageElement, Event>) {
-  console.warn('Error loading image' + e.target);
+  console.warn('Error loading image ' + e.target);
 }
 
 function findBindingColorFromNumber(value: number, binding: Bindings): string {
@@ -41,6 +41,7 @@ export interface CreateImageProps {
   w: string;
   tooltip: string | undefined;
   url: string;
+  fallback: string | undefined;
   alt: string;
   overlay_value: string | number | undefined;
   classname: string;
@@ -60,6 +61,7 @@ export function CreateImage(props: CreateImageProps) {
     w,
     tooltip,
     url,
+    fallback,
     alt,
     overlay_value,
     classname,
@@ -72,6 +74,11 @@ export function CreateImage(props: CreateImageProps) {
     slideshow,
     forceShowTooltip,
   } = props;
+
+  // "errored" is here to prevent infinite loading in case
+  // fallback image raise also raise an error
+  const [errored, setErrored] = useState(false);
+
   const { eventBus } = usePanelContext();
   const publishEventEnter = useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -135,7 +142,18 @@ export function CreateImage(props: CreateImageProps) {
             pointerEvents: 'auto',
           }}
           title={tl}
-          onError={(e) => handleError(e)}
+          onError={(e) => {
+            handleError(e);
+            // "errored" is here to prevent infinite loading in case
+            // fallback image raise also raise an error
+            if (!errored && fallback !== undefined) {
+              setErrored(true);
+              e.currentTarget.src = fallback
+            }
+          }}
+          onLoad={(e) => {
+            setErrored(false);
+          }}
           src={url}
           alt={alt}
         />
@@ -204,6 +222,8 @@ export interface HighlightProps {
 export interface ImageDataProps {
   /** Image URL **/
   url: string;
+  /** Fallback URL **/
+  fallback?: string;
   /** Tooltip text, if null no tooltip **/
   tooltip?: string | undefined;
   /** Alternative **/
@@ -315,6 +335,7 @@ export function Image(props: ImageProps) {
           w={w}
           tooltip={image.tooltip}
           url={image.url}
+          fallback={image.fallback}
           alt={image.alt}
           overlay_value={overlay.overlay_value}
           classname={cl + ' ' + va}
