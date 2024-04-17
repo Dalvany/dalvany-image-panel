@@ -47,7 +47,8 @@ Options that allow to choose how the image will be displayed :
 * Image height : the height of the image. This option support variable (beware that it needs to be a number)
 * Single fill : if the query have a unique result, allow to fill the panel instead of using width and height above
 * Alt field : field to use as `alt`. The special value `Use icon field`
-  will use the same field as `Icon field`. This is the default value.
+  will use the same field as `Icon field`. This is the default value. The `Alt field` will
+  be used if there is a problem loading the image and the fallback isn't set or have itself a problem.
 
 ### Shared crosshair options
 
