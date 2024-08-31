@@ -44,6 +44,8 @@ Options for building image URL :
 
 Options that allow to choose how the image will be displayed :
 
+* Auto fit : compute the width and height of image in order that the serie fit in the entire panel. Enabling this
+  option will disable `Image width` and `Image height`.
 * Image width : the width of the image. This option support variable (beware that it needs to be a number)
 * Image height : the height of the image. This option support variable (beware that it needs to be a number)
 * Single fill : if the query have a unique result, allow to fill the panel instead of using width and height above
