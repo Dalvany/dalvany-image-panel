@@ -98,6 +98,7 @@ export interface DynamicImageOptions {
   suffix?: string;
   fallback?: string;
   singleFill: boolean;
+  autofit: boolean;
   width: string;
   height: string;
   icon_field: string;

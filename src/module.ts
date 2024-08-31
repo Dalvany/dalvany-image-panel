@@ -87,11 +87,19 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       description: "Fallback image to display if URL doesn't work. Leave empty to disable fallback.",
       category: ['URL'],
     })
+    .addBooleanSwitch({
+      path: 'autofit',
+      name: 'Auto fit',
+      description: 'Compute image size so the serie fit the panel',
+      defaultValue: false,
+      category: ['Image options'],
+    })
     .addTextInput({
       path: 'width',
       name: 'Image width',
       description: "Image width in pixel (potentially ignored if 'single fill')",
       defaultValue: '75',
+      showIf: (currentConfig) => !currentConfig.autofit,
       category: ['Image options'],
     })
     .addTextInput({
@@ -99,6 +107,28 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       name: 'Image height',
       description: "Image height in pixel (potentially ignored if 'single fill')",
       defaultValue: '75',
+      showIf: (currentConfig) => !currentConfig.autofit,
+      category: ['Image options'],
+    })
+    .addBooleanSwitch({
+      path: 'singleFill',
+      name: 'Single fill',
+      description: 'If there is a single image or slideshow is enabled, it will try to fill panel',
+      defaultValue: true,
+      category: ['Image options'],
+    })
+    .addSelect({
+      path: 'alt_field',
+      name: 'Alt field',
+      description: "Field value that is displayed if image doesn't exists",
+      settings: {
+        allowCustomValue: false,
+        options: [],
+        getOptions: async (context: FieldOverrideContext) => {
+          return Promise.resolve(listFields(context, { value: '', label: 'Use icon field' }));
+        },
+      },
+      defaultValue: '',
       category: ['Image options'],
     })
     .addColorPicker({
@@ -177,27 +207,6 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       defaultValue: true,
       showIf: (currentConfig) => currentConfig.slideshow.enable,
       category: ['Slideshow'],
-    })
-    .addBooleanSwitch({
-      path: 'singleFill',
-      name: 'Single fill',
-      description: 'If there is a single image or slideshow is enabled, it will try to fill panel',
-      defaultValue: true,
-      category: ['Image options'],
-    })
-    .addSelect({
-      path: 'alt_field',
-      name: 'Alt field',
-      description: "Field value that is displayed if image doesn't exists",
-      settings: {
-        allowCustomValue: false,
-        options: [],
-        getOptions: async (context: FieldOverrideContext) => {
-          return Promise.resolve(listFields(context, { value: '', label: 'Use icon field' }));
-        },
-      },
-      defaultValue: '',
-      category: ['Image options'],
     })
     .addBooleanSwitch({
       path: 'tooltip',

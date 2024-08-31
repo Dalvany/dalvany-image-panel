@@ -89,7 +89,7 @@ function intoString(data: number | string): string {
 }
 
 export function DynamicImagePanel(props: Props) {
-  const { options, data, id } = props;
+  const { options, data, id, height, width } = props;
 
   const [hooverTime, setHooverTime] = useState<number | undefined>();
   const { eventBus, sync } = usePanelContext();
@@ -392,6 +392,30 @@ export function DynamicImagePanel(props: Props) {
   // intoString to maintain compatibility (see comment on intoString)
   let w = Number(props.replaceVariables(intoString(options.width)));
   let h = Number(props.replaceVariables(intoString(options.height)));
+  if (options.autofit) {
+    let image_number = values.length;
+    let ratio = width / height;
+
+    console.info("image number = " + image_number);
+    console.info("ratio = " + ratio);
+
+    // We have width / height = R
+    // If x is the number of column and y the number of row, we need :
+    // x / y = R and x * y = N (image number)
+    //
+    // Then : x = sqrt(N * R)
+    let x = Math.ceil(Math.sqrt(image_number * ratio));
+    let y = Math.ceil(image_number / x)
+
+    console.info(x + " columns");
+    console.info(y + " rows");
+
+    w = Math.floor(width/x) - 10;
+    h = Math.floor(height/y) - 10;
+
+    console.info("width = " + width + ", w = " + w);
+    console.info("height = " + height + ", h = " + h);
+  }
 
   const children = values.map((value) => {
     const overlay: OverlayProps = {
