@@ -124,7 +124,6 @@ export function DynamicImagePanel(props: Props) {
     || data.series[0].fields.length === 0
     || data.series[0].fields[0].values === undefined
     || data.series[0].fields[0].values.length === 0) {
-    console.error('data is empty or null');
     return <PanelDataErrorView panelId={id} data={data} />;
   }
   if (data.error || (data.errors && data.errors.length > 1)) {
@@ -133,10 +132,6 @@ export function DynamicImagePanel(props: Props) {
 
   const number_series = data.series.length;
   if (number_series > 1) {
-    console.error(data.series.length + ' timeseries');
-    for (let i = 0; i < data.series.length; i++) {
-      console.error('Serie ' + i + ' : ' + data.series[i].name);
-    }
     return (
       <PanelDataErrorView
         message={"There's multiple time series. Use the outer join transform."}
@@ -153,7 +148,6 @@ export function DynamicImagePanel(props: Props) {
   let icon_index = getFieldIndex(options.icon_field, data.series[0].fields, data.series[0]);
   if (icon_index === -1) {
     if (options.icon_field === '') {
-      console.error('Missing non time field from data');
       return (
         <PanelDataErrorView
           message={"Can't find a non time field for image. Please use another field"}
@@ -163,7 +157,6 @@ export function DynamicImagePanel(props: Props) {
         />
       );
     } else {
-      console.error("Missing field '" + options.icon_field + "' from data");
       return (
         <PanelDataErrorView
           message={"Can't find " + options.icon_field + ' field for image.'}
@@ -178,7 +171,6 @@ export function DynamicImagePanel(props: Props) {
   let alt_index =
     options.alt_field === '' ? icon_index : getFieldIndex(options.alt_field, data.series[0].fields, data.series[0]);
   if (alt_index === -1) {
-    console.error("Missing field '" + options.alt_field + "' from data for alt");
     return (
       <PanelDataErrorView message={"Can't find " + options.alt_field + ' field for alt.'} panelId={id} data={data} />
     );
@@ -190,7 +182,6 @@ export function DynamicImagePanel(props: Props) {
       ? getFieldIndex(options.tooltip_field, data.series[0].fields, data.series[0])
       : icon_index;
   if (tooltip_index === -1) {
-    console.error("Missing field '" + options.tooltip_field + "' from data for tooltip");
     return (
       <PanelDataErrorView
         message={"Can't find " + options.tooltip_field + ' field for tooltip.'}
@@ -211,7 +202,6 @@ export function DynamicImagePanel(props: Props) {
   // Find time field for tooltip (if no tooltip or if it doesn't include time, use icon field as we don't care about values)
   let time_index = options.tooltip && options.tooltip_include_date ? hoover_time_index : icon_index;
   if (time_index === -1) {
-    console.error('Missing time field from data for tooltip');
     return <PanelDataErrorView message={"Can't find time field for tooltip."} panelId={id} data={data} />;
   }
 
@@ -221,7 +211,6 @@ export function DynamicImagePanel(props: Props) {
   if (options.overlay.field !== '') {
     overlay_field_index = getFieldIndex(options.overlay.field, data.series[0].fields, data.series[0]);
     if (overlay_field_index === -1) {
-      console.error("Missing field '" + options.overlay.field + "' for overlay");
       return (
         <PanelDataErrorView
           message={"Missing field '" + options.overlay.field + "' for overlay"}
@@ -243,7 +232,6 @@ export function DynamicImagePanel(props: Props) {
     underline_size = options.underline.text_size;
     underline_index = getFieldIndex(options.underline.field, data.series[0].fields, data.series[0]);
     if (underline_index === -1) {
-      console.error("Missing field '" + options.underline.field + "' for underline");
       return (
         <PanelDataErrorView
           message={"Missing field '" + options.underline.field + "' for underline"}
@@ -258,7 +246,6 @@ export function DynamicImagePanel(props: Props) {
     if (options.underline.bindings_field !== undefined) {
       underline_binding_index = getFieldIndex(options.underline.bindings_field, data.series[0].fields, data.series[0]);
       if (underline_binding_index === -1) {
-        console.error("Missing field '" + options.underline.bindings_field + "' for underline binding");
         return (
           <PanelDataErrorView
             message={"Missing field '" + options.underline.bindings_field + "' for underline binding"}
@@ -383,7 +370,6 @@ export function DynamicImagePanel(props: Props) {
   }
 
   if (!values || values.length === 0) {
-    console.error('Series contains no values');
     return <PanelDataErrorView message={'No data'} panelId={id} data={data} />;
   }
 
@@ -396,9 +382,6 @@ export function DynamicImagePanel(props: Props) {
     let image_number = values.length;
     let ratio = width / height;
 
-    console.info("image number = " + image_number);
-    console.info("ratio = " + ratio);
-
     // We have width / height = R
     // If x is the number of column and y the number of row, we need :
     // x / y = R and x * y = N (image number)
@@ -407,14 +390,8 @@ export function DynamicImagePanel(props: Props) {
     let x = Math.ceil(Math.sqrt(image_number * ratio));
     let y = Math.ceil(image_number / x)
 
-    console.info(x + " columns");
-    console.info(y + " rows");
-
     w = Math.floor(width/x) - 10;
     h = Math.floor(height/y) - 10;
-
-    console.info("width = " + width + ", w = " + w);
-    console.info("height = " + height + ", h = " + h);
   }
 
   const children = values.map((value) => {
