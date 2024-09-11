@@ -1,9 +1,27 @@
 # Changelog
 
-## Next version
+## Next
+
+- Update changelog
+
+## 4.0.0
+
+- Update dependencies
+- Set minimum grafana version to 11.0.0
+- Add an autofit option ([#96](https://github.com/Dalvany/dalvany-image-panel/issues/96))
+
+## 3.1.0
+
+- Update dependencies
+- Use Grafana's provided CI scripts
+- Add fallback image ([#89](https://github.com/Dalvany/dalvany-image-panel/issues/89))
+
+## 3.0.0
 
 - Fix license link to point to main branch instead of old master
-- Upgrade minimum grafana version to 9.0.0
+- Upgrade minimum grafana version to 10.0.0
+- Fix undefined value error ([#80](https://github.com/Dalvany/dalvany-image-panel/issues/80))
+- Update dependencies
 
 ## 2.8.0
 

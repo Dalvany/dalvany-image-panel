@@ -166,13 +166,7 @@ Multiple results
 
 One result with "single fill" disabled
 
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot03.png)
-
-Overlay
-
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot04.png)
-
-Underline
+![screenshot](https://github.com/Dalvany/dalvany-image-pane)
 
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot05.png)
 
@@ -181,15 +175,6 @@ Shared crosshair support
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot06.png)
 
 Shared tooltip support
-
-![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot07.png)
-
-## Install
-
-Follow instructions from
-[grafana plugin web page](https://grafana.com/grafana/plugins/dalvany-image-panel/?tab=installation)
-
-## License
 
 * Color binding component is a modification of grafana's ThresholdsEditor thus under Apache 2.0 license.
 
