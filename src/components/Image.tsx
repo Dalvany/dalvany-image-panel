@@ -130,7 +130,7 @@ export function CreateImage(props: CreateImageProps) {
     >
       <ConditionalWrap
         condition={!slideshow && content !== ''}
-        wrap={(children: JSX.Element) => (
+        wrap={(children: React.JSX.Element) => (
           <Tooltip placement={'auto'} show={forceShowTooltip} content={content}>
             {children}
           </Tooltip>
@@ -324,7 +324,7 @@ export function Image(props: ImageProps) {
     <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
       <ConditionalWrap
         condition={link.link !== undefined}
-        wrap={(children: JSX.Element) => (
+        wrap={(children: React.JSX.Element) => (
           <a href={link.link} target={target} rel={'noreferrer noopener'} style={{ height: '100%' }}>
             {children}
           </a>
