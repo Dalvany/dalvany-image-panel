@@ -210,7 +210,7 @@ function BindingComponentEditor(props: EditorProps) {
     sortBindings();
   };
 
-  let d: JSX.Element[] = [];
+  let d: React.JSX.Element[] = [];
 
   // Add the "base"/"unbounded values" bindings.
   let first = (

@@ -456,7 +456,7 @@ export function DynamicImagePanel(props: Props) {
       <ConditionalWrap
         key={'1'}
         condition={options.slideshow.enable}
-        wrap={(children: JSX.Element) => (
+        wrap={(children: React.JSX.Element) => (
           <div key={''} className={'full-height'} style={{ display: 'flex' }}>
             {children}
           </div>
