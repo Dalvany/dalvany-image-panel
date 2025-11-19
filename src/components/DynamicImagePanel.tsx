@@ -387,11 +387,21 @@ export function DynamicImagePanel(props: Props) {
     // x / y = R and x * y = N (image number)
     //
     // Then : x = sqrt(N * R)
-    let x = Math.ceil(Math.sqrt(image_number * ratio));
+    let x = Math.floor(Math.sqrt(image_number * ratio));
     let y = Math.ceil(image_number / x)
 
+    // There is a 5px margin (see in image.css '.div-container')
+    // that we must take into account
     w = Math.floor(width/x) - 10;
     h = Math.floor(height/y) - 10;
+
+    // If there is an underline, we must take
+    // into account when computing the image size
+    if (options.underline.field !== '') {
+      // 1.57 seems like the ratio between text_size and the computed height
+      // of the div (at least on my computer)
+      h = h - options.underline.text_size*1.57;
+    }
   }
 
   const children = values.map((value) => {
