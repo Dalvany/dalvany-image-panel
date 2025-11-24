@@ -441,6 +441,7 @@ export function DynamicImagePanel(props: Props) {
     const imageData: ImageDataProps = {
       time: value.time,
       url: start + value.icon + end,
+      authentication: options.authentication,
       fallback: fallback,
       alt: value.alt,
       width: w,
