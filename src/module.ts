@@ -81,6 +81,27 @@ export const plugin = new PanelPlugin<DynamicImageOptions>(DynamicImagePanel).se
       description: 'To append at the end of the URL',
       category: ['URL'],
     })
+    .addSelect({
+      path: 'authentication.method',
+      name: 'Authentication method',
+      description: 'Authentication method',
+      settings: {
+        allowCustomValue: false,
+        options: [
+          { value: '', label: 'None' },
+          { value: 'basic', label: 'Basic' },
+          { value: 'bearer', label: 'Bearer' },],
+      },
+      defaultValue: '',
+      category: ['URL'],
+    })
+    .addTextInput({
+      path: 'authentication.value',
+      name: 'Token or basic value',
+      description: "Bearer token or basic value. Warning: this setting won't be hidden so use with care.",
+      showIf: (currentConfig) => currentConfig.authentication.method !== '',
+      category: ['URL'],
+    })
     .addTextInput({
       path: 'fallback',
       name: 'Fallback URL',
