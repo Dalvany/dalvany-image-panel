@@ -90,6 +90,10 @@ export interface SharedCrossSupport {
   borderColor: string;
 }
 
+export interface Authentication {
+  method: string,
+  value: string,
+}
 /**
  * Options
  */
@@ -97,6 +101,7 @@ export interface DynamicImageOptions {
   baseUrl?: string;
   suffix?: string;
   fallback?: string;
+  authentication: Authentication;
   singleFill: boolean;
   autofit: boolean;
   width: string;
