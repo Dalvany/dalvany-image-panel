@@ -1,7 +1,7 @@
-import { Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
+import { Authentication, Bindings, Position, Size, TEXT_UNBOUNDED_DEFAULT_COLOR } from 'types';
 import { Property } from 'csstype';
 import { Tooltip, usePanelContext } from '@grafana/ui';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 import ConditionalWrap from 'conditional-wrap';
 
@@ -41,6 +41,7 @@ export interface CreateImageProps {
   w: string;
   tooltip: string | undefined;
   url: string;
+  authentication: Authentication | undefined;
   fallback: string | undefined;
   alt: string;
   overlay_value: string | number | undefined;
@@ -61,6 +62,7 @@ export function CreateImage(props: CreateImageProps) {
     w,
     tooltip,
     url,
+    authentication,
     fallback,
     alt,
     overlay_value,
@@ -77,7 +79,8 @@ export function CreateImage(props: CreateImageProps) {
 
   // "errored" is here to prevent infinite loading in case
   // fallback image raise also raise an error
-  const [errored, setErrored] = useState(false);
+  const [error, setError] = useState(false);
+  const [img, setImg] = useState<string | null>(null);
 
   const { eventBus } = usePanelContext();
   const publishEventEnter = useCallback(
@@ -116,6 +119,69 @@ export function CreateImage(props: CreateImageProps) {
   let content = tooltip ? tooltip : '';
   let tl = slideshow ? tooltip : undefined;
 
+
+  useEffect(() => {
+    const abortCtrl = new AbortController();
+    let objectUrl: string | null = null;
+
+    let headers = {};
+    if (authentication !== undefined && authentication.method === 'basic') {
+      if (authentication.method === "basic") {
+        headers = {
+          "Authorization": "Basic "+btoa(authentication.value)
+        }
+      } else if (authentication.method === "bearer") {
+        headers = {
+          "Authorization": "Bearer "+authentication.value
+        }
+      }
+    }
+
+    async function fetchImage() {
+      try {
+        const res = await fetch(url, { 
+          signal: abortCtrl.signal,
+          headers: headers,
+          credentials: 'include',
+        });
+        if (!res.ok) {
+          throw new Error("Network error");
+        }
+
+        const blob = await res.blob();
+        objectUrl = URL.createObjectURL(blob);
+        setImg(objectUrl);
+      } catch (err: any) {
+        if (err.name !== "AbortError" && fallback !== null) {
+          try {
+            const res = await fetch(fallback!, { signal: abortCtrl.signal });
+            if (!res.ok) {
+              throw new Error("Network error");
+            }
+
+            const blob = await res.blob();
+            objectUrl = URL.createObjectURL(blob);
+            setImg(objectUrl);
+          } catch (err: any) {
+            if (err.name !== "AbortError") {
+              setError(true);
+            }
+          }
+        }
+      }
+    }
+
+    fetchImage();
+
+    // cleanup: release object URL + abort fetch
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+      abortCtrl.abort();
+    };
+  }, [url, authentication, fallback]);
+
   return (
     <div
       style={{
@@ -146,15 +212,15 @@ export function CreateImage(props: CreateImageProps) {
             handleError(e);
             // "errored" is here to prevent infinite loading in case
             // fallback image raise also raise an error
-            if (!errored && fallback !== undefined) {
-              setErrored(true);
+            if (!error && fallback !== undefined) {
+              setError(true);
               e.currentTarget.src = fallback
             }
           }}
           onLoad={(e) => {
-            setErrored(false);
+            setError(false);
           }}
-          src={url}
+          src={img!}
           alt={alt}
         />
       </ConditionalWrap>
@@ -222,6 +288,8 @@ export interface HighlightProps {
 export interface ImageDataProps {
   /** Image URL **/
   url: string;
+  /** Authentication data */
+  authentication: Authentication | undefined;
   /** Fallback URL **/
   fallback?: string;
   /** Tooltip text, if null no tooltip **/
@@ -335,6 +403,7 @@ export function Image(props: ImageProps) {
           w={w}
           tooltip={image.tooltip}
           url={image.url}
+          authentication={image.authentication}
           fallback={image.fallback}
           alt={image.alt}
           overlay_value={overlay.overlay_value}
