@@ -166,7 +166,13 @@ Multiple results
 
 One result with "single fill" disabled
 
-![screenshot](https://github.com/Dalvany/dalvany-image-pane)
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot03.png)
+
+Overlay
+
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot04.png)
+
+Underline
 
 ![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot05.png)
 
@@ -176,11 +182,13 @@ Shared crosshair support
 
 Shared tooltip support
 
+![screenshot](https://github.com/Dalvany/dalvany-image-panel/raw/main/src/img/screenshot07.png)
+
 * Color binding component is a modification of grafana's ThresholdsEditor thus under Apache 2.0 license.
 
 ## Credits
 
-Logo for the plugin was found [here](https://www.iconfinder.com/icons/211677/image_icon) and is under MIT license.  
+Logo for the plugin was found on [iconfinder](https://www.iconfinder.com) (image icon can't be found anymore) and is under MIT license.  
 [Slideshow](https://github.com/femioladeji/react-slideshow) is under Apache 2.0 license.  
 
 GitHub's workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
