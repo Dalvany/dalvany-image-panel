@@ -12,7 +12,9 @@ permissions: read-all
 jobs:
   release:
     permissions:
+      id-token: write
       contents: write
+      attestations: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,3 +24,5 @@ jobs:
         with:
           # Make sure to save the token in your repository secrets
           policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
+          attestation: true
+          use_changelog_generator: true 
