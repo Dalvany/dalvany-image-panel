@@ -188,7 +188,7 @@ Shared tooltip support
 
 ## Credits
 
-Logo for the plugin was found on [iconfinder](https://www.iconfinder.com) (image icon can't be found anymore) and is under MIT license.  
+Logo for the plugin was found on iconfinder (now freepik ?) (image icon can't be found anymore) and was under MIT license.  
 [Slideshow](https://github.com/femioladeji/react-slideshow) is under Apache 2.0 license.  
 
 GitHub's workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license

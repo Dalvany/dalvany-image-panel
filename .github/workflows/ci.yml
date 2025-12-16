@@ -136,3 +136,11 @@ jobs:
           name: ${{ steps.metadata.outputs.plugin-id }}-${{ steps.metadata.outputs.plugin-version }}
           path: ${{ steps.metadata.outputs.plugin-id }}
           retention-days: 5
+
+      - name: Validate plugin
+        run: |
+          echo "Archive path : $PLUGIN_ARCHIVE"
+          npx -y @grafana/plugin-validator@latest -sourceCodeUri file://. "$PLUGIN_ARCHIVE"
+        shell: bash
+        env:
+          PLUGIN_ARCHIVE: ${{ steps.metadata.outputs.archive }}
