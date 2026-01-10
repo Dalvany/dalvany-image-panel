@@ -1,0 +1,24 @@
+services:
+  grafana:
+    container_name: 'dalvany-image-panel'
+    platform: 'linux/amd64'
+    build:
+      context: ./.config
+      args:
+        grafana_image: ${GRAFANA_IMAGE:-grafana-oss}
+        grafana_version: ${GRAFANA_VERSION:-11.0.0}
+    ports:
+      - 3000:3000/tcp
+    volumes:
+      - ./dist:/var/lib/grafana/plugins/dalvany-image-panel
+      - ./provisioning:/etc/grafana/provisioning
+
+  mariadb:
+    image: mariadb:latest
+    volumes:
+      - ./tests-assets/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=test
+      - MARIADB_USER=test
+      - MARIADB_PASSWORD=test

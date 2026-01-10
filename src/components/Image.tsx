@@ -5,6 +5,9 @@ import React, { useCallback, useState } from 'react';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 import ConditionalWrap from 'conditional-wrap';
 import { sanitizeUrl } from '@braintree/sanitize-url';
+import { css } from '@emotion/css'
+
+import {bottom_left_overlay, bottom_right_overlay, div_container, image, top_left_overlay, top_right_overlay} from 'css/styles'
 
 function handleError(e: React.SyntheticEvent<HTMLImageElement, Event>) {
   console.warn('Error loading image ' + e.target);
@@ -45,7 +48,7 @@ export interface CreateImageProps {
   fallback: string | undefined;
   alt: string;
   overlay_value: string | number | undefined;
-  classname: string;
+  overlay_position: Position;
   oh: string;
   ow: string;
   overlay_color: string | undefined;
@@ -65,7 +68,7 @@ export function CreateImage(props: CreateImageProps) {
     fallback,
     alt,
     overlay_value,
-    classname,
+    overlay_position,
     oh,
     ow,
     overlay_color,
@@ -117,6 +120,17 @@ export function CreateImage(props: CreateImageProps) {
   let content = tooltip ? tooltip : '';
   let tl = slideshow ? tooltip : undefined;
 
+  var overlay_position_css = top_left_overlay;
+  if (overlay_position === Position.TOP_RIGHT) {
+    overlay_position_css = top_right_overlay;
+  }
+  else if (overlay_position === Position.BOTTOM_LEFT) {
+    overlay_position_css = bottom_left_overlay;
+  }
+  else if (overlay_position === Position.BOTTOM_RIGHT) {
+    overlay_position_css = bottom_right_overlay;
+  }
+
   return (
     <div
       style={{
@@ -138,7 +152,7 @@ export function CreateImage(props: CreateImageProps) {
         )}
       >
         <img
-          className={'image'}
+          className={css`${image}`}
           style={{
             pointerEvents: 'auto',
           }}
@@ -161,7 +175,7 @@ export function CreateImage(props: CreateImageProps) {
       </ConditionalWrap>
       {overlay_value !== undefined && (
         <div
-          className={classname}
+          className={css`${overlay_position_css}`}
           style={{
             height: oh,
             width: ow,
@@ -269,15 +283,6 @@ export function Image(props: ImageProps) {
     h = '100%';
   }
 
-  let va = 'top-overlay';
-  let cl = 'right-overlay';
-  if (overlay.overlay_position === Position.TOP_LEFT || overlay.overlay_position === Position.BOTTOM_LEFT) {
-    cl = 'left-overlay';
-  }
-  if (overlay.overlay_position === Position.BOTTOM_LEFT || overlay.overlay_position === Position.BOTTOM_RIGHT) {
-    va = 'bottom-overlay';
-  }
-
   let ow = (overlay.overlay_width?.size ?? '5') + (overlay.overlay_width?.unit ?? '%');
   let oh = (overlay.overlay_height?.size ?? '5') + (overlay.overlay_height?.unit ?? '%');
 
@@ -322,7 +327,7 @@ export function Image(props: ImageProps) {
   let target = link.open_in_tab ? '_blank' : '_self';
 
   return (
-    <div className={'div-container'} style={{ width: w, overflow: 'hidden' }}>
+    <div className={css`${div_container};`} style={{ width: w, overflow: 'hidden' }}>
       <ConditionalWrap
         condition={link.link !== undefined}
         wrap={(children: React.JSX.Element) => (
@@ -339,7 +344,7 @@ export function Image(props: ImageProps) {
           fallback={image.fallback}
           alt={image.alt}
           overlay_value={overlay.overlay_value}
-          classname={cl + ' ' + va}
+          overlay_position={overlay.overlay_position}
           oh={oh}
           ow={ow}
           overlay_color={overlay_color}

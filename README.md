@@ -189,7 +189,7 @@ Shared tooltip support
 ## Credits
 
 Logo for the plugin was found on iconfinder (now freepik ?) (image icon can't be found anymore) and was under MIT license.  
-[Slideshow](https://github.com/femioladeji/react-slideshow) is under Apache 2.0 license.  
+[Slideshow](https://github.com/femioladeji/react-slideshow) is under MIT license.  
 
 GitHub's workflows are from [grafana](https://github.com/grafana/plugin-workflows) and under Apache 2.0 license
 
@@ -198,3 +198,4 @@ GitHub's workflows are from [grafana](https://github.com/grafana/plugin-workflow
 * [Documentation](https://grafana.com/docs/grafana/latest/developers/plugins/?pg=docs)
 * ["Storybook"](https://developers.grafana.com/ui/latest/index.html)
 * [Release workflow](https://github.com/grafana/plugin-tools/tree/main/packages/create-plugin/templates/github/workflows)
+* [Styling](https://github.com/grafana/grafana/blob/main/contribute/style-guides/styling.md)
