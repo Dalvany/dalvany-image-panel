@@ -4,6 +4,7 @@ import { Tooltip, usePanelContext } from '@grafana/ui';
 import React, { useCallback, useState } from 'react';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 import ConditionalWrap from 'conditional-wrap';
+import { sanitizeUrl } from '@braintree/sanitize-url';
 
 function handleError(e: React.SyntheticEvent<HTMLImageElement, Event>) {
   console.warn('Error loading image ' + e.target);
@@ -148,13 +149,13 @@ export function CreateImage(props: CreateImageProps) {
             // fallback image raise also raise an error
             if (!errored && fallback !== undefined) {
               setErrored(true);
-              e.currentTarget.src = fallback
+              e.currentTarget.src = sanitizeUrl(fallback)
             }
           }}
           onLoad={(e) => {
             setErrored(false);
           }}
-          src={url}
+          src={sanitizeUrl(url)}
           alt={alt}
         />
       </ConditionalWrap>
@@ -325,7 +326,7 @@ export function Image(props: ImageProps) {
       <ConditionalWrap
         condition={link.link !== undefined}
         wrap={(children: React.JSX.Element) => (
-          <a href={link.link} target={target} rel={'noreferrer noopener'} style={{ height: '100%' }}>
+          <a href={sanitizeUrl(link.link)} target={target} rel={'noreferrer noopener'} style={{ height: '100%' }}>
             {children}
           </a>
         )}
