@@ -1,0 +1,63 @@
+//.dalvany-image-panel {
+//    @import "react-slideshow-image/dist/styles.css";
+//}
+
+//.full {
+//    height: 100%;
+//    width: 100%;
+//}
+
+//.image {
+//   object-fit: contain;
+//    display: block;
+//    flex: none;
+//    height: 100%;
+//    width: 100%;
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//}
+
+.size-option {
+    display: flex;
+}
+
+//.no-slideshow {
+//    display: flex;
+//    flex-flow: row wrap;
+//    justify-content: flex-start;
+//}
+
+//.left-overlay {
+//    left: 0;
+//}
+
+//.right-overlay {
+//    right: 0;
+//}
+
+//.top-overlay {
+//    top: 0;
+//}
+
+//.bottom-overlay {
+//    bottom: 0;
+//}
+
+//div-container {
+//    display: flex;
+//    flex-direction: column;
+//    margin: 5px;
+//}
+
+//.main-container {
+//    /* Other than hidden -> scroll bar ? */
+//    overflow: hidden;
+//    overflow-y: auto;
+//    height: 100%;
+//}
+
+/* Fix slideshow height (is there a better way of doing that ?) */
+//#slideshow-wrapper div {
+//    height: inherit;
+//}

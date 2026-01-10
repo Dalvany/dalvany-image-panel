@@ -18,12 +18,14 @@ import { usePanelContext } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
 import { DynamicImageOptions, Transition } from 'types';
 import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'components/Image';
-import '../css/image.css';
-
 // @ts-ignore
 import { Slide, Fade, Zoom } from 'react-slideshow-image';
-import 'react-slideshow-image/dist/styles.css';
 import ConditionalWrap from 'conditional-wrap';
+import { css } from '@emotion/css'
+
+import {main_container, no_slideshow, slideshow_wrapper} from 'css/styles'
+import 'react-slideshow-image/dist/styles.css';
+
 
 interface Props extends PanelProps<DynamicImageOptions> { }
 
@@ -467,7 +469,10 @@ export function DynamicImagePanel(props: Props) {
         key={'1'}
         condition={options.slideshow.enable}
         wrap={(children: React.JSX.Element) => (
-          <div key={''} className={'full-height'} style={{ display: 'flex' }}>
+          //<div key={''} className={'full-height'} style={{ display: 'flex' }}>
+          //  {children}
+          //</div>
+          <div key={''} className={css`${full_height}`} style={{ display: 'flex' }}>
             {children}
           </div>
         )}
@@ -486,7 +491,10 @@ export function DynamicImagePanel(props: Props) {
       infinite: options.slideshow.infinite,
     };
     return (
-      <div id={'slideshow-wrapper'} className={'main-container'}>
+      <div className={css`
+        ${main_container};
+        ${slideshow_wrapper};
+      `}>
         {(transition === Transition.SLIDE)
           ? <Slide {...p}>{children}</Slide>
           : <Fade {...p}>{children}</Fade>
@@ -495,5 +503,9 @@ export function DynamicImagePanel(props: Props) {
     );
   }
 
-  return <div className="main-container no-slideshow">{children}</div>;
+  return <div className={css`
+      ${main_container};
+      ${no_slideshow};
+    `}
+    >{children}</div>;
 }
