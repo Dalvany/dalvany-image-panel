@@ -64,7 +64,8 @@
     "react": "18.3.0",
     "react-dom": "18.3.0",
     "react-slideshow-image": "^4.2.1",
-    "tslib": "2.5.3"
+    "tslib": "2.5.3",
+    "@braintree/sanitize-url": "^7.1.1"
   },
   "packageManager": "yarn@1.22.18"
 }
