@@ -63,7 +63,7 @@
     "sass-loader": "^16.0.0",
     "react": "18.3.0",
     "react-dom": "18.3.0",
-    "react-slideshow-image": "^4.3.2",
+    "react-slideshow-image": "https://github.com/Dalvany/react-slideshow#feat/use_emotion",
     "tslib": "2.5.3",
     "@braintree/sanitize-url": "^7.1.1"
   },
