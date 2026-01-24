@@ -120,7 +120,7 @@ export function CreateImage(props: CreateImageProps) {
   let content = tooltip ? tooltip : '';
   let tl = slideshow ? tooltip : undefined;
 
-  var overlay_position_css = top_left_overlay;
+  let overlay_position_css = top_left_overlay;
   if (overlay_position === Position.TOP_RIGHT) {
     overlay_position_css = top_right_overlay;
   }
