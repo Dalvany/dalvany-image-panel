@@ -8375,7 +8375,7 @@ react-select@5.10.0:
     react-transition-group "^4.3.0"
     use-isomorphic-layout-effect "^1.2.0"
 
-react-slideshow-image@^4.2.1:
+react-slideshow-image@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/react-slideshow-image/-/react-slideshow-image-4.3.2.tgz#e8ada974a7b308404211c4d09e035447e082c921"
   integrity sha512-cALXr6RvP7er5QYWcX1ctBvG2x4jvZsgSPMPWUzQG47ZeKZjmXNmN9h8y4tScsWk/7TV23uAFQIESN8kxTaBHQ==

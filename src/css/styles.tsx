@@ -50,5 +50,8 @@ export const bottom_right_overlay = css`
 `
 
 export const slideshow_wrapper = css`
-    height: inherit;
+    height: 100%;
+    & div {
+        height: inherit;
+    }
 `;

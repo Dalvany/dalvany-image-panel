@@ -472,7 +472,7 @@ export function DynamicImagePanel(props: Props) {
           //<div key={''} className={'full-height'} style={{ display: 'flex' }}>
           //  {children}
           //</div>
-          <div key={''} className={css`${full_height}`} style={{ display: 'flex' }}>
+          <div key={''} style={{ display: 'flex' }}>
             {children}
           </div>
         )}
