@@ -62,10 +62,10 @@
     "conditional-wrap": "^1.0.2",
     "react": "18.3.0",
     "react-dom": "18.3.0",
-    "react-slideshow-image": "4.3.2",
+    "react-slideshow-image": "^4.3.2",
     "sass": "^1.97.0",
     "sass-loader": "^16.0.0",
-    "tslib": "2.5.3"
+    "tslib": "^2.5.3"
   },
   "packageManager": "yarn@1.22.18"
 }
