@@ -5,7 +5,6 @@ import React, { useCallback, useState } from 'react';
 import { DataHoverClearEvent, DataHoverEvent } from '@grafana/data';
 import ConditionalWrap from 'conditional-wrap';
 import { sanitizeUrl } from '@braintree/sanitize-url';
-import { css } from '@emotion/css'
 
 import {bottom_left_overlay, bottom_right_overlay, div_container, image, top_left_overlay, top_right_overlay} from 'css/styles'
 
@@ -152,7 +151,7 @@ export function CreateImage(props: CreateImageProps) {
         )}
       >
         <img
-          className={css`${image}`}
+          className={`${image}`}
           style={{
             pointerEvents: 'auto',
           }}
@@ -175,7 +174,7 @@ export function CreateImage(props: CreateImageProps) {
       </ConditionalWrap>
       {overlay_value !== undefined && (
         <div
-          className={css`${overlay_position_css}`}
+          className={`${overlay_position_css}`}
           style={{
             height: oh,
             width: ow,
@@ -327,7 +326,7 @@ export function Image(props: ImageProps) {
   let target = link.open_in_tab ? '_blank' : '_self';
 
   return (
-    <div className={css`${div_container};`} style={{ width: w, overflow: 'hidden' }}>
+    <div className={`${div_container};`} style={{ width: w, overflow: 'hidden' }}>
       <ConditionalWrap
         condition={link.link !== undefined}
         wrap={(children: React.JSX.Element) => (

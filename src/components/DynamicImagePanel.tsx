@@ -21,10 +21,9 @@ import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, Underli
 // @ts-ignore
 import { Slide, Fade, Zoom } from 'react-slideshow-image';
 import ConditionalWrap from 'conditional-wrap';
-import { css } from '@emotion/css'
 
 import {main_container, no_slideshow, slideshow_wrapper} from 'css/styles'
-import 'react-slideshow-image/dist/styles.css';
+import '../css/slideshow.scss';
 
 
 interface Props extends PanelProps<DynamicImageOptions> { }
@@ -491,9 +490,10 @@ export function DynamicImagePanel(props: Props) {
       infinite: options.slideshow.infinite,
     };
     return (
-      <div className={css`
-        ${main_container};
-        ${slideshow_wrapper};
+      <div className={`
+        dalvany-image-panel
+        ${main_container}
+        ${slideshow_wrapper}
       `}>
         {(transition === Transition.SLIDE)
           ? <Slide {...p}>{children}</Slide>
@@ -503,7 +503,7 @@ export function DynamicImagePanel(props: Props) {
     );
   }
 
-  return <div className={css`
+  return <div className={`
       ${main_container};
       ${no_slideshow};
     `}
