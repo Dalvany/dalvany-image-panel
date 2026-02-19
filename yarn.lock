@@ -8391,7 +8391,7 @@ react-select@5.10.0:
     react-transition-group "^4.3.0"
     use-isomorphic-layout-effect "^1.2.0"
 
-react-slideshow-image@4.3.2:
+react-slideshow-image@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/react-slideshow-image/-/react-slideshow-image-4.3.2.tgz#e8ada974a7b308404211c4d09e035447e082c921"
   integrity sha512-cALXr6RvP7er5QYWcX1ctBvG2x4jvZsgSPMPWUzQG47ZeKZjmXNmN9h8y4tScsWk/7TV23uAFQIESN8kxTaBHQ==
@@ -9669,11 +9669,6 @@ tsconfig-paths@^4.2.0:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.3.tgz#24944ba2d990940e6e982c4bea147aba80209913"
-  integrity sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==
-
 tslib@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.0.tgz#b295854684dbda164e181d259a22cd779dcd7bc3"
@@ -9684,7 +9679,7 @@ tslib@2.6.2:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
-tslib@2.8.1, tslib@^2.1.0, tslib@^2.7.0, tslib@^2.8.0, tslib@^2.8.1:
+tslib@2.8.1, tslib@^2.1.0, tslib@^2.5.3, tslib@^2.7.0, tslib@^2.8.0, tslib@^2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
