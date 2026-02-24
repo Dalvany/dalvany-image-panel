@@ -18,8 +18,7 @@ import { usePanelContext } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
 import { DynamicImageOptions, Transition } from 'types';
 import { HighlightProps, Image, ImageDataProps, LinkProps, OverlayProps, UnderlineProps } from 'components/Image';
-// @ts-ignore
-import { Slide, Fade, Zoom } from 'react-slideshow-image';
+import { Slide, Fade } from 'react-slideshow-image';
 import ConditionalWrap from 'conditional-wrap';
 
 import {main_container, no_slideshow, slideshow_wrapper} from 'css/styles'
