@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased](https://github.com/Dalvany/dalvany-image-panel/tree/HEAD)
+
+[Full Changelog](https://github.com/Dalvany/dalvany-image-panel/compare/v5.0.0...HEAD)
+
+- Fix description [\#126](https://github.com/Dalvany/dalvany-image-panel/issues/126)
+
+## [v5.0.0](https://github.com/Dalvany/dalvany-image-panel/tree/v5.0.0) (2026-03-01)
+
+[Full Changelog](https://github.com/Dalvany/dalvany-image-panel/compare/v4.0.1...v5.0.0)
+
+- Layout problem [\#124](https://github.com/Dalvany/dalvany-image-panel/issues/124)
+
+- Is this still being maintained? [\#121](https://github.com/Dalvany/dalvany-image-panel/issues/121)
+- React 19 Upgrade: Ensure your plugin is compatible with React 19 [\#119](https://github.com/Dalvany/dalvany-image-panel/issues/119)
+- Include slideshow code [\#116](https://github.com/Dalvany/dalvany-image-panel/issues/116)
+
+- fix: fix underline color mapping description [\#127](https://github.com/Dalvany/dalvany-image-panel/pull/127) ([Dalvany](https://github.com/Dalvany))
+- fix: remove use of semicolon [\#125](https://github.com/Dalvany/dalvany-image-panel/pull/125) ([Dalvany](https://github.com/Dalvany))
+- Make plugin compatible with react 19 [\#123](https://github.com/Dalvany/dalvany-image-panel/pull/123) ([Dalvany](https://github.com/Dalvany))
+- fix: remove ts\_ignore [\#122](https://github.com/Dalvany/dalvany-image-panel/pull/122) ([Dalvany](https://github.com/Dalvany))
+
 ## [v4.0.1](https://github.com/Dalvany/dalvany-image-panel/tree/v4.0.1) (2026-02-19)
 
 [Full Changelog](https://github.com/Dalvany/dalvany-image-panel/compare/v4.0.0...v4.0.1)
