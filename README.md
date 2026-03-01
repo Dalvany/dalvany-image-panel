@@ -10,6 +10,7 @@ The result will be : baseURL + icon field + suffix.
 
 Note :
 
+* Version 5.0.0 requires at least Grafana 12.0.0
 * version 4.0.0 requires at least Grafana 11.0.0
 * version 3.0.0 requires at least Grafana 10.0.3
 * version 2.8.0 requires at least Grafana 9.0.0
