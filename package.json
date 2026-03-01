@@ -1,6 +1,6 @@
 {
   "name": "dalvany-image-panel",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Display an image based on metric",
   "scripts": {
     "build": "webpack -c ./.config/webpack/webpack.config.ts --env production",

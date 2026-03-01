@@ -326,7 +326,7 @@ export function Image(props: ImageProps) {
   let target = link.open_in_tab ? '_blank' : '_self';
 
   return (
-    <div className={`${div_container};`} style={{ width: w, overflow: 'hidden' }}>
+    <div className={`${div_container}`} style={{ width: w, overflow: 'hidden' }}>
       <ConditionalWrap
         condition={link.link !== undefined}
         wrap={(children: React.JSX.Element) => (

@@ -503,8 +503,8 @@ export function DynamicImagePanel(props: Props) {
   }
 
   return <div className={`
-      ${main_container};
-      ${no_slideshow};
+      ${main_container}
+      ${no_slideshow}
     `}
     >{children}</div>;
 }
